@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ArticleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Articles';
+$this->title = 'Пост';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Article', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Додати новий пост', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:ntext',
             [
                 'format' => 'html',
-                'label' => 'Image',
+                'label' => 'Фото',
                 'value' => function($data){
                     return Html::img($data->getImage(), ['width'=>200]);
                 }

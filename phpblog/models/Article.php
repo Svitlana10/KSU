@@ -53,16 +53,16 @@ class Article extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'content' => 'Content',
-            'date' => 'Date',
-            'image' => 'Image',
-            'viewed' => 'Viewed',
-            'user_id' => 'User ID',
-            'status' => 'Status',
-            'category_id' => 'Category ID',
+            'id' => '№',
+            'title' => 'Назва',
+            'description' => 'Опис',
+            'content' => 'Вміст',
+            'date' => 'Дата',
+            'image' => 'Фото',
+            'viewed' => 'Переглянуто',
+            'user_id' => '№ користувача',
+            'status' => 'Статус',
+            'category_id' => '№ категорії',
         ];
     }
 
@@ -97,7 +97,7 @@ class Article extends \yii\db\ActiveRecord
 
     public function getCategory()
     {
-        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
     public function saveCategory($category_id)
@@ -112,7 +112,7 @@ class Article extends \yii\db\ActiveRecord
 
     public function getTags()
     {
-        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->viaTable('article_tag', ['article_id' => 'id']);
     }
     

@@ -42,9 +42,9 @@ class ArticleTag extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'article_id' => 'Article ID',
-            'tag_id' => 'Tag ID',
+            'id' => '№',
+            'article_id' => '№ поста',
+            'tag_id' => '№ тегу',
         ];
     }
 
