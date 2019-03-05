@@ -75,7 +75,7 @@ PublicAsset::register($this);
                 <div class="navbar-header" style="width:20%">
                     <li class="navbar-brand">
 
-                        <a  href="/" style="width:60%; margin-left: 40%"><img src="/public/images/logo.png"  alt=""></a>
+                        <a  href="/" style="width:40%; margin-left: 40%"><img src="/public/images/logo_2.png"  alt=""></a>
                     </li>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#bs-example-navbar-collapse-1">
@@ -123,8 +123,11 @@ PublicAsset::register($this);
             </div>
         </div>
         <!-- /.container-fluid -->
+
     </nav>
-<img src="/public/images/logo_1.png" style="width:100%" alt="">
+<div  style=" text-align: center; width: 100% ">
+    <img  src="/public/images/logo_1.png"  alt="">
+</div>
     <?= $content ?>
 
 
