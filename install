@@ -93,8 +93,7 @@ function createEnv(): void
 
     echo "      file .env configurated\n";
 
-    $dotenv = new Dotenv\Dotenv(__DIR__);
-    $dotenv->load();
+    (\Dotenv\Dotenv::create(__DIR__ . '/'))->load();
 }
 
 /**
