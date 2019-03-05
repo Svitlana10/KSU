@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host='.getenv('DB_HOST').';dbname='.getenv('DB_NAME'),
-    'username' => getenv('DB_USERNAME'),
-    'password' => getenv('DB_PASSWORD'),
+    'dsn' => 'mysql:host='.env('DB_HOST', 'localhost').';dbname='.env('DB_NAME', 'webblog'),
+    'username' => env('DB_USERNAME', 'root'),
+    'password' => env('DB_PASSWORD', 'root'),
     'charset' => 'utf8',
-    'tablePrefix' => getenv('DB_PREFIX')
+    'tablePrefix' => env('DB_PREFIX', '')
 ];
