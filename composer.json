@@ -14,11 +14,12 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.2",
         "yiisoft/yii2": "^2.0",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "leoshtika/yii2-nav-sidebar": "*"
+        "vlucas/phpdotenv": "^2.4",
+        "leoshtika/yii2-nav-sidebar": "*",
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -32,6 +33,12 @@
     "config": {
         "process-timeout": 1800
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "scripts": {
         "post-create-project-cmd": [
             "yii\\composer\\Installer::postCreateProject"

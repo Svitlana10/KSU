@@ -1,3 +1,8 @@
+#envirements
+.env
+
+composer.lock
+
 # phpstorm project files
 .idea
 
