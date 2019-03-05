@@ -3,7 +3,7 @@
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../helpers/helpers.php');
 
-(\Dotenv\Dotenv::create(__DIR__ . '/'))->load();
+(\Dotenv\Dotenv::create(__DIR__ . '/../'))->load();
 
 // comment out the following two lines when deployed to production
 defined('YII_DEBUG') or define('YII_DEBUG', env('YII_DEBUG'));

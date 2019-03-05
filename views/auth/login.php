@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'labelOptions' => ['class' => 'col-lg-1 control-label'],
                     ],
                 ]); ?>
-            
+
                     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
             
                     <?= $form->field($model, 'password')->passwordInput() ?>
