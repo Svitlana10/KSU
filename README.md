@@ -17,12 +17,12 @@ Apache virtual host
 
     <VirtualHost *:80>
         ServerName webblog.loc
-        <Directory /var/www/webblog/web>
+        <Directory /var/www/KSU/web>
             Options Indexes FollowSymLinks MultiViews
             AllowOverride All
             Require all granted
         </Directory>
-        DocumentRoot /var/www/webblog/web
+        DocumentRoot /var/www/KSU/web
     </VirtualHost>
     
 REQUIREMENTS
