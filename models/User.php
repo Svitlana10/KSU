@@ -19,9 +19,11 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-
-    const USER_IS_NOT_ADMIN = 0;
-    const USER_IS_ADMIN = 1;
+    const USER_STATUS_NOT_ACTIVE = 0;
+    const USER_STATUS_BANNED     = 1;
+    const USER_STATUS_USER       = 2;
+    const USER_STATUS_MODERATOR  = 3;
+    const USER_STATUS_ADMIN      = 4;
 
     /**
      * @inheritdoc

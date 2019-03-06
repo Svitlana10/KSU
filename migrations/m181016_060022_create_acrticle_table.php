@@ -11,22 +11,34 @@ class m181016_060022_create_acrticle_table extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
         $this->createTable('article', [
-            'id' => $this->primaryKey(),
-            'title'=>$this->string(),
-            'description'=>$this->text(),
-            'content'=>$this->text(),
-            'date'=>$this->dateTime(),
-            'image'=>$this->string(),
-            'viewed'=>$this->integer(),
-            'user_id'=>$this->integer(),
-            'status'=>$this->integer(),
-            'category_id'=>$this->integer(),
+            'id'            => $this->primaryKey(),
+            'title'         => $this->string()->notNull(),
+            'description'   => $this->text(),
+            'content'       => $this->text(),
+            'image'         => $this->string(),
+            'viewed'        => $this->integer(),
+            'user_id'       => $this->integer(),
+            'status'        => $this->integer(),
+            'category_id'   => $this->integer(),
+            'created_at'    => $this->integer()->notNull(),
+            'updated_at'    => $this->integer()->notNull(),
         ], $tableOptions);
+
+        $this->createIndex(
+            'idx-article-user_id',
+            'article',
+            'user_id'
+        );
+
+        $this->createIndex(
+            'idx-article-category_id',
+            'article',
+            'category_id'
+        );
     }
 
     /**

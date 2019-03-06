@@ -14,14 +14,15 @@ class m181016_060258_create_article_tag_table extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('article_tag', [
-            'id' => $this->primaryKey(),
-            'article_id'=>$this->integer(),
-            'tag_id'=>$this->integer()
+        $this->createTable('{{%article_tag}}', [
+            'id'            => $this->primaryKey(),
+            'article_id'    => $this->integer(),
+            'tag_id'        => $this->integer(),
+            'created_at'    => $this->integer()->notNull(),
+            'updated_at'    => $this->integer()->notNull(),
         ], $tableOptions);
 
         // creates index for column `user_id`
@@ -66,6 +67,6 @@ class m181016_060258_create_article_tag_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('article_tag');
+        $this->dropTable('{{%article_tag}}');
     }
 }
