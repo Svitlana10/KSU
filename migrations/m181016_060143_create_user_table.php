@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `user`.
+ * Handles the creation of table `users`.
  */
 class m181016_060143_create_user_table extends Migration
 {
@@ -18,7 +18,7 @@ class m181016_060143_create_user_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user}}', [
+        $this->createTable('{{%users}}', [
             'id'            => $this->primaryKey(),
             'username'      => $this->string()->notNull()->unique(),
             'auth_key'      => $this->string(32)->notNull(),
@@ -30,12 +30,12 @@ class m181016_060143_create_user_table extends Migration
             'updated_at'    => $this->integer()->notNull(),
         ], $tableOptions);
 
-        // add foreign key for table `user`
+        // add foreign key for table `users`
         $this->addForeignKey(
             'fk-article-user_id',
-            'article',
+            'articles',
             'user_id',
-            'user',
+            'users',
             'id',
             'CASCADE'
         );
@@ -46,6 +46,6 @@ class m181016_060143_create_user_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('{{%user}}');
+        $this->dropTable('{{%users}}');
     }
 }

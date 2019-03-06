@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `comment`.
+ * Handles the creation of table `comments`.
  */
 class m181016_060158_create_comment_table extends Migration
 {
@@ -17,7 +17,7 @@ class m181016_060158_create_comment_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('comment', [
+        $this->createTable('{{%comments}}', [
             'id'            => $this->primaryKey(),
             'text'          => $this->string(),
             'user_id'       => $this->integer(),
@@ -30,16 +30,16 @@ class m181016_060158_create_comment_table extends Migration
         // creates index for column `user_id`
         $this->createIndex(
             'idx-post-user_id',
-            'comment',
+            'comments',
             'user_id'
         );
 
         // add foreign key for table `user`
         $this->addForeignKey(
             'fk-post-user_id',
-            'comment',
+            'comments',
             'user_id',
-            'user',
+            'users',
             'id',
             'CASCADE'
         );
@@ -47,16 +47,16 @@ class m181016_060158_create_comment_table extends Migration
         // creates index for column `article_id`
         $this->createIndex(
             'idx-article_id',
-            'comment',
+            'comments',
             'article_id'
         );
 
         // add foreign key for table `article`
         $this->addForeignKey(
             'fk-article_id',
-            'comment',
+            'comments',
             'article_id',
-            'article',
+            'articles',
             'id',
             'CASCADE'
         );
@@ -67,6 +67,6 @@ class m181016_060158_create_comment_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('comment');
+        $this->dropTable('{{%comments}}');
     }
 }

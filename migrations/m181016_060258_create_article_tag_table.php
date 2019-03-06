@@ -38,7 +38,7 @@ class m181016_060258_create_article_tag_table extends Migration
             'tag_article_article_id',
             'article_tag',
             'article_id',
-            'article',
+            'articles',
             'id',
             'CASCADE'
         );
@@ -56,7 +56,7 @@ class m181016_060258_create_article_tag_table extends Migration
             'fk-tag_id',
             'article_tag',
             'tag_id',
-            'tag',
+            'tags',
             'id',
             'CASCADE'
         );

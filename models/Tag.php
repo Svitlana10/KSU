@@ -19,7 +19,7 @@ class Tag extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tag';
+        return '{{%tags}}';
     }
 
     /**
@@ -45,11 +45,11 @@ class Tag extends \yii\db\ActiveRecord
 
     /**
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
-    
     public function getArticles()
     {
-        return $this->hasMany(Article::className(), ['id' => 'article_id'])
+        return $this->hasMany(Article::class, ['id' => 'article_id'])
             ->viaTable('article_tag', ['tag_id' => 'id']);
     }
 }

@@ -9,7 +9,10 @@ class SignupForm extends Model
     public $name;
     public $email;
     public $password;
-    
+
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -19,14 +22,23 @@ class SignupForm extends Model
             [['email'], 'unique', 'targetClass'=>'app\models\User', 'targetAttribute'=>'email']
         ];
     }
-    
+
+    /**
+     * @return bool
+     */
     public function signup()
     {
         if($this->validate())
         {
             $user = new User();
-            $user->attributes = $this->attributes;
-            return $user->create();
+            $user->setAttributes($this->getAttributes());
+
+            if($user->save()){
+                return true;
+            }
+            $this->addErrors($user->getErrors());
         }
+
+        return false;
     }
 }

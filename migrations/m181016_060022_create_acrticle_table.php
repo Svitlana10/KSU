@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `acrticle`.
+ * Handles the creation of table `acrticles`.
  */
 class m181016_060022_create_acrticle_table extends Migration
 {
@@ -14,7 +14,7 @@ class m181016_060022_create_acrticle_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('article', [
+        $this->createTable('{{%articles}}', [
             'id'            => $this->primaryKey(),
             'title'         => $this->string()->notNull(),
             'description'   => $this->text(),
@@ -30,13 +30,13 @@ class m181016_060022_create_acrticle_table extends Migration
 
         $this->createIndex(
             'idx-article-user_id',
-            'article',
+            'articles',
             'user_id'
         );
 
         $this->createIndex(
             'idx-article-category_id',
-            'article',
+            'articles',
             'category_id'
         );
     }
@@ -46,6 +46,6 @@ class m181016_060022_create_acrticle_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('article');
+        $this->dropTable('{{%articles}}');
     }
 }

@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `tag`.
+ * Handles the creation of table `tags`.
  */
 class m181016_060129_create_tag_table extends Migration
 {
@@ -17,7 +17,7 @@ class m181016_060129_create_tag_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('tag', [
+        $this->createTable('{{%tags}}', [
             'id'            => $this->primaryKey(),
             'title'         => $this->string()->notNull(),
             'created_at'    => $this->integer()->notNull(),
@@ -30,6 +30,6 @@ class m181016_060129_create_tag_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('tag');
+        $this->dropTable('{{%tags}}');
     }
 }

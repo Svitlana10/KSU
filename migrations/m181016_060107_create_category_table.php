@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `category`.
+ * Handles the creation of table `categories`.
  */
 class m181016_060107_create_category_table extends Migration
 {
@@ -17,7 +17,7 @@ class m181016_060107_create_category_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%category}}', [
+        $this->createTable('{{%categories}}', [
             'id' => $this->primaryKey(),
             'title'=>$this->string(),
             'created_at'    => $this->integer()->notNull(),
@@ -27,9 +27,9 @@ class m181016_060107_create_category_table extends Migration
         // add foreign key for table `user`
         $this->addForeignKey(
             'fk-article-category_id',
-            'article',
+            'articles',
             'category_id',
-            'category',
+            'categories',
             'id',
             'CASCADE'
         );
@@ -40,6 +40,6 @@ class m181016_060107_create_category_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('{{%category}}');
+        $this->dropTable('{{%categories}}');
     }
 }

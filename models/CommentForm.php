@@ -7,6 +7,9 @@ use yii\base\Model;
 
 class CommentForm extends Model
 {
+    /**
+     * @var Comment $comment
+     */
     public $comment;
     
     public function rules()

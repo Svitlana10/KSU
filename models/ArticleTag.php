@@ -21,7 +21,7 @@ class ArticleTag extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'article_tag';
+        return '{{%article_tag}}';
     }
 
     /**
