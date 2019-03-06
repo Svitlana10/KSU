@@ -26,7 +26,7 @@ class ArticleController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -53,6 +53,7 @@ class ArticleController extends Controller
      * Displays a single Article model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -69,7 +70,6 @@ class ArticleController extends Controller
     public function actionCreate()
     {
         $model = new Article();
-        $model->setAttribute('date',date('Y-m-d H:i:s'));
 
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -85,6 +85,7 @@ class ArticleController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -104,6 +105,9 @@ class ArticleController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -128,6 +132,11 @@ class ArticleController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionSetImage($id)
     {
         $model = new ImageUpload;
@@ -145,12 +154,18 @@ class ArticleController extends Controller
         
         return $this->render('image', ['model'=>$model]);
     }
-    
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionSetCategory($id)
     {
+        /** @var Article $article */
         $article = $this->findModel($id);
         
-        $selectedCategory = $article->category==null?null:$article->category->id;
+        $selectedCategory = $article->category==null ? null : $article->category->id;
         $categories = ArrayHelper::map(Category::find()->all(), 'id', 'title');
 
         if(Yii::$app->request->isPost)
@@ -169,6 +184,12 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionSetTags($id)
     {
         $article = $this->findModel($id);

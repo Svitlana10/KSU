@@ -14,7 +14,6 @@ use yii\helpers\ArrayHelper;
  * @property string $title
  * @property string $description
  * @property string $content
- * @property string $date
  * @property string $image
  * @property integer $viewed
  * @property integer $user_id
@@ -25,6 +24,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
+ * @property Category $category
  */
 class Article extends \yii\db\ActiveRecord
 {
@@ -54,7 +54,6 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['title','description','content'], 'string'],
-            [['date'], 'default', 'value'=>date('Y-m-d H:i:s')],
             [['title'], 'string', 'max' => 255],
             [['category_id'], 'number']
         ];
@@ -70,12 +69,13 @@ class Article extends \yii\db\ActiveRecord
             'title' => 'Назва',
             'description' => 'Опис',
             'content' => 'Вміст',
-            'date' => 'Дата',
             'image' => 'Фото',
             'viewed' => 'Переглянуто',
             'user_id' => '№ користувача',
             'status' => 'Статус',
             'category_id' => '№ категорії',
+            'created_at' => 'Дата створення',
+            'updated_at' => 'Дата оновлення',
         ];
     }
 
@@ -192,15 +192,6 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return string
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function getDate()
-    {
-        return Yii::$app->formatter->asDate($this->date);
-    }
-
-    /**
      * @param int $pageSize
      * @return mixed
      */
@@ -218,7 +209,7 @@ class Article extends \yii\db\ActiveRecord
         // limit the query using the pagination and retrieve the articles
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
-            ->orderBy('date desc')
+            ->orderBy(['created_at' => SORT_DESC])
             ->all();
         
         $data['articles'] = $articles;
@@ -240,7 +231,7 @@ class Article extends \yii\db\ActiveRecord
      */
     public static function getRecent()
     {
-        return Article::find()->orderBy('date asc')->limit(4)->all();
+        return Article::find()->orderBy('created_at desc')->limit(4)->all();
     }
 
     /**
@@ -256,7 +247,7 @@ class Article extends \yii\db\ActiveRecord
      */
     public function getArticleComments()
     {
-        return $this->getComments()->where(['status'=>1])->all();
+        return $this->getComments()->where(['status'=>Comment::STATUS_ALLOW])->all();
     }
 
     /**
