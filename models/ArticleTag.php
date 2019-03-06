@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "article_tag".
@@ -10,6 +11,8 @@ use Yii;
  * @property integer $id
  * @property integer $article_id
  * @property integer $tag_id
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property Tag $tag
  * @property Article $article
@@ -25,14 +28,24 @@ class ArticleTag extends \yii\db\ActiveRecord
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             [['article_id', 'tag_id'], 'integer'],
-            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
-            [['article_id'], 'exist', 'skipOnError' => true, 'targetClass' => Article::className(), 'targetAttribute' => ['article_id' => 'id']],
+            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::class, 'targetAttribute' => ['tag_id' => 'id']],
+            [['article_id'], 'exist', 'skipOnError' => true, 'targetClass' => Article::class, 'targetAttribute' => ['article_id' => 'id']],
         ];
     }
 
@@ -53,7 +66,7 @@ class ArticleTag extends \yii\db\ActiveRecord
      */
     public function getTag()
     {
-        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
+        return $this->hasOne(Tag::class, ['id' => 'tag_id']);
     }
 
     /**
@@ -61,6 +74,6 @@ class ArticleTag extends \yii\db\ActiveRecord
      */
     public function getArticle()
     {
-        return $this->hasOne(Article::className(), ['id' => 'article_id']);
+        return $this->hasOne(Article::class, ['id' => 'article_id']);
     }
 }
