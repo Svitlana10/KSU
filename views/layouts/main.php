@@ -38,7 +38,10 @@ PublicAsset::register($this);
 
             <div class="w3-teal">
 
-                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="openNav()">&#9776;</button>
+                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="myFunction()">&#9776;
+
+                </button>
+
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a href="#">Головна</a>
@@ -61,12 +64,14 @@ PublicAsset::register($this);
                 function closeNav() {
                     document.getElementById("mySidenav").style.width = "0";
                 }
-                function openRightMenu() {
-                    document.getElementById("rightMenu").style.display = "block";
-                }
 
-                function closeRightMenu() {
-                    document.getElementById("rightMenu").style.display = "none";
+                function myFunction() {
+                    var x = document.getElementById("mySidenav");
+                    if (x.style.display === "block") {
+                        x.style.display = "none";
+                    } else {
+                        x.style.display = "block";
+                    }
                 }
             </script>
             <div class="menu-content">
@@ -125,27 +130,36 @@ PublicAsset::register($this);
         <!-- /.container-fluid -->
 
     </nav>
-<div  style=" text-align: center; width: 100% ">
-    <img  src="/public/images/logo_1.png"  alt="">
-</div>
+
+
+
     <?= $content ?>
-
-
-    <footer class="footer-widget-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                </div>
-                <h4 class="text-uppercase">Контактна іформація</h4>
-
-
-            </div>
-        </div>
-    </footer>
-
-<?php $this->endBody() ?>
+<?php $this->endBody() ?>.
+<?php $this->endPage() ?>
 </body>
 
+<footer class="footer-widget-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <aside class="footer-widget">
+                </aside>
+            </div>
+            <div class="col-md-6">
+                <div class="about-content">Блог створено для лабораторної роботи. Всі права захищені.
+                </div>
+                <div class="address">
+                    <h4 class="text-uppercase">Контактна іфнормація</h4>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+
+
 </html>
-<?php $this->endPage() ?>
+
 
