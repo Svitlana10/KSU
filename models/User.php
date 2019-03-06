@@ -242,7 +242,7 @@ class User extends ActiveRecord implements IdentityInterface
         if($user = User::findOne($user_id)){
             return Yii::$app->mailer->compose(
                 ['html' => '', 'text' => ''],
-                ['user' => $user],
+                ['user' => $user]
             )
                 ->setFrom([env('supportEmail', 'nomail@test.test') => env('appName', 'Yii-test-project'). ' robot'])
                 ->setTo($user->email)
