@@ -59,7 +59,9 @@ class CategorySearch extends Category
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'            => $this->id,
+            'created_at'    => $this->created_at,
+            'updated_at'    => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);
