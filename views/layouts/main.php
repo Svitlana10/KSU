@@ -6,8 +6,7 @@
 use app\assets\PublicAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use \yii\bootstrap\NavBar;
-use \yii\bootstrap\Nav;
+use app\models\User;
 
 PublicAsset::register($this);
 ?>
@@ -67,10 +66,12 @@ PublicAsset::register($this);
 
                 function myFunction() {
                     var x = document.getElementById("mySidenav");
-                    if (x.style.display === "block") {
-                        x.style.display = "none";
+                    if (document.getElementById("mySidenav").style.width === "250px") {
+                        // x.style.display = "none";
+                        document.getElementById("mySidenav").style.width = "0";
                     } else {
-                        x.style.display = "block";
+                        document.getElementById("mySidenav").style.width = "250px";
+                        // x.style.display = "block";
                     }
                 }
             </script>
@@ -94,18 +95,21 @@ PublicAsset::register($this);
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav text-uppercase">
-                        <?php if(!Yii::$app->user->isGuest):?>
-                        <li>
-                         <a   href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a></li>
-
-                            <?php endif;?>
+                        <?php if(!Yii::$app->user->isGuest):
+                            $user_status = Yii::$app->user->identity->status;
+                             if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a>
+                                </li>
+                             <?php endif;
+                        endif;?>
                     </ul>
                     <div class="i_con">
-                        <ul class="nav navbar-nav text-uppercase">
+                        <ul class="nav navbar-nav navbar-right text-uppercase">
 
                             <?php if(Yii::$app->user->isGuest):?>
-                                <li><a style=" margin-left:10%" href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
-                                <li><a style=" margin-left:10%" href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
+                                <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
+                                <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
                             <?php else: ?>
                                 <?=  Html::beginForm(['/auth/logout'], 'post')
                                 . Html::submitButton(
