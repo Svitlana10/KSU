@@ -24,7 +24,7 @@ class Module extends \yii\base\Module
     {
         return [
             'access'    =>  [
-                'class' =>  AccessControl::className(),
+                'class' =>  AccessControl::class,
                 'denyCallback'  =>  function($rule, $action)
                 {
                     throw new \yii\web\NotFoundHttpException();
@@ -34,16 +34,12 @@ class Module extends \yii\base\Module
                         'allow' =>  true,
                         'matchCallback' =>  function($rule, $action)
                         {
-							if (Yii::$app->user->isGuest || !Yii::$app->user->identity->isAdmin)
-							{
-								return false;
-							}else
-							{
-								return true;
-							}
-							
-							
-                            
+                            if(Yii::$app->user->identity->isAdmin || Yii::$app->user->identity->isModer){
+
+                                return true;
+                            }
+
+                            return false;
                         }
                     ]
                 ]

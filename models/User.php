@@ -98,6 +98,24 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Check is user admin
+     * @return bool
+     */
+    public function getIsAdmin()
+    {
+        return $this->status === self::USER_STATUS_ADMIN;
+    }
+
+    /**
+     * Check is user admin
+     * @return bool
+     */
+    public function getIsModer()
+    {
+        return $this->status === self::USER_STATUS_MODERATOR;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getComments()

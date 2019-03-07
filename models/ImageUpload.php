@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 class ImageUpload extends Model
@@ -27,27 +28,45 @@ class ImageUpload extends Model
 
     /**
      * @param UploadedFile $file
-     * @param $currentImage
+     * @param string $currentImage
      * @return string
+     * @throws \yii\base\Exception
      */
-    public function uploadFile(UploadedFile $file, $currentImage)
+    public function uploadFile(UploadedFile $file, $currentImage = '')
     {
         $this->image = $file;
 
        if($this->validate())
        {
-           $this->deleteCurrentImage($currentImage);
+           if(trim($currentImage) != '' && $currentImage != null) {
+               $this->deleteCurrentImage($currentImage);
+           }
            return $this->saveImage();
        }
 
+       return false;
     }
 
     /**
      * @return string
+     * @throws \yii\base\Exception
      */
     private function getFolder()
     {
-        return Yii::getAlias('@web') . 'uploads/';
+        $fullPath = Yii::getAlias('@web') . 'uploads/';
+        self::checkFolder($fullPath);
+        return $fullPath;
+    }
+
+    /**
+     * @param $filepath
+     * @throws \yii\base\Exception
+     */
+    private static function checkFolder($filepath)
+    {
+        if(!file_exists($filepath)) {
+            FileHelper::createDirectory($filepath, 0777, true);
+        }
     }
 
     /**
@@ -60,34 +79,39 @@ class ImageUpload extends Model
 
     /**
      * @param $currentImage
+     * @throws \yii\base\Exception
      */
     public function deleteCurrentImage($currentImage)
     {
-        if($this->fileExists($currentImage))
+        $fullFilePath = $this->getFolder() . $currentImage;
+
+        if($this->fileExists($fullFilePath))
         {
-            unlink($this->getFolder() . $currentImage);
+            unlink($fullFilePath);
         }
     }
 
     /**
-     * @param $currentImage
+     * @param $fullFilePath
      * @return bool
      */
-    public function fileExists($currentImage)
+    public function fileExists($fullFilePath)
     {
-        if(!empty($currentImage) && $currentImage != null)
+        if(!empty($fullFilePath) && $fullFilePath != null)
         {
-            return file_exists($this->getFolder() . $currentImage);
+            return file_exists($fullFilePath);
         }
+
+        return false;
     }
 
     /**
      * @return string
+     * @throws \yii\base\Exception
      */
     public function saveImage()
     {
         $filename = $this->generateFilename();
-
         $this->image->saveAs($this->getFolder() . $filename);
 
         return $filename;
