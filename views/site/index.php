@@ -2,12 +2,9 @@
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 ?>
-<!--main content start-->
-<div class="main-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <?php foreach($articles as $article):?>
+                <?php
+                /** @var \app\models\Article $articles */
+                foreach($articles as $article):?>
                     <article class="post" >
                         <div class="post-thumb">
                             <a href="<?= Url::toRoute(['site/view', 'id'=>$article->id]);?>"><img src="<?= $article->getImage();?>" alt=""></a>
@@ -47,14 +44,5 @@ use yii\widgets\LinkPager;
                         'pagination' => $pagination,
                     ]);
                 ?>
-            </div>
-            <?= $this->render('/partials/sidebar', [
-                'popular'=>$popular,
-                'recent'=>$recent,
-                'categories'=>$categories
-            ]);?>
-        </div>
-    </div>
-</div>
 <!-- end main content-->
 <!--footer start-->

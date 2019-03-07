@@ -17,14 +17,18 @@ class AuthController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'nosidebar';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if(Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->login()) {
+        if(Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            if ($model->login()) {
 
                 return $this->goBack();
+            }
         }
         return $this->render('login', [
             'model' => $model,
@@ -47,9 +51,11 @@ class AuthController extends Controller
      * Signup action
      *
      * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionSignup()
     {
+        $this->layout = 'nosidebar';
         $model = new SignupForm();
 
         if(Yii::$app->request->isPost)

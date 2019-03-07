@@ -4,9 +4,13 @@ namespace app\models;
 
 use yii\base\Model;
 
+/**
+ * Class SignupForm
+ * @package app\models
+ */
 class SignupForm extends Model
 {
-    public $name;
+    public $username;
     public $email;
     public $password;
 
@@ -16,8 +20,8 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            [['name','email','password'], 'required'],
-            [['name'], 'string'],
+            [['username','email','password'], 'required'],
+            [['username'], 'string'],
             [['email'], 'email'],
             [['email'], 'unique', 'targetClass'=>'app\models\User', 'targetAttribute'=>'email']
         ];
@@ -25,13 +29,17 @@ class SignupForm extends Model
 
     /**
      * @return bool
+     * @throws \yii\base\Exception
      */
     public function signup()
     {
         if($this->validate())
         {
             $user = new User();
-            $user->setAttributes($this->getAttributes());
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
 
             if($user->save()){
                 return true;

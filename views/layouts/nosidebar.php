@@ -23,24 +23,24 @@ PublicAsset::register($this);
 </head>
 <body id="backgr">
 <?php $this->beginBody() ?>
-    <div class="wrap">
+<div class="wrap">
 
 
-    </div>
+</div>
 
-    <nav class="navbar main-menu navbar-default">
-        <div class="container">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-            <div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
+<nav class="navbar main-menu navbar-default">
+    <div class="container">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
 
-            </div>
+        </div>
 
-            <div class="w3-teal">
+        <div class="w3-teal">
 
-                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="myFunction()">&#9776;
+            <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="myFunction()">&#9776;
 
-                </button>
+            </button>
 
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -95,10 +95,10 @@ PublicAsset::register($this);
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav text-uppercase">
                         <?php if(!Yii::$app->user->isGuest):?>
-                        <li>
-                         <a   href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a></li>
+                            <li>
+                                <a   href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a></li>
 
-                            <?php endif;?>
+                        <?php endif;?>
                     </ul>
                     <div class="i_con">
                         <ul class="nav navbar-nav text-uppercase">
@@ -123,7 +123,7 @@ PublicAsset::register($this);
         </div>
         <!-- /.container-fluid -->
 
-    </nav>
+</nav>
 
 
 <!--main content start-->
@@ -132,11 +132,6 @@ PublicAsset::register($this);
         <div class="row">
             <div class="col-md-8">
                 <?= $content ?>
-            </div>
-            <div class="col-md-4" data-sticky_column>
-                <div class="primary-sidebar">
-                    <?= \app\widgets\Sidebar::widget() ?>
-                </div>
             </div>
         </div>
     </div>
