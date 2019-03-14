@@ -29,7 +29,7 @@ class m181016_060107_create_category_table extends Migration
             'fk-article-category_id',
             'articles',
             'category_id',
-            'categories',
+            '{{%categories}}',
             'id',
             'CASCADE'
         );
@@ -40,6 +40,7 @@ class m181016_060107_create_category_table extends Migration
      */
     public function down()
     {
+        $this->dropForeignKey('fk-article-category_id', '{{%categories}}');
         $this->dropTable('{{%categories}}');
     }
 }

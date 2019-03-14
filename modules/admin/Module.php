@@ -31,6 +31,7 @@ class Module extends \yii\base\Module
                 },
                 'rules' =>  [
                     [
+                        'roles' => ['@'],
                         'allow' =>  true,
                         'matchCallback' =>  function($rule, $action)
                         {

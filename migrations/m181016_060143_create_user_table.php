@@ -35,7 +35,7 @@ class m181016_060143_create_user_table extends Migration
             'fk-article-user_id',
             'articles',
             'user_id',
-            'users',
+            '{{%users}}',
             'id',
             'CASCADE'
         );
@@ -46,6 +46,7 @@ class m181016_060143_create_user_table extends Migration
      */
     public function down()
     {
+        $this->dropForeignKey('fk-article-user_id', '{{%users}}');
         $this->dropTable('{{%users}}');
     }
 }

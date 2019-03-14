@@ -50,7 +50,6 @@ class m181016_060258_create_article_tag_table extends Migration
             'tag_id'
         );
 
-
         // add foreign key for table `user`
         $this->addForeignKey(
             'fk-tag_id',
@@ -67,6 +66,10 @@ class m181016_060258_create_article_tag_table extends Migration
      */
     public function down()
     {
+        $this->dropIndex('idx_tag_id', 'article_tag');
+        $this->dropIndex('tag_article_article_id', 'article_tag');
+        $this->dropForeignKey('tag_article_article_id', 'article_tag');
+        $this->dropForeignKey('fk-tag_id', 'article_tag');
         $this->dropTable('{{%article_tag}}');
     }
 }

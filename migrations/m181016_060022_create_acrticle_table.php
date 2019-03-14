@@ -46,6 +46,8 @@ class m181016_060022_create_acrticle_table extends Migration
      */
     public function down()
     {
+        $this->dropIndex('idx-article-user_id', '{{%articles}}');
+        $this->dropIndex('idx-article-category_id', '{{%articles}}');
         $this->dropTable('{{%articles}}');
     }
 }

@@ -67,6 +67,10 @@ class m181016_060158_create_comment_table extends Migration
      */
     public function down()
     {
+        $this->dropIndex('idx-article_id', 'comments');
+        $this->dropIndex('idx-post-user_id', 'comments');
+        $this->dropForeignKey('fk-post-user_id-user_id', 'comments');
+        $this->dropForeignKey('fk-article_id', 'comments');
         $this->dropTable('{{%comments}}');
     }
 }
