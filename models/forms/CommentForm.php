@@ -1,10 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
+use app\models\Comment;
 use Yii;
 use yii\base\Model;
 
+/**
+ * Class CommentForm
+ * @package app\models\forms
+ */
 class CommentForm extends Model
 {
     /**

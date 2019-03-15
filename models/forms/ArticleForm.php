@@ -6,7 +6,7 @@
  * Time: 23:55
  */
 
-namespace app\models;
+namespace app\models\forms;
 
 
 use CKSource\CKFinder\Image;
@@ -14,7 +14,7 @@ use yii\base\Model;
 
 /**
  * Class ArticleForm
- * @package app\models
+ * @package app\models\forms
  */
 class ArticleForm extends Model
 {
