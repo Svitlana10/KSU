@@ -11,8 +11,8 @@ namespace app\models\forms;
 
 use app\models\Article;
 use app\models\Category;
+use app\models\ImageUpload;
 use app\models\User;
-use CKSource\CKFinder\Image;
 use yii\base\Model;
 
 /**
@@ -65,9 +65,6 @@ class ArticleForm extends Model
     {
         parent::init();
 
-        $this->article = new Article();
-        $this->category = new Category();
-
         if($this->article){
             $this->setAttributes($this->article->getAttributes());
             $this->user = User::findOne($this->article->user_id);
@@ -106,11 +103,12 @@ class ArticleForm extends Model
         $this->article->user_id;
 
         if($this->article->save()){
+
             $transaction->commit();
             return true;
         }
-        $transaction->rollBack();
 
+        $transaction->rollBack();
         return false;
     }
 
@@ -130,11 +128,12 @@ class ArticleForm extends Model
         $this->article->user_id;
 
         if($this->article->save()){
+
             $transaction->commit();
             return true;
         }
-        $transaction->rollBack();
 
+        $transaction->rollBack();
         return false;
     }
 }
