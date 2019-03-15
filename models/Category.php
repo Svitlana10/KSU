@@ -78,6 +78,11 @@ class Category extends \yii\db\ActiveRecord
         return Category::find()->all();
     }
 
+    public static function getAllAsArray()
+    {
+        return Category::find()->asArray()->all();
+    }
+
     /**
      * @param $id
      * @return mixed

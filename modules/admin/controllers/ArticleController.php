@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\ArticleForm;
 use app\models\Category;
 use app\models\ImageUpload;
 use app\models\Tag;
@@ -66,18 +67,23 @@ class ArticleController extends Controller
      * Creates a new Article model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
-        $model = new Article();
+        $model = new ArticleForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post());
+            if ($model->create()) {
+
+                return $this->redirect(['view', 'id' => $model->article->id]);
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model->article,
+        ]);
     }
 
     /**
@@ -86,18 +92,23 @@ class ArticleController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException
+     * @throws \yii\db\Exception
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        
-        if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model = new ArticleForm(['article' => $this->findModel($id)]);
+
+        if(Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post());
+            if ($model->update()) {
+
+                return $this->redirect(['view', 'id' => $model->article->id]);
+            }
         }
+
+        return $this->render('update', [
+            'model' => $model->article,
+        ]);
     }
 
     /**
@@ -153,35 +164,6 @@ class ArticleController extends Controller
         }
         
         return $this->render('image', ['model'=>$model]);
-    }
-
-    /**
-     * @param $id
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
-     */
-    public function actionSetCategory($id)
-    {
-        /** @var Article $article */
-        $article = $this->findModel($id);
-        
-        $selectedCategory = $article->category==null ? null : $article->category->id;
-        $categories = ArrayHelper::map(Category::find()->all(), 'id', 'title');
-
-        if(Yii::$app->request->isPost)
-        {
-            $category = Yii::$app->request->post('category');
-            if($article->saveCategory($category))
-            {
-                return $this->redirect(['view', 'id'=>$article->id]);
-            }
-        }
-
-        return $this->render('category', [
-            'article'=>$article,
-            'selectedCategory'=>$selectedCategory,
-            'categories'=>$categories
-        ]);
     }
 
     /**

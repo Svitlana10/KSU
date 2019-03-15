@@ -55,7 +55,7 @@ class Article extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['title','description','content'], 'string'],
             [['title'], 'string', 'max' => 255],
-            [['category_id'], 'number']
+            [['category_id'], 'integer']
         ];
     }
 
@@ -79,13 +79,29 @@ class Article extends \yii\db\ActiveRecord
         ];
     }
 
+    public function create()
+    {
+        if($this->validate()){
+            $this->user_id = Yii::$app->user->id;
+            if($this->save()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @return bool
      */
     public function saveArticle()
     {
-        $this->user_id = Yii::$app->user->id;
-        return $this->save(false);
+        if($this->validate()){
+            $this->user_id = Yii::$app->user->id;
+            if($this->save()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
