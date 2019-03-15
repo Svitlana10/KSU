@@ -9,6 +9,9 @@
 namespace app\models\forms;
 
 
+use app\models\Article;
+use app\models\Category;
+use app\models\User;
 use CKSource\CKFinder\Image;
 use yii\base\Model;
 
