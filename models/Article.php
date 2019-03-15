@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "articles".
@@ -79,31 +80,6 @@ class Article extends \yii\db\ActiveRecord
         ];
     }
 
-    public function create()
-    {
-        if($this->validate()){
-            $this->user_id = Yii::$app->user->id;
-            if($this->save()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public function saveArticle()
-    {
-        if($this->validate()){
-            $this->user_id = Yii::$app->user->id;
-            if($this->save()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * @param $filename
      * @return bool
@@ -123,7 +99,7 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     *
+     * @throws \yii\base\Exception
      */
     public function deleteImage()
     {
@@ -132,7 +108,25 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param bool $insert
      * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert)
+    {
+        $photo = new ImageUpload();
+        $form = new ArticleForm();
+
+        if($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')){
+            $this->image = $photo->uploadFile($file, $this->image);
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @return bool
+     * @throws \yii\base\Exception
      */
     public function beforeDelete()
     {

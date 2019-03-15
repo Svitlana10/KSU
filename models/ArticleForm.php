@@ -62,8 +62,8 @@ class ArticleForm extends Model
     {
         parent::init();
 
+        $this->article = new Article();
         $this->category = new Category();
-        $this->imageUpload = new ImageUpload();
 
         if($this->article){
             $this->setAttributes($this->article->getAttributes());
