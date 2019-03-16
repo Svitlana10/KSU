@@ -22,6 +22,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'title'), ['prompt' => 'Оберіть категорію..']) ?>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label> <?= $model->getAttributeLabel('image') ?> </label>
+        </div>
+        <div class="panel-body">
+            <?= ($model->image)? '<img src="'.$model->getImage().'" class="img-thumbnail">' : "no image uploaded" ?>
+        </div>
+        <div class="panel-footer">
+            <?= $form->field($model, 'image')->fileInput()->label(false) ?>
+        </div>
+    </div>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Додати' : 'Редагувати', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

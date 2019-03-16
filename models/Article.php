@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\forms\ArticleForm;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\Pagination;
@@ -115,7 +116,7 @@ class Article extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $photo = new ImageUpload();
-        $form = new ArticleForm();
+        $form = new Article();
 
         if($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')){
             $this->image = $photo->uploadFile($file, $this->image);

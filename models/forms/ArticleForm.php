@@ -136,4 +136,9 @@ class ArticleForm extends Model
         $transaction->rollBack();
         return false;
     }
+
+    public function getImage()
+    {
+        return ($this->article) ? $this->article->getImage() : '/no-image.png';
+    }
 }

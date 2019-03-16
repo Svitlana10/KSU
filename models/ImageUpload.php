@@ -53,7 +53,7 @@ class ImageUpload extends Model
      */
     private function getFolder()
     {
-        $fullPath = Yii::getAlias('@web') . 'uploads/';
+        $fullPath = Yii::getAlias('@app') . '/web/img/uploads/';
         self::checkFolder($fullPath);
         return $fullPath;
     }
