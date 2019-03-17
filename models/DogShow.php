@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "dog_show".
@@ -13,11 +14,13 @@ use Yii;
  * @property string $address
  * @property int $show_date
  * @property string $img
- * @property int $start_reg_date
+ * @property int $start_reg_da te
  * @property int $end_reg_date
  * @property int $user_id
  * @property int $created_at
  * @property int $updated_at
+ *
+ * @property boolean startRegStatus
  *
  * @property User $user
  */
@@ -34,14 +37,28 @@ class DogShow extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-            [['tile', 'description', 'address', 'show_date'], 'required'],
+            [[
+                'tile', 'description', 'address',
+                'show_date', 'start_reg_da', 'end_reg_date'
+            ], 'required'],
             [['description'], 'string'],
             [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
             [['tile', 'address', 'img'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['start_reg_da'], 'default', 'value' => time()]
         ];
     }
 
@@ -51,18 +68,34 @@ class DogShow extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'tile' => 'Tile',
-            'description' => 'Description',
-            'address' => 'Address',
-            'show_date' => 'Show Date',
-            'img' => 'Img',
-            'start_reg_date' => 'Start Reg Date',
-            'end_reg_date' => 'End Reg Date',
-            'user_id' => 'User ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'id'                => '№',
+            'title'             => 'Назва',
+            'description'       => 'Опис',
+            'address'           => 'Адреса',
+            'show_date'         => 'Дата шоу',
+            'img'               => 'Картинка',
+            'start_reg_date'    => 'Початок реєстрації',
+            'end_reg_date'      => 'Кінець реєстрації',
+            'user_id'           => 'Користувач',
+            'created_at'        => 'Дата створення',
+            'updated_at'        => 'Дата оновлення',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStartRegStatus()
+    {
+        return ($this->start_reg_da >= time()) ? true : false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getFinishRegStatus()
+    {
+        return ($this->startRegStatus && $this->end_reg_date <= time()) ? true : false;
     }
 
     /**

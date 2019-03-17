@@ -82,17 +82,17 @@ class Article extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => '№',
-            'title' => 'Назва',
-            'description' => 'Опис',
-            'content' => 'Вміст',
-            'image' => 'Фото',
-            'viewed' => 'Переглянуто',
-            'user_id' => '№ користувача',
-            'status' => 'Статус',
-            'category_id' => '№ категорії',
-            'created_at' => 'Дата створення',
-            'updated_at' => 'Дата оновлення',
+            'id'            => '№',
+            'title'         => 'Назва',
+            'description'   => 'Опис',
+            'content'       => 'Вміст',
+            'image'         => 'Фото',
+            'viewed'        => 'Переглянуто',
+            'user_id'       => '№ користувача',
+            'status'        => 'Статус',
+            'category_id'   => '№ категорії',
+            'created_at'    => 'Дата створення',
+            'updated_at'    => 'Дата оновлення',
         ];
     }
 
