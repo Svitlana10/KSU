@@ -26,8 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'description:ntext',
-            'content:ntext',
+//            'description:ntext',
+//            'content:ntext',
+            'statusText',
             [
                 'format' => 'html',
                 'label' => 'Фото',
@@ -37,8 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'viewed',
             // 'user_id',
-            // 'status',
             // 'category_id',
+            'created_at:datetime',
+            'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -72,7 +72,7 @@ class DogShow extends \yii\db\ActiveRecord
             'title'             => 'Назва',
             'description'       => 'Опис',
             'address'           => 'Адреса',
-            'show_date'         => 'Дата шоу',
+            'show_date'         => 'Дата виставки',
             'img'               => 'Картинка',
             'start_reg_date'    => 'Початок реєстрації',
             'end_reg_date'      => 'Кінець реєстрації',

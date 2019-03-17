@@ -16,8 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if(!empty($comments)):?>
     <?php endif;?>
     <div>
-        <label
-        <p class="" for="fname">Родословна</p> <label
+        <!--<label>
+            <p class="" for="fname">Родословна</p>
+        </label>-->
 
         <label for="fname">Порода собаки</label>
               <input type="text" id="fname" name="firstname" >
