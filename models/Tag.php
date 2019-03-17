@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property \yii\db\ActiveQuery $articles
  * @property ArticleTag[] $articleTags
  */
 class Tag extends \yii\db\ActiveRecord

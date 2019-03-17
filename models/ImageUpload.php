@@ -7,6 +7,12 @@ use yii\base\Model;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
+/**
+ * Class ImageUpload
+ * @package app\models
+ *
+ * @property string $folder
+ */
 class ImageUpload extends Model
 {
 

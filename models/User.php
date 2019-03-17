@@ -22,6 +22,12 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property bool $isAdmin
+ * @property bool $isModer
+ * @property null $userStatus
+ * @property mixed $password
+ * @property string $image
+ * @property string $authKey
  * @property Comment[] $comments
  */
 class User extends ActiveRecord implements IdentityInterface

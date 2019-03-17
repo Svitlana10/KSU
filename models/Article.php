@@ -23,12 +23,14 @@ use yii\web\UploadedFile;
  * @property integer $category_id
  * @property integer $created_at
  * @property integer $updated_at
- * @property string  $statusText
- *
- * @property array $selectedTags
+ * @property string $statusText
  *
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
+ * @property \yii\db\ActiveQuery $tags
+ * @property array|\yii\db\ActiveRecord[] $articleComments
+ * @property array $selectedTags
+ * @property \yii\db\ActiveQuery $author
  * @property Category $category
  */
 class Article extends \yii\db\ActiveRecord

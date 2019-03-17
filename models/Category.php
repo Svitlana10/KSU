@@ -11,6 +11,8 @@ use yii\data\Pagination;
  * @property integer $id
  * @property string $title
  * @property integer $created_at
+ * @property \yii\db\ActiveQuery $articles
+ * @property string|int $articlesCount
  * @property integer $updated_at
  */
 class Category extends \yii\db\ActiveRecord

@@ -17,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $updated_at
  *
  * @property Article $article
+ * @property string $date
  * @property User $user
  */
 class Comment extends \yii\db\ActiveRecord

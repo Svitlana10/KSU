@@ -22,6 +22,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property boolean startRegStatus
  *
+ * @property bool $finishRegStatus
  * @property User $user
  */
 class DogShow extends \yii\db\ActiveRecord
