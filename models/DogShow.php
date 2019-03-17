@@ -14,7 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $address
  * @property int $show_date
  * @property string $img
- * @property int $start_reg_da te
+ * @property int $start_reg_date
  * @property int $end_reg_date
  * @property int $user_id
  * @property int $created_at
@@ -103,6 +103,6 @@ class DogShow extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(user::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

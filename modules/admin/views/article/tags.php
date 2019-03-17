@@ -4,15 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Article */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $tags app\models\Article */
 ?>
 
 <div class="article-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= Html::dropDownList('tags', $selectedTags, $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
+    <?= Html::dropDownList('tags', $tags->selectedTags , $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Додати', ['class' => 'btn btn-success']) ?>

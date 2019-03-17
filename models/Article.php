@@ -25,6 +25,8 @@ use yii\web\UploadedFile;
  * @property integer $updated_at
  * @property string  $statusText
  *
+ * @property array $selectedTags
+ *
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
  * @property Category $category
@@ -167,20 +169,6 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param $category_id
-     * @return bool
-     */
-    public function saveCategory($category_id)
-    {
-        $category = Category::findOne($category_id);
-        if($category != null)
-        {
-            $this->link('category', $category);
-            return true;            
-        }
-    }
-
-    /**
      * @return \yii\db\ActiveQuery
      * @throws \yii\base\InvalidConfigException
      */
@@ -196,8 +184,7 @@ class Article extends \yii\db\ActiveRecord
      */
     public function getSelectedTags()
     {
-         $selectedIds = $this->getTags()->select('id')->asArray()->all();
-        return ArrayHelper::getColumn($selectedIds, 'id');
+        return ArrayHelper::getColumn($this->getTags()->select('id')->asArray()->all(), 'id');
     }
 
     /**
