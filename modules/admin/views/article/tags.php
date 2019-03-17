@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= Html::dropDownList('tags', $selectedTags , $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
+    <div class="form-group">
+        <?= Html::dropDownList('tags', $selectedTags , $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Додати', ['class' => 'btn btn-success']) ?>
