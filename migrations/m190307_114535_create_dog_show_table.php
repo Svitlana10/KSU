@@ -48,8 +48,8 @@ class m190307_114535_create_dog_show_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropIndex('idx-dog_show-user_id', '{{%dog_show}}');
         $this->dropForeignKey('fk-dog_show-user_id', '{{%dog_show}}');
+        $this->dropIndex('idx-dog_show-user_id', '{{%dog_show}}');
         $this->dropTable('{{%dog_show}}');
     }
 }
