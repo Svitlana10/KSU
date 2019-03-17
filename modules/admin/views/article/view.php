@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'image',
             'viewed',
             'user_id',
-            'status',
+            'statusText',
             'category_id',
             'created_at:datetime',
             'updated_at:datetime'

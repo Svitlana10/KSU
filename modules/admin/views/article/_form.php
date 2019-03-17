@@ -1,12 +1,13 @@
 <?php
 
+use app\models\Article;
 use app\models\Category;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Article */
+/* @var $model app\models\forms\ArticleForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -20,7 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'category')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'title'), ['prompt' => 'Оберіть категорію..']) ?>
+    <?= $form->field($model, 'status')->dropDownList(ArrayHelper::map(Article::$statuses, 'id', 'title'), ['prompt' => 'Оберіть статус..']) ?>
+
+    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'title'), ['prompt' => 'Оберіть категорію..']) ?>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -35,7 +38,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Додати' : 'Редагувати', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->article->isNewRecord ? 'Додати' : 'Редагувати', ['class' => $model->article->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

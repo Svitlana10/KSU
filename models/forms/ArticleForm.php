@@ -8,7 +8,6 @@
 
 namespace app\models\forms;
 
-
 use app\models\Article;
 use app\models\Category;
 use app\models\ImageUpload;
@@ -79,7 +78,7 @@ class ArticleForm extends Model
     public function rules()
     {
         return[
-            [['title'], 'required'],
+            [['title', 'category_id'], 'required'],
             [['title','description','content'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['category_id', 'status', 'viewed', 'user_id', 'category_id'], 'integer'],

@@ -23,6 +23,7 @@ use yii\web\UploadedFile;
  * @property integer $category_id
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string  $statusText
  *
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
@@ -30,6 +31,18 @@ use yii\web\UploadedFile;
  */
 class Article extends \yii\db\ActiveRecord
 {
+
+    const STATUS_PUBLISH = '10';
+    const STATUS_UNPUBLISH = '0';
+
+    /**
+     * @var array
+     */
+    public static $statuses = [
+        ['id' => self::STATUS_PUBLISH, 'title' => 'Publish'],
+        ['id' => self::STATUS_UNPUBLISH, 'title' => 'Un publish'],
+    ];
+
     /**
      * @inheritdoc
      */
@@ -57,7 +70,9 @@ class Article extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['title','description','content'], 'string'],
             [['title'], 'string', 'max' => 255],
-            [['category_id'], 'integer']
+            [['category_id', 'status'], 'integer'],
+            ['status', 'default', 'value' => self::STATUS_UNPUBLISH],
+            ['status', 'in', 'range' => [self::STATUS_PUBLISH, self::STATUS_UNPUBLISH]]
         ];
     }
 
@@ -79,6 +94,14 @@ class Article extends \yii\db\ActiveRecord
             'created_at' => 'Дата створення',
             'updated_at' => 'Дата оновлення',
         ];
+    }
+
+    /**
+     * @return string | null
+     */
+    public function getStatusText()
+    {
+        return ArrayHelper::map(self::$statuses, 'id', 'title')[$this->status] ?: null;
     }
 
     /**
@@ -116,7 +139,7 @@ class Article extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $photo = new ImageUpload();
-        $form = new Article();
+        $form = new ArticleForm();
 
         if($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')){
             $this->image = $photo->uploadFile($file, $this->image);
