@@ -162,7 +162,8 @@ class ArticleController extends Controller
         }
         
         return $this->render('tags', [
-            'tags'=>$tags
+            'tags'          =>$tags,
+            'selectedTags'  => $article->selectedTags
         ]);
     }
 }

@@ -4,14 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $tags app\models\Article */
+/* @var $tags app\models\Tag */
+
+$this->title = 'Додати теги';
+$this->params['breadcrumbs'][] = ['label' => 'Пост', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="article-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= Html::dropDownList('tags', $tags->selectedTags , $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
+    <?= Html::dropDownList('tags', $selectedTags , $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Додати', ['class' => 'btn btn-success']) ?>
