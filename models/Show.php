@@ -27,6 +27,11 @@ use Yii;
  */
 class Show extends \yii\db\ActiveRecord
 {
+
+    const STATUS_REG_COMING_SOON = 'Скоро буде..';
+    const STATUS_REG_GOING = 'Йде реєстрація..';
+    const STATUS_REH_END = 'Рєстрація закінчена..';
+
     /**
      * {@inheritdoc}
      */
@@ -70,19 +75,19 @@ class Show extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return bool
-     */
-    public function getStartRegStatus()
-    {
-        return ($this->start_reg_date >= time()) ? true : false;
-    }
-
-    /**
      * @return string
      */
     public function getImage()
     {
         return ($this->img) ? '/img/uploads/' . $this->img : '/no-image.png';
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStartRegStatus()
+    {
+        return ($this->start_reg_date >= time()) ? true : false;
     }
 
     /**
@@ -98,16 +103,7 @@ class Show extends \yii\db\ActiveRecord
      */
     public function getStatus()
     {
-        $status = '';
-        if($this->startRegStatus){
-            $status = 'Йде реєстрація..';
-            if($this->finishRegStatus){
-                $status = 'Рєстрація закінчена..';
-            }
-        } else {
-            $status = 'Скоро буде..';
-        }
-        return $status;
+        return ($this->startRegStatus) ? ($this->finishRegStatus) ? self::STATUS_REH_END : self::STATUS_REG_GOING : self::STATUS_REG_COMING_SOON;
     }
 
     /**
