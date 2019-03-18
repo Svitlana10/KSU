@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\forms\ShowForm */
@@ -18,7 +19,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'show_date')->textInput() ?>
+    <?= $form->field($model, 'show_date')->widget(DateTimePicker::class, [
+            'options' => ['placeholder' => 'Введіть дату/час проведення виставки', 'readonly' => true],
+            'removeButton' => false,
+            'pluginOptions' => [
+                    'autoClose' => true
+            ]
+    ]) ?>
 
     <div class="panel panel-default">
         <div class="panel-heading">

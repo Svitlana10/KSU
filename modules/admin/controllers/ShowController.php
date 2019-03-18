@@ -2,19 +2,19 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\forms\DogShowForm;
+use app\models\forms\ShowForm;
 use Yii;
-use app\models\DogShow;
-use app\models\searchs\DogShowSearch;
+use app\models\Show;
+use app\models\searchs\ShowSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
- * DogShowController implements the CRUD actions for DogShow model.
+ * ShowController implements the CRUD actions for Show model.
  */
-class DogShowController extends Controller
+class ShowController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +32,12 @@ class DogShowController extends Controller
     }
 
     /**
-     * Lists all DogShow models.
+     * Lists all Show models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DogShowSearch();
+        $searchModel = new ShowSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +47,7 @@ class DogShowController extends Controller
     }
 
     /**
-     * Displays a single DogShow model.
+     * Displays a single Show model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,21 +60,21 @@ class DogShowController extends Controller
     }
 
     /**
-     * Creates a new DogShow model.
+     * Creates a new Show model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
-        $model = new DogShowForm();
+        $model = new ShowForm();
 
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());
             $model->image = UploadedFile::getInstance($model, 'image') ?: UploadedFile::getInstanceByName('image');
             if ($model->create()) {
 
-                return $this->redirect(['view', 'id' => $model->dog_show->id]);
+                return $this->redirect(['view', 'id' => $model->show->id]);
             }
         }
 
@@ -93,14 +93,14 @@ class DogShowController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = new DogShowForm(['dog_show' => $this->findModel($id)]);
+        $model = new ShowForm(['show' => $this->findModel($id)]);
 
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());
             $model->image = UploadedFile::getInstance($model, 'image') ?: UploadedFile::getInstanceByName('image');
             if ($model->update()) {
 
-                return $this->redirect(['view', 'id' => $model->dog_show->id]);
+                return $this->redirect(['view', 'id' => $model->show->id]);
             }
         }
 
@@ -110,7 +110,7 @@ class DogShowController extends Controller
     }
 
     /**
-     * Deletes an existing DogShow model.
+     * Deletes an existing Show model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -126,15 +126,15 @@ class DogShowController extends Controller
     }
 
     /**
-     * Finds the DogShow model based on its primary key value.
+     * Finds the Show model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return DogShow the loaded model
+     * @return Show the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = DogShow::findOne($id)) !== null) {
+        if (($model = Show::findOne($id)) !== null) {
             return $model;
         }
 
