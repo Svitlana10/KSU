@@ -60,6 +60,8 @@ class DogShowForm extends Model
      */
     public function init()
     {
+        $this->dog_show = new DogShow();
+
         if($this->dog_show){
             $this->setAttributes($this->dog_show->getAttributes());
             $this->user = User::findOne($this->dog_show->user_id);
@@ -73,12 +75,12 @@ class DogShowForm extends Model
     {
         return [
             [[
-                'tile', 'description', 'address',
+                'title', 'description', 'address',
                 'show_date', 'start_reg_da', 'end_reg_date'
             ], 'required'],
             [['description'], 'string'],
             [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['tile', 'address', 'img'], 'string', 'max' => 255],
+            [['title', 'address', 'img'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

@@ -9,7 +9,7 @@ use yii\behaviors\TimestampBehavior;
  * This is the model class for table "dog_show".
  *
  * @property int $id
- * @property string $tile
+ * @property string $title
  * @property string $description
  * @property string $address
  * @property int $show_date
@@ -53,12 +53,12 @@ class DogShow extends \yii\db\ActiveRecord
     {
         return [
             [[
-                'tile', 'description', 'address',
+                'title', 'description', 'address',
                 'show_date', 'start_reg_da', 'end_reg_date'
             ], 'required'],
             [['description'], 'string'],
             [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['tile', 'address', 'img'], 'string', 'max' => 255],
+            [['title', 'address', 'img'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['start_reg_da'], 'default', 'value' => time()]
         ];

@@ -14,7 +14,7 @@ class m190307_114535_create_dog_show_table extends Migration
     {
         $this->createTable('{{%dog_show}}', [
             'id'            => $this->primaryKey(),
-            'tile'          => $this->string()->notNull(),
+            'title'          => $this->string()->notNull(),
             'description'   => $this->text()->notNull(),
             'address'       => $this->string()->notNull(),
             'show_date'     => $this->integer()->notNull(),

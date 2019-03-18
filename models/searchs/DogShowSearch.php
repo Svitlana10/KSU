@@ -18,7 +18,7 @@ class DogShowSearch extends DogShow
     {
         return [
             [['id', 'show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['tile', 'description', 'address', 'img'], 'safe'],
+            [['title', 'description', 'address', 'img'], 'safe'],
         ];
     }
 
@@ -67,7 +67,7 @@ class DogShowSearch extends DogShow
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'tile', $this->tile])
+        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'img', $this->img]);
