@@ -27,15 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'tile',
-            'description:ntext',
-            'address',
-            'show_date',
-            //'img',
-            //'start_reg_date',
-            //'end_reg_date',
+//            'description:ntext',
+//            'address',
+            'show_date:datetime',
+            [
+                'format' => 'html',
+                'label' => 'Фото',
+                'value' => function($data){
+                    return Html::img($data->image, ['width'=>200]);
+                }
+            ],
+            'start_reg_date:datetime',
+            'end_reg_date:datetime',
             //'user_id',
-            //'created_at',
-            //'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

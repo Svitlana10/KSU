@@ -23,6 +23,7 @@ use yii\behaviors\TimestampBehavior;
  * @property boolean startRegStatus
  *
  * @property bool $finishRegStatus
+ * @property string $image
  * @property User $user
  */
 class DogShow extends \yii\db\ActiveRecord
@@ -88,7 +89,15 @@ class DogShow extends \yii\db\ActiveRecord
      */
     public function getStartRegStatus()
     {
-        return ($this->start_reg_da >= time()) ? true : false;
+        return ($this->start_reg_date >= time()) ? true : false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return ($this->img) ? '/img/uploads/' . $this->img : '/no-image.png';
     }
 
     /**

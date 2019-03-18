@@ -2,23 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: comrade
- * Date: 15.03.19
- * Time: 23:55
+ * Date: 18.03.19
+ * Time: 1:48
  */
 
 namespace app\models\forms;
 
-use app\models\Article;
-use app\models\Category;
+
+use app\models\DogShow;
 use app\models\ImageUpload;
 use app\models\User;
 use yii\base\Model;
 
 /**
- * Class ArticleForm
+ * Class DogShowForm
  * @package app\models\forms
+ *
+ * @property mixed $image
  */
-class ArticleForm extends Model
+class DogShowForm extends Model
 {
     /** @var integer $id */
     public $id;
@@ -26,33 +28,29 @@ class ArticleForm extends Model
     public $title;
     /** @var string $description */
     public $description;
-    /** @var string $content */
-    public $content;
+    /** @var string $address */
+    public $address;
+    /** @var integer $show_date */
+    public $show_date;
     /** @var string $image */
-    public $image;
-    /** @var integer $viewed */
-    public $viewed;
+    public $img;
+    /** @var integer $start_reg_date */
+    public $start_reg_date;
+    /** @var integer $end_reg_date */
+    public $end_reg_date;
 
     /** @var User $user */
     public $user;
     /** @var integer $user_id */
     public $user_id;
 
-    /** @var integer $status */
-    public $status;
-
-    /** @var Category $category */
-    public $category;
-    /** @var integer $category_id */
-    public $category_id;
+    /** @var DogShow $dog_show */
+    public $dog_show;
 
     /** @var integer $created_at */
     public $created_at;
     /** @var integer $updated_at */
     public $updated_at;
-
-    /** @var Article $article */
-    public $article;
 
     /** @var ImageUpload $imageUpload */
     public $imageUpload;
@@ -62,27 +60,26 @@ class ArticleForm extends Model
      */
     public function init()
     {
-        parent::init();
-
-        if($this->article){
-            $this->setAttributes($this->article->getAttributes());
-            $this->user = User::findOne($this->article->user_id);
-            $this->category = Category::findOne($this->article->category_id);
+        if($this->dog_show){
+            $this->setAttributes($this->dog_show->getAttributes());
+            $this->user = User::findOne($this->dog_show->user_id);
         }
     }
 
     /**
      * {@inheritdoc}
-     * @return array
      */
     public function rules()
     {
-        return[
-            [['title', 'category_id'], 'required'],
-            [['title','description','content'], 'string'],
-            [['title'], 'string', 'max' => 255],
-            [['category_id', 'status', 'viewed', 'user_id', 'category_id'], 'integer'],
-            ['image', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
+        return [
+            [[
+                'tile', 'description', 'address',
+                'show_date', 'start_reg_da', 'end_reg_date'
+            ], 'required'],
+            [['description'], 'string'],
+            [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['tile', 'address', 'img'], 'string', 'max' => 255],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -98,10 +95,10 @@ class ArticleForm extends Model
 
         $transaction = \Yii::$app->db->beginTransaction();
 
-        $this->article->setAttributes($this->getAttributes());
-        $this->article->user_id = \Yii::$app->user->id;
+        $this->dog_show->setAttributes($this->getAttributes());
+        $this->dog_show->user_id = \Yii::$app->user->id;
 
-        if($this->article->save()){
+        if($this->dog_show->save()){
 
             $transaction->commit();
             return true;
@@ -123,10 +120,10 @@ class ArticleForm extends Model
 
         $transaction = \Yii::$app->db->beginTransaction();
 
-        $this->article->setAttributes($this->getAttributes());
-        $this->article->user_id = \Yii::$app->user->id;
+        $this->dog_show->setAttributes($this->getAttributes());
+        $this->dog_show->user_id = \Yii::$app->user->id;
 
-        if($this->article->save()){
+        if($this->dog_show->save()){
 
             $transaction->commit();
             return true;
@@ -138,6 +135,6 @@ class ArticleForm extends Model
 
     public function getImage()
     {
-        return ($this->article) ? $this->article->getImage() : '/no-image.png';
+        return $this->dog_show->getImage();
     }
 }
