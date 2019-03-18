@@ -39,10 +39,29 @@ use kartik\datetime\DateTimePicker;
         </div>
     </div>
 
-    <?= $form->field($model, 'start_reg_date')->textInput() ?>
-
-    <?= $form->field($model, 'end_reg_date')->textInput() ?>
-
+    <div class="panel panel-default">
+        <div class="panel-heading">Реєстрація</div>
+        <div class="panel-body">
+            <div class="col-mod-6">
+                <?= $form->field($model, 'start_reg_date')->widget(DateTimePicker::class, [
+                    'options' => ['placeholder' => 'Введіть дату/час початку реєстрації', 'readonly' => true],
+                    'removeButton' => false,
+                    'pluginOptions' => [
+                        'autoClose' => true
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-mod-6">
+                <?= $form->field($model, 'end_reg_date')->widget(DateTimePicker::class, [
+                    'options' => ['placeholder' => 'Введіть дату/час закінчення рєстрації', 'readonly' => true],
+                    'removeButton' => false,
+                    'pluginOptions' => [
+                        'autoClose' => true
+                    ]
+                ]) ?>
+            </div>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->show->isNewRecord ? 'Додати' : 'Редагувати', ['class' => $model->show->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

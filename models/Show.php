@@ -22,6 +22,7 @@ use Yii;
  * @property bool $finishRegStatus
  * @property string $image
  * @property bool $startRegStatus
+ * @property string $status
  * @property User $user
  */
 class Show extends \yii\db\ActiveRecord
@@ -89,7 +90,24 @@ class Show extends \yii\db\ActiveRecord
      */
     public function getFinishRegStatus()
     {
-        return ($this->startRegStatus && $this->end_reg_date <= time()) ? true : false;
+        return ($this->startRegStatus && $this->end_reg_date >= time()) ? true : false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        $status = '';
+        if($this->startRegStatus){
+            $status = 'Йде реєстрація..';
+            if($this->finishRegStatus){
+                $status = 'Рєстрація закінчена..';
+            }
+        } else {
+            $status = 'Скоро буде..';
+        }
+        return $status;
     }
 
     /**
