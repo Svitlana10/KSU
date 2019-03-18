@@ -3,10 +3,9 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "dog_show".
+ * This is the model class for table "show".
  *
  * @property int $id
  * @property string $title
@@ -20,30 +19,19 @@ use yii\behaviors\TimestampBehavior;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property boolean startRegStatus
- *
  * @property bool $finishRegStatus
  * @property string $image
+ * @property bool $startRegStatus
  * @property User $user
  */
-class DogShow extends \yii\db\ActiveRecord
+class Show extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'dog_show';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
+        return 'show';
     }
 
     /**
@@ -52,15 +40,11 @@ class DogShow extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[
-                'title', 'description', 'address',
-                'show_date', 'start_reg_da', 'end_reg_date'
-            ], 'required'],
+            [['title', 'description', 'address', 'show_date'], 'required'],
             [['description'], 'string'],
             [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
             [['title', 'address', 'img'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['start_reg_da'], 'default', 'value' => time()]
         ];
     }
 
@@ -70,17 +54,17 @@ class DogShow extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'                => '№',
-            'title'             => 'Назва',
-            'description'       => 'Опис',
-            'address'           => 'Адреса',
-            'show_date'         => 'Дата виставки',
-            'img'               => 'Картинка',
-            'start_reg_date'    => 'Початок реєстрації',
-            'end_reg_date'      => 'Кінець реєстрації',
-            'user_id'           => 'Користувач',
-            'created_at'        => 'Дата створення',
-            'updated_at'        => 'Дата оновлення',
+            'id' => '№',
+            'title' => 'Назва',
+            'description' => 'Опис',
+            'address' => 'Адреса',
+            'show_date' => 'Дата виставки',
+            'img' => 'Картинка',
+            'start_reg_date' => 'Початок реєстрації',
+            'end_reg_date' => 'Кінець реєстрації',
+            'user_id' => 'Користувач',
+            'created_at' => 'Дата створення',
+            'updated_at' => 'Дата оновлення',
         ];
     }
 

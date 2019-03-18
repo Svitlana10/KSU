@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\forms\DogShowForm */
+/* @var $model app\models\forms\ShowForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="dog-show-form">
+<div class="show-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->dog_show->isNewRecord ? 'Додати' : 'Редагувати', ['class' => $model->dog_show->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->show->isNewRecord ? 'Додати' : 'Редагувати', ['class' => $model->show->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

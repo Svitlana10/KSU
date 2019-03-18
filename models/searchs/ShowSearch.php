@@ -4,12 +4,12 @@ namespace app\models\searchs;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\DogShow;
+use app\models\Show;
 
 /**
- * DogShowSearch represents the model behind the search form of `app\models\searchs\DogShow`.
+ * ShowSearch represents the model behind the search form of `app\models\Show`.
  */
-class DogShowSearch extends DogShow
+class ShowSearch extends Show
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class DogShowSearch extends DogShow
      */
     public function search($params)
     {
-        $query = DogShow::find();
+        $query = Show::find();
 
         // add conditions that should always apply here
 
