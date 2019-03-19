@@ -44,7 +44,6 @@ class DogShow extends \yii\db\ActiveRecord
     {
         return [
             [['dog_id', 'show_id'], 'integer'],
-            [['created_at', 'updated_at'], 'required'],
             [['dog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dog::class, 'targetAttribute' => ['dog_id' => 'id']],
             [['show_id'], 'exist', 'skipOnError' => true, 'targetClass' => Show::class, 'targetAttribute' => ['show_id' => 'id']],
         ];
