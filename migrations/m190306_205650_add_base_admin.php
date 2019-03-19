@@ -14,14 +14,10 @@ class m190306_205650_add_base_admin extends Migration
      */
     public function safeUp()
     {
-        $user = new \app\models\User();
-        $user->setPassword('admin@admin.admin');
-        $user->generateAuthKey();
-
         $this->insert('{{%users}}',[
             'username'      => 'admin',
-            'auth_key'      => $user->auth_key,
-            'password_hash' => $user->password_hash,
+            'auth_key'      => Yii::$app->security->generateRandomString(),
+            'password_hash' => Yii::$app->security->generatePasswordHash('admin@admin.admin'),
             'email'         => 'admin@admin.admin',
             'status'        => \app\models\User::USER_STATUS_ADMIN,
             'avatar'        => '',

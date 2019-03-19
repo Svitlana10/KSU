@@ -39,7 +39,7 @@ class m190307_114535_create_show_table extends Migration
             'user_id',
             '{{%users}}',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
     }
 

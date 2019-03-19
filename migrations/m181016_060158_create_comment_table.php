@@ -41,7 +41,7 @@ class m181016_060158_create_comment_table extends Migration
             'user_id',
             'users',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
 
         // creates index for column `article_id`
@@ -58,7 +58,7 @@ class m181016_060158_create_comment_table extends Migration
             'article_id',
             'articles',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
     }
 

@@ -40,7 +40,7 @@ class m181016_060258_create_article_tag_table extends Migration
             'article_id',
             'articles',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
 
         // creates index for column `user_id`
@@ -57,7 +57,7 @@ class m181016_060258_create_article_tag_table extends Migration
             'tag_id',
             'tags',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
     }
 

@@ -37,7 +37,7 @@ class m181016_060143_create_user_table extends Migration
             'user_id',
             '{{%users}}',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
     }
 

@@ -31,7 +31,7 @@ class m181016_060107_create_category_table extends Migration
             'category_id',
             '{{%categories}}',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
     }
 
