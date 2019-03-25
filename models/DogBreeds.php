@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property string|null $statusTitle
  * @property Dog[] $dogs
  */
 class DogBreeds extends \yii\db\ActiveRecord
@@ -23,6 +24,7 @@ class DogBreeds extends \yii\db\ActiveRecord
     const STATUS_NEW        = 1;
     const STATUS_APPROVED   = 2;
 
+    /**@var array $statuses*/
     public static $statuses = [
         ['id' => self::STATUS_NEW, 'title' => 'NEW'],
         ['id' => self::STATUS_APPROVED, 'title' => 'APPROVED'],
@@ -72,6 +74,9 @@ class DogBreeds extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return string|null
+     */
     public function getStatusTitle()
     {
         return ArrayHelper::map(self::$statuses, 'id', 'title')[$this->status] ?: null;

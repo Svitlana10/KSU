@@ -13,7 +13,10 @@ class Module extends \yii\base\Module
      * @inheritdoc
      */
     public $layout = '/admin';
-    
+
+    /**
+     * @var string
+     */
     public $controllerNamespace = 'app\modules\admin\controllers';
 
     /**
@@ -35,12 +38,7 @@ class Module extends \yii\base\Module
                         'allow' =>  true,
                         'matchCallback' =>  function($rule, $action)
                         {
-                            if(Yii::$app->user->identity->isAdmin || Yii::$app->user->identity->isModer){
-
-                                return true;
-                            }
-
-                            return false;
+                            return (Yii::$app->user->identity->isAdmin || Yii::$app->user->identity->isModer) ? true : false;
                         }
                     ]
                 ]

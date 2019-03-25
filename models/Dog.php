@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "dogs".
@@ -20,10 +20,21 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property DogShow[] $dogShows
  * @property DogBreeds $breed
+ * @property null|string $statusTitle
  * @property DogTypes $type
  */
 class Dog extends \yii\db\ActiveRecord
 {
+
+    const STATUS_NEW        = 1;
+    const STATUS_APPROVED   = 2;
+
+    /**@var array $statuses*/
+    public static $statuses = [
+        ['id' => self::STATUS_NEW, 'title' => 'NEW'],
+        ['id' => self::STATUS_APPROVED, 'title' => 'APPROVED'],
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -71,6 +82,14 @@ class Dog extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStatusTitle()
+    {
+        return ArrayHelper::map(self::$statuses, 'id', 'title')[$this->status] ?: null;
     }
 
     /**

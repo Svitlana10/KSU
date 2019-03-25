@@ -19,11 +19,13 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'show_date')->widget(DateTimePicker::class, [
+    <?= $form->field($model, 'showDate')->widget(DateTimePicker::class, [
             'options' => ['placeholder' => 'Введіть дату/час проведення виставки', 'readonly' => true],
             'removeButton' => false,
             'pluginOptions' => [
-                    'autoClose' => true
+                'autoClose' => true,
+                'format' => 'dd-mm-yyyy H:i:s',
+                'startDate' => Yii::$app->formatter->asDatetime(time(), "php:d-m-Y  H:i:s")
             ]
     ]) ?>
 
@@ -43,20 +45,22 @@ use kartik\datetime\DateTimePicker;
         <div class="panel-heading">Реєстрація</div>
         <div class="panel-body">
             <div class="col-mod-6">
-                <?= $form->field($model, 'start_reg_date')->widget(DateTimePicker::class, [
+                <?= $form->field($model, 'startRegDate')->widget(DateTimePicker::class, [
                     'options' => ['placeholder' => 'Введіть дату/час початку реєстрації', 'readonly' => true],
                     'removeButton' => false,
                     'pluginOptions' => [
-                        'autoClose' => true
+                        'autoClose' => true,
+                        'format' => 'dd-mm-yyyy H:i:s',
                     ]
                 ]) ?>
             </div>
             <div class="col-mod-6">
-                <?= $form->field($model, 'end_reg_date')->widget(DateTimePicker::class, [
+                <?= $form->field($model, 'endRegDate')->widget(DateTimePicker::class, [
                     'options' => ['placeholder' => 'Введіть дату/час закінчення рєстрації', 'readonly' => true],
                     'removeButton' => false,
                     'pluginOptions' => [
-                        'autoClose' => true
+                        'autoClose' => true,
+                        'format' => 'dd-mm-yyyy H:i:s',
                     ]
                 ]) ?>
             </div>

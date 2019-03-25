@@ -22,14 +22,19 @@ class ArticleForm extends Model
 {
     /** @var integer $id */
     public $id;
+
     /** @var string $title */
     public $title;
+
     /** @var string $description */
     public $description;
+
     /** @var string $content */
     public $content;
+
     /** @var string $image */
     public $image;
+
     /** @var integer $viewed */
     public $viewed;
 

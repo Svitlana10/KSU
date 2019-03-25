@@ -24,20 +24,26 @@ class ShowForm extends Model
 {
     /** @var integer $id */
     public $id;
+
     /** @var string $title */
     public $title;
+
     /** @var string $description */
     public $description;
+
     /** @var string $address */
     public $address;
-    /** @var integer $show_date */
-    public $show_date;
-    /** @var string $image */
+
+    /** @var string $showDate */
+    public $showDate;
+
     public $img;
-    /** @var integer $start_reg_date */
-    public $start_reg_date;
-    /** @var integer $end_reg_date */
-    public $end_reg_date;
+
+    /** @var string $start_reg_date */
+    public $startRegDate;
+
+    /** @var string $end_reg_date */
+    public $endRegDate;
 
     /** @var User $user */
     public $user;
@@ -64,6 +70,9 @@ class ShowForm extends Model
 
         if($this->show){
             $this->setAttributes($this->show->getAttributes());
+            $this->showDate     = $this->show->showDate;
+            $this->startRegDate = $this->show->startRegDate;
+            $this->endRegDate   = $this->show->endRegDate;
             $this->user = User::findOne($this->show->user_id);
         }
     }
@@ -75,12 +84,18 @@ class ShowForm extends Model
     {
         return [
             [[
-                'title', 'description', 'address',
-                'show_date', 'start_reg_da', 'end_reg_date'
+                'title', 'address',
+                'showDate', 'startRegDate', 'endRegDate'
             ], 'required'],
             [['description'], 'string'],
-            [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'address', 'img'], 'string', 'max' => 255],
+            [[
+                'user_id', 'created_at', 'updated_at'
+            ], 'integer'],
+            [[
+                'showDate', 'startRegDate', 'endRegDate'
+            ], 'safe'],
+            [['title', 'address'], 'string', 'max' => 255],
+            ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -97,6 +112,7 @@ class ShowForm extends Model
 
         $transaction = \Yii::$app->db->beginTransaction();
 
+        $this->show = new Show();
         $this->show->setAttributes($this->getAttributes());
         $this->show->user_id = \Yii::$app->user->id;
 
@@ -105,7 +121,7 @@ class ShowForm extends Model
             $transaction->commit();
             return true;
         }
-
+        $this->addErrors($this->show->getErrors());
         $transaction->rollBack();
         return false;
     }

@@ -71,7 +71,7 @@ class ShowController extends Controller
 
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());
-            $model->image = UploadedFile::getInstance($model, 'image') ?: UploadedFile::getInstanceByName('image');
+            $model->img = UploadedFile::getInstance($model, 'img') ?: UploadedFile::getInstanceByName('img');
             if ($model->create()) {
 
                 return $this->redirect(['view', 'id' => $model->show->id]);
@@ -97,7 +97,7 @@ class ShowController extends Controller
 
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());
-            $model->image = UploadedFile::getInstance($model, 'image') ?: UploadedFile::getInstanceByName('image');
+            $model->img = UploadedFile::getInstance($model, 'img') ?: UploadedFile::getInstanceByName('img');
             if ($model->update()) {
 
                 return $this->redirect(['view', 'id' => $model->show->id]);

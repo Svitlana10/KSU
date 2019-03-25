@@ -109,57 +109,11 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param $filename
-     * @return bool
-     */
-    public function saveImage($filename)
-    {
-        $this->image = $filename;
-        return $this->save(false);
-    }
-
-    /**
      * @return string
      */
     public function getImage()
     {
         return ($this->image) ? '/img/uploads/' . $this->image : '/no-image.png';
-    }
-
-    /**
-     * @throws \yii\base\Exception
-     */
-    public function deleteImage()
-    {
-        $imageUploadModel = new ImageUpload();
-        $imageUploadModel->deleteCurrentImage($this->image);
-    }
-
-    /**
-     * @param bool $insert
-     * @return bool
-     * @throws \yii\base\Exception
-     */
-    public function beforeSave($insert)
-    {
-        $photo = new ImageUpload();
-        $form = new ArticleForm();
-
-        if($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')){
-            $this->image = $photo->uploadFile($file, $this->image);
-        }
-
-        return parent::beforeSave($insert);
-    }
-
-    /**
-     * @return bool
-     * @throws \yii\base\Exception
-     */
-    public function beforeDelete()
-    {
-        $this->deleteImage();
-        return parent::beforeDelete();
     }
 
     /**
@@ -288,5 +242,32 @@ class Article extends \yii\db\ActiveRecord
     {
         $this->viewed += 1;
         return $this->save(false);
+    }
+
+    /**
+     * @param bool $insert
+     * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert)
+    {
+        $photo = new ImageUpload();
+        $form = new ArticleForm();
+
+        if($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')){
+            $this->image = $photo->uploadFile($file, $this->image);
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function beforeDelete()
+    {
+        (new ImageUpload())->deleteCurrentImage($this->image);
+        return parent::beforeDelete();
     }
 }
