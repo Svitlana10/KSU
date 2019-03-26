@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property int $breed_id
  * @property string $pedigree_number
  * @property string $owner
+ * @property int $status
  * @property int $months
  * @property int $type_id
  * @property int $created_at
@@ -59,7 +60,8 @@ class Dog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['breed_id', 'months', 'type_id'], 'integer'],
+            [['breed_id', 'months', 'type_id', 'status'], 'integer'],
+            ['status', 'default', 'value' => self::STATUS_NEW],
             [['dog_name', 'pedigree_number', 'owner'], 'string', 'max' => 255],
             [['breed_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogBreeds::class, 'targetAttribute' => ['breed_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogTypes::class, 'targetAttribute' => ['type_id' => 'id']],
@@ -114,5 +116,10 @@ class Dog extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(DogTypes::class, ['id' => 'type_id']);
+    }
+
+    public static function getAllTypes()
+    {
+        return ArrayHelper::map(DogTypes::find()->select(['id', 'title'])->asArray()->all(), 'id', 'title');
     }
 }

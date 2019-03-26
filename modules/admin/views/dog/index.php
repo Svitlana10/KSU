@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\DogSearch */
+/* @var $searchModel app\models\searchs\DogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Dogs';
@@ -27,11 +27,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'dog_name',
-            'breed_id',
+            [
+                'label' => 'Порода',
+                'value' => function($data){
+                    /** @var \app\models\Dog $data */
+                    return $data->breed->title;
+                }
+            ],
             'pedigree_number',
             'owner',
-            //'months',
-            //'type_id',
+            'months',
+            [
+                'label' => 'Тип',
+                'value' => function($data){
+                    /** @var \app\models\Dog $data*/
+                    return $data->type->title;
+                }
+            ],
             'created_at:datetime',
             'updated_at:datetime',
 

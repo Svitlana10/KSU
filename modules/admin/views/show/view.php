@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Dogs', ['/admin/dog', 'show' => $model->id], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -33,13 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             'address',
-            'show_date',
+            'show_date:datetime',
             'img',
-            'start_reg_date',
-            'end_reg_date',
-            'user_id',
-            'created_at',
-            'updated_at',
+            'start_reg_date:datetime',
+            'end_reg_date:datetime',
+            [
+                'label' => 'Створив',
+                'value' => $model->user->username
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

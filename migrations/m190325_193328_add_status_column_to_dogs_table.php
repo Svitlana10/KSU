@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m190325_193328_add_status_column_to_dogs_column
+ * Class m190325_193328_add_status_column_to_dogs_table
  */
-class m190325_193328_add_status_column_to_dogs_column extends Migration
+class m190325_193328_add_status_column_to_dogs_table extends Migration
 {
     /**
      * {@inheritdoc}

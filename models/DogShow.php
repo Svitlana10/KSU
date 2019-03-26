@@ -4,12 +4,14 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "dog_show".
  *
  * @property int $id
  * @property int $dog_id
+ * @property int $status
  * @property int $show_id
  * @property int $created_at
  * @property int $updated_at
@@ -19,12 +21,21 @@ use yii\behaviors\TimestampBehavior;
  */
 class DogShow extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW        = 1;
+    const STATUS_APPROVED   = 2;
+
+    /**@var array $statuses*/
+    public static $statuses = [
+        ['id' => self::STATUS_NEW, 'title' => 'NEW'],
+        ['id' => self::STATUS_APPROVED, 'title' => 'APPROVED'],
+    ];
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'dog_show';
+        return '{{%dog_show}}';
     }
 
     /**
@@ -43,7 +54,8 @@ class DogShow extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['dog_id', 'show_id'], 'integer'],
+            [['dog_id', 'show_id', 'status'], 'integer'],
+            ['status', 'default', 'value' => self::STATUS_NEW],
             [['dog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Dog::class, 'targetAttribute' => ['dog_id' => 'id']],
             [['show_id'], 'exist', 'skipOnError' => true, 'targetClass' => Show::class, 'targetAttribute' => ['show_id' => 'id']],
         ];
@@ -61,6 +73,14 @@ class DogShow extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStatusTitle()
+    {
+        return ArrayHelper::map(self::$statuses, 'id', 'title')[$this->status] ?: null;
     }
 
     /**

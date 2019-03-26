@@ -57,6 +57,7 @@ class DogBreeds extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['title'], 'string', 'max' => 255],
             [['title'], 'unique'],
+            [['status'], 'integer'],
             [['status'], 'default', 'value' => self::STATUS_NEW],
         ];
     }

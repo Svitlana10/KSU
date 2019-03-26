@@ -112,7 +112,6 @@ class ShowForm extends Model
 
         $transaction = \Yii::$app->db->beginTransaction();
 
-        $this->show = new Show();
         $this->show->setAttributes($this->getAttributes());
         $this->show->user_id = \Yii::$app->user->id;
 
