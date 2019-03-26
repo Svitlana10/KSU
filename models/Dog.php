@@ -22,6 +22,7 @@ use yii\helpers\ArrayHelper;
  * @property DogShow[] $dogShows
  * @property DogBreeds $breed
  * @property null|string $statusTitle
+ * @property string $breedTitle
  * @property DogTypes $type
  */
 class Dog extends \yii\db\ActiveRecord
@@ -29,6 +30,9 @@ class Dog extends \yii\db\ActiveRecord
 
     const STATUS_NEW        = 1;
     const STATUS_APPROVED   = 2;
+
+    /** @var string $breed */
+    public $breed_title;
 
     /**@var array $statuses*/
     public static $statuses = [
@@ -62,7 +66,7 @@ class Dog extends \yii\db\ActiveRecord
         return [
             [['breed_id', 'months', 'type_id', 'status'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_NEW],
-            [['dog_name', 'pedigree_number', 'owner'], 'string', 'max' => 255],
+            [['dog_name', 'pedigree_number', 'owner', 'breed_title'], 'string', 'max' => 255],
             [['breed_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogBreeds::class, 'targetAttribute' => ['breed_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogTypes::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
@@ -100,6 +104,11 @@ class Dog extends \yii\db\ActiveRecord
     public function getDogShows()
     {
         return $this->hasMany(DogShow::class, ['dog_id' => 'id']);
+    }
+
+    public function getBreedTitle()
+    {
+        return ($breed = $this->breed) ? $breed->title : '';
     }
 
     /**

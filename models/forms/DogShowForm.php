@@ -14,10 +14,10 @@ use app\models\DogTypes;
 use yii\base\Model;
 
 /**
- * Class ArticleForm
+ * Class DogShowForm
  * @package app\models\forms
  */
-class DogForm extends Model
+class DogShowForm extends Model
 {
     /** @var integer $id */
     public $id;

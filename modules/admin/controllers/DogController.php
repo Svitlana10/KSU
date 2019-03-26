@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\DogBreeds;
 use app\models\searchs\DogSearch;
 use Yii;
 use app\models\Dog;
@@ -66,8 +67,12 @@ class DogController extends Controller
     {
         $model = new Dog();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $model->breed_id = $this->checkDogBreed($model->breed_title);
+            if ($model->validate() && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -86,8 +91,12 @@ class DogController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $model->breed_id = $this->checkDogBreed($model->breed_title);
+            if ($model->validate() && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -109,6 +118,28 @@ class DogController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $breed_title
+     * @return bool
+     */
+    protected function checkDogBreed($breed_title)
+    {
+        $breed = DogBreeds::find()->where(['like', 'title', $breed_title])->one();
+
+        if(!$breed) {
+            $breed = new DogBreeds();
+            $breed->title = $breed_title;
+            $breed->status = DogBreeds::STATUS_NEW;
+
+            if(!$breed->save()){
+
+                return 1;
+            }
+        }
+
+        return $breed->id;
     }
 
     /**
