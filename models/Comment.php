@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "comment".
@@ -12,8 +13,11 @@ use Yii;
  * @property integer $user_id
  * @property integer $article_id
  * @property integer $status
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property Article $article
+ * @property string $date
  * @property User $user
  */
 class Comment extends \yii\db\ActiveRecord
@@ -27,7 +31,17 @@ class Comment extends \yii\db\ActiveRecord
 
     public static function tableName()
     {
-        return 'comment';
+        return '{{%comments}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
     }
 
     /**
@@ -38,8 +52,8 @@ class Comment extends \yii\db\ActiveRecord
         return [
             [['user_id', 'article_id', 'status'], 'integer'],
             [['text'], 'string', 'max' => 255],
-            [['article_id'], 'exist', 'skipOnError' => true, 'targetClass' => Article::className(), 'targetAttribute' => ['article_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['article_id'], 'exist', 'skipOnError' => true, 'targetClass' => Article::class, 'targetAttribute' => ['article_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -62,7 +76,7 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getArticle()
     {
-        return $this->hasOne(Article::className(), ['id' => 'article_id']);
+        return $this->hasOne(Article::class, ['id' => 'article_id']);
     }
 
     /**
@@ -70,25 +84,38 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    /**
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getDate()
     {
-        return Yii::$app->formatter->asDate($this->date);
-    }
-    
-    public function isAllowed()
-    {
-        return $this->status;
+        return Yii::$app->formatter->asDate($this->created_at);
     }
 
+    /**
+     * @return bool
+     */
+    public function isAllowed()
+    {
+        return $this->status === self::STATUS_ALLOW;
+    }
+
+    /**
+     * @return bool
+     */
     public function allow()
     {
         $this->status = self::STATUS_ALLOW;
         return $this->save(false);
     }
 
+    /**
+     * @return bool
+     */
     public function disallow()
     {
         $this->status = self::STATUS_DISALLOW;

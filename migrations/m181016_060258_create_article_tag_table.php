@@ -14,14 +14,15 @@ class m181016_060258_create_article_tag_table extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('article_tag', [
-            'id' => $this->primaryKey(),
-            'article_id'=>$this->integer(),
-            'tag_id'=>$this->integer()
+        $this->createTable('{{%article_tag}}', [
+            'id'            => $this->primaryKey(),
+            'article_id'    => $this->integer(),
+            'tag_id'        => $this->integer(),
+            'created_at'    => $this->integer()->notNull(),
+            'updated_at'    => $this->integer()->notNull(),
         ], $tableOptions);
 
         // creates index for column `user_id`
@@ -37,9 +38,9 @@ class m181016_060258_create_article_tag_table extends Migration
             'tag_article_article_id',
             'article_tag',
             'article_id',
-            'article',
+            'articles',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
 
         // creates index for column `user_id`
@@ -49,15 +50,14 @@ class m181016_060258_create_article_tag_table extends Migration
             'tag_id'
         );
 
-
         // add foreign key for table `user`
         $this->addForeignKey(
             'fk-tag_id',
             'article_tag',
             'tag_id',
-            'tag',
+            'tags',
             'id',
-            'CASCADE'
+            'CASCADE','RESTRICT'
         );
     }
 
@@ -66,6 +66,10 @@ class m181016_060258_create_article_tag_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('article_tag');
+        $this->dropIndex('idx_tag_id', 'article_tag');
+        $this->dropIndex('tag_article_article_id', 'article_tag');
+        $this->dropForeignKey('tag_article_article_id', 'article_tag');
+        $this->dropForeignKey('fk-tag_id', 'article_tag');
+        $this->dropTable('{{%article_tag}}');
     }
 }

@@ -6,8 +6,7 @@
  * Time: 17:02
  */
 
-if ( ! function_exists('env'))
-{
+if ( ! function_exists('env')){
     /**
      * Gets the value of an environment variable. Supports boolean, empty and null.
      *
@@ -34,15 +33,13 @@ if ( ! function_exists('env'))
             case '(empty)':
                 return '';
         }
-        if (str_starts_with($value, '"') && str_ends_with($value, '"'))
-        {
+        if (str_starts_with($value, '"') && str_ends_with($value, '"')){
             return substr($value, 1, -1);
         }
         return $value;
     }
 }
-if ( ! function_exists('value'))
-{
+if ( ! function_exists('value')){
     /**
      * Return the default value of the given value.
      *
@@ -54,8 +51,7 @@ if ( ! function_exists('value'))
         return $value instanceof Closure ? $value() : $value;
     }
 }
-if ( ! function_exists('str_ends_with'))
-{
+if ( ! function_exists('str_ends_with')){
     /**
      * Determine if a given string ends with a given substring.
      *
@@ -65,15 +61,13 @@ if ( ! function_exists('str_ends_with'))
      */
     function str_ends_with($haystack, $needles)
     {
-        foreach ((array) $needles as $needle)
-        {
+        foreach ((array) $needles as $needle){
             if ((string) $needle === substr($haystack, -strlen($needle))) return true;
         }
         return false;
     }
 }
-if ( ! function_exists('str_starts_with'))
-{
+if ( ! function_exists('str_starts_with')){
     /**
      * Determine if a given string starts with a given substring.
      *
@@ -83,15 +77,13 @@ if ( ! function_exists('str_starts_with'))
      */
     function str_starts_with($haystack, $needles)
     {
-        foreach ((array) $needles as $needle)
-        {
+        foreach ((array) $needles as $needle){
             if ($needle != '' && strpos($haystack, $needle) === 0) return true;
         }
         return false;
     }
 }
-if ( ! function_exists('array_get'))
-{
+if ( ! function_exists('array_get')){
     /**
      * Get an item from an array using "dot" notation.
      *
@@ -104,10 +96,8 @@ if ( ! function_exists('array_get'))
     {
         if (is_null($key)) return $array;
         if (isset($array[$key])) return $array[$key];
-        foreach (explode('.', $key) as $segment)
-        {
-            if ( ! is_array($array) || ! array_key_exists($segment, $array))
-            {
+        foreach (explode('.', $key) as $segment){
+            if ( ! is_array($array) || ! array_key_exists($segment, $array)){
                 return value($default);
             }
             $array = $array[$segment];

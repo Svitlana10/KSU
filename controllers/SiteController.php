@@ -22,7 +22,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -33,7 +33,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -65,25 +65,16 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $data = Article::getAll(5);
-        $popular = Article::getPopular();
-        $recent = Article::getRecent();
-        $categories = Category::getAll();
         
         return $this->render('index',[
             'articles'=>$data['articles'],
             'pagination'=>$data['pagination'],
-            'popular'=>$popular,
-            'recent'=>$recent,
-            'categories'=>$categories
         ]);
     }
     
     public function actionView($id)
     {
         $article = Article::findOne($id);
-        $popular = Article::getPopular();
-        $recent = Article::getRecent();
-        $categories = Category::getAll();
         $comments = $article->getArticleComments();
         $commentForm = new CommentForm();
 
@@ -91,9 +82,6 @@ class SiteController extends Controller
         
         return $this->render('single',[
             'article'=>$article,
-            'popular'=>$popular,
-            'recent'=>$recent,
-            'categories'=>$categories,
             'comments'=>$comments,
             'commentForm'=>$commentForm
         ]);
@@ -103,16 +91,10 @@ class SiteController extends Controller
     {
 
         $data = Category::getArticlesByCategory($id);
-        $popular = Article::getPopular();
-        $recent = Article::getRecent();
-        $categories = Category::getAll();
         
         return $this->render('category',[
             'articles'=>$data['articles'],
             'pagination'=>$data['pagination'],
-            'popular'=>$popular,
-            'recent'=>$recent,
-            'categories'=>$categories
         ]);
     }
 

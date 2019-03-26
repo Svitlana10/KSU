@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Article */
+/* @var $model app\models\DogBreeds */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="article-form">
+<div class="dog-breeds-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Додати', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

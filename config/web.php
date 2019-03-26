@@ -1,5 +1,7 @@
 <?php
 
+use app\modules\admin\Module as AdminModule;
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -38,7 +40,7 @@ $config = [
     ],
     'modules' => [
         'admin' => [
-            'class' => 'app\modules\admin\Module',
+            'class' => AdminModule::class,
         ],
     ],
     'params' => $params,
