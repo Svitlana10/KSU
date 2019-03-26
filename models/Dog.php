@@ -19,6 +19,7 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property DogShow $dogShow
  * @property DogShow[] $dogShows
  * @property DogBreeds $breed
  * @property null|string $statusTitle
@@ -96,6 +97,14 @@ class Dog extends \yii\db\ActiveRecord
     public function getStatusTitle()
     {
         return ArrayHelper::map(self::$statuses, 'id', 'title')[$this->status] ?: null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDogShow()
+    {
+        return $this->hasOne(DogShow::class, ['dog_id' => 'id']);
     }
 
     /**

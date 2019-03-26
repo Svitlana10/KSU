@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Show */
+/* @var $dogs \app\models\Dog[] */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Shows', 'url' => ['index']];
@@ -24,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Dogs', ['/admin/dog', 'show' => $model->id], ['class' => 'btn btn-default']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -46,5 +46,34 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at:datetime',
         ],
     ]) ?>
+
+
+    <?php if($dogs) echo "<h1>Собаки:</h1>" ;{ foreach ($dogs as $dog) : ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label> <?= $dog->dog_name ?> </label> <?= Html::a('Переглянути', ['/admin/dog/view', 'id' => $dog->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Видалити з шоу', ['/admin/dog-show/delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+                <?= Html::a('Видалити собаку', ['/admin/dog/delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            </div>
+            <div class="panel-body">
+                <label>Власник:</label><?= $dog->owner ?><hr>
+                <label>№ Родословної:</label><?= $dog->pedigree_number ?><hr>
+                <label>Місяців:</label><?= $dog->months ?><hr>
+                <label>Пол:</label><?= $dog->type->title ?>
+            </div>
+        </div>
+    <?php endforeach; } ?>
 
 </div>

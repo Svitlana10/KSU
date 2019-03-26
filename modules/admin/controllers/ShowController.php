@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use app\models\forms\ShowForm;
+use app\models\searchs\DogShowSearch;
 use Yii;
 use app\models\Show;
 use app\models\searchs\ShowSearch;
@@ -54,8 +55,11 @@ class ShowController extends Controller
      */
     public function actionView($id)
     {
+        /** @var Show $model */
+        $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'dogs' => $model->dogs
         ]);
     }
 

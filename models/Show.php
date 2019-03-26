@@ -29,6 +29,7 @@ use yii\web\UploadedFile;
  * @property string $showDate
  * @property string $endRegDate
  * @property string $startRegDate
+ * @property Dog[] $dogs
  * @property User $user
  */
 class Show extends \yii\db\ActiveRecord
@@ -207,5 +208,15 @@ class Show extends \yii\db\ActiveRecord
     {
         (new ImageUpload())->deleteCurrentImage($this->img);
         return parent::beforeDelete();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getDogs()
+    {
+        return $this->hasMany(Dog::class, ['id' => 'dog_id'])
+            ->viaTable('dog_show', ['show_id' => 'id']);
     }
 }
