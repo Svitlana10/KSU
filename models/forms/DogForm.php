@@ -8,13 +8,9 @@
 
 namespace app\models\forms;
 
-use app\models\Article;
-use app\models\Category;
 use app\models\Dog;
 use app\models\DogBreeds;
 use app\models\DogTypes;
-use app\models\ImageUpload;
-use app\models\User;
 use yii\base\Model;
 
 /**
@@ -56,6 +52,9 @@ class DogForm extends Model
     /** @var integer $updated_at */
     public $updated_at;
 
+    /** @var string $email */
+    public $email;
+
     /** @var Dog $dog */
     public $dog;
 
@@ -84,8 +83,10 @@ class DogForm extends Model
     public function rules()
     {
         return[
+            [['email', 'owner', 'pedigree_number'], 'required'],
+            [['email'], 'email'],
             [['months', 'type_id', 'status'], 'integer'],
-            [['dog_name', 'pedigree_number', 'owner'], 'string', 'max' => 255],
+            [['dog_name', 'pedigree_number', 'owner', 'breed_title'], 'string', 'max' => 255],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogTypes::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
     }
@@ -102,12 +103,13 @@ class DogForm extends Model
 
         $transaction = \Yii::$app->db->beginTransaction();
 
+        $this->dog = new Dog();
         $this->dog->setAttributes($this->getAttributes());
 
-        if($this->dog->save()){
+        if($this->checkDogBreed() && $this->dog->save()){
 
             $transaction->commit();
-            return true;
+            return $this->sendMail();
         }
 
         $transaction->rollBack();
@@ -136,5 +138,40 @@ class DogForm extends Model
 
         $transaction->rollBack();
         return false;
+    }
+
+    protected function checkDogBreed()
+    {
+        $this->breed = DogBreeds::find()->where(['like', 'title', $this->breed_title])->one();
+
+        if(!$this->breed) {
+            $this->breed = new DogBreeds();
+            $this->breed->title = $this->breed_title;
+            $this->breed->status = DogBreeds::STATUS_NEW;
+
+            if(!$this->breed->save()){
+                $this->addErrors($this->breed->getErrors());
+                return false;
+            }
+        }
+
+        $this->dog->breed_id = $this->breed->id;
+
+        return true;
+    }
+
+    /**
+     * Send email for dog`s confirm
+     * @return bool
+     */
+    protected function sendMail()
+    {
+        return \Yii::$app->mailer->compose(
+            ['html' => 'approveDog-html', 'text' => 'approveDog-text'],
+            ['dog' => $this->dog])
+            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->params['appName']])
+            ->setTo($this->email)
+            ->setSubject(\Yii::$app->params['appName']. ' - approve dog')
+            ->send();
     }
 }
