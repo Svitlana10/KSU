@@ -70,7 +70,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::USER_STATUS_NOT_ACTIVE],
+            ['status', 'default', 'value' => self::USER_STATUS_USER],
             ['status', 'in', 'range' => [self::USER_STATUS_NOT_ACTIVE, self::USER_STATUS_BANNED, self::USER_STATUS_USER,
                 self::USER_STATUS_MODERATOR, self::USER_STATUS_ADMIN]],
         ];
