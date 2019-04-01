@@ -6,14 +6,16 @@ use app\models\forms\LoginForm;
 use app\models\forms\SignupForm;
 use app\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\web\Controller;
+use yii\web\Response;
 
 class AuthController extends Controller
 {
     /**
      * Login action
      *
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionLogin()
     {
@@ -50,8 +52,8 @@ class AuthController extends Controller
     /**
      * Signup action
      *
-     * @return string|\yii\web\Response
-     * @throws \yii\base\Exception
+     * @return string|Response
+     * @throws Exception
      */
     public function actionSignup()
     {
@@ -74,7 +76,7 @@ class AuthController extends Controller
      * @param $user_id
      * @param $first_name
      * @param $photo
-     * @return \yii\web\Response
+     * @return Response
      */
     public function actionLoginVk($user_id, $first_name, $photo)
     {
