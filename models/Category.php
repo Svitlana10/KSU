@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\data\Pagination;
 
 /**
@@ -10,6 +10,10 @@ use yii\data\Pagination;
  *
  * @property integer $id
  * @property string $title
+ * @property integer $created_at
+ * @property \yii\db\ActiveQuery $articles
+ * @property string|int $articlesCount
+ * @property integer $updated_at
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -18,7 +22,17 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'category';
+        return '{{%categories}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
     }
 
     /**
@@ -42,21 +56,39 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getArticles()
     {
-        return $this->hasMany(Article::className(), ['category_id' => 'id']);
+        return $this->hasMany(Article::class, ['category_id' => 'id']);
     }
 
+    /**
+     * @return int|string
+     */
     public function getArticlesCount()
     {
         return $this->getArticles()->count();
     }
-    
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getAll()
     {
         return Category::find()->all();
     }
-    
+
+    public static function getAllAsArray()
+    {
+        return Category::find()->asArray()->all();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public static function getArticlesByCategory($id)
     {
         // build a DB query to get all articles

@@ -6,8 +6,7 @@
 use app\assets\PublicAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use \yii\bootstrap\NavBar;
-use \yii\bootstrap\Nav;
+use app\models\User;
 
 PublicAsset::register($this);
 ?>
@@ -38,7 +37,10 @@ PublicAsset::register($this);
 
             <div class="w3-teal">
 
-                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="openNav()">&#9776;</button>
+                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="myFunction()">&#9776;
+
+                </button>
+
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a href="#">Головна</a>
@@ -61,12 +63,16 @@ PublicAsset::register($this);
                 function closeNav() {
                     document.getElementById("mySidenav").style.width = "0";
                 }
-                function openRightMenu() {
-                    document.getElementById("rightMenu").style.display = "block";
-                }
 
-                function closeRightMenu() {
-                    document.getElementById("rightMenu").style.display = "none";
+                function myFunction() {
+                    var x = document.getElementById("mySidenav");
+                    if (document.getElementById("mySidenav").style.width === "250px") {
+                        // x.style.display = "none";
+                        document.getElementById("mySidenav").style.width = "0";
+                    } else {
+                        document.getElementById("mySidenav").style.width = "250px";
+                        // x.style.display = "block";
+                    }
                 }
             </script>
             <div class="menu-content">
@@ -86,31 +92,28 @@ PublicAsset::register($this);
                         <span class="icon-bar"></span>
 
                     </button>
-
-
-
-
                 </div>
-
-
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav text-uppercase">
-                        <?php if(!Yii::$app->user->isGuest):?>
-                        <li>
-                         <a   href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a></li>
-
-                            <?php endif;?>
+                        <?php if(!Yii::$app->user->isGuest):
+                            $user_status = Yii::$app->user->identity->status;
+                             if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a>
+                                </li>
+                             <?php endif;
+                        endif;?>
                     </ul>
                     <div class="i_con">
-                        <ul class="nav navbar-nav text-uppercase">
+                        <ul class="nav navbar-nav navbar-right text-uppercase">
 
                             <?php if(Yii::$app->user->isGuest):?>
-                                <li><a style=" margin-left:10%" href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
-                                <li><a style=" margin-left:10%" href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
+                                <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
+                                <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
                             <?php else: ?>
                                 <?=  Html::beginForm(['/auth/logout'], 'post')
                                 . Html::submitButton(
-                                    'Вийти (' . Yii::$app->user->identity->name . ')',
+                                    'Вийти (' . Yii::$app->user->identity->username . ')',
                                     ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px; margin-left: 10%; color:#ffffff;"]
                                 )
                                 . Html::endForm() ?>
@@ -125,27 +128,31 @@ PublicAsset::register($this);
         <!-- /.container-fluid -->
 
     </nav>
-<div  style=" text-align: center; width: 100% ">
-    <img  src="/public/images/logo_1.png"  alt="">
-</div>
-    <?= $content ?>
 
 
-    <footer class="footer-widget-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
+<!--main content start-->
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <?= $content ?>
+            </div>
+            <div class="col-md-4" data-sticky_column>
+                <div class="primary-sidebar">
+                    <?= \app\widgets\Sidebar::widget() ?>
                 </div>
-                <h4 class="text-uppercase">Контактна іформація</h4>
-
-
             </div>
         </div>
-    </footer>
-
-<?php $this->endBody() ?>
+    </div>
+</div>
+<?php $this->endBody() ?>.
+<?php $this->endPage() ?>
 </body>
 
+<?= \app\widgets\Footer::widget() ?>
+
+
+
 </html>
-<?php $this->endPage() ?>
+
 

@@ -7,43 +7,33 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="leave-comment mr0"><!--leave comment-->
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="site-login">
-                <h1><?= Html::encode($this->title) ?></h1>
 
-                <p>Будь ласка заповніть поля для реєстрації:</p>
+<div class="login-page">
+    <div class="form">
+        <div class="login-form">
+            <h1><?= Html::encode($this->title) ?></h1>
+            <p>Будь ласка заповніть поля для реєстрації:</p>
+            <?php $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'layout' => 'horizontal',
+                'fieldConfig' => [
+                    'template' => "{label}\n<div class=\"text\">{input}</div>\n<div class=\"password\">{error}</div>",
+                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                ],
+            ]); ?>
 
-                <?php $form = ActiveForm::begin([
-                    'id' => 'login-form',
-                    'layout' => 'horizontal',
-                    'fieldConfig' => [
-                        'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-                        'labelOptions' => ['class' => 'col-lg-1 control-label'],
-                    ],
-                ]); ?>
-
-                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'email')->textInput() ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <div class="form-group">
-                    <div class="col-lg-offset-1 col-lg-11">
-                        <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                    </div>
-                </div>
-
-                <?php ActiveForm::end(); ?>
-
-                
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'email')->textInput() ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
+            <div class="form-group">
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
+
 

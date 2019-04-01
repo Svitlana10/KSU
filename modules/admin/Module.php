@@ -13,7 +13,10 @@ class Module extends \yii\base\Module
      * @inheritdoc
      */
     public $layout = '/admin';
-    
+
+    /**
+     * @var string
+     */
     public $controllerNamespace = 'app\modules\admin\controllers';
 
     /**
@@ -24,26 +27,18 @@ class Module extends \yii\base\Module
     {
         return [
             'access'    =>  [
-                'class' =>  AccessControl::className(),
+                'class' =>  AccessControl::class,
                 'denyCallback'  =>  function($rule, $action)
                 {
                     throw new \yii\web\NotFoundHttpException();
                 },
                 'rules' =>  [
                     [
+                        'roles' => ['@'],
                         'allow' =>  true,
                         'matchCallback' =>  function($rule, $action)
                         {
-							if (Yii::$app->user->isGuest || !Yii::$app->user->identity->isAdmin)
-							{
-								return false;
-							}else
-							{
-								return true;
-							}
-							
-							
-                            
+                            return (Yii::$app->user->identity->isAdmin || Yii::$app->user->identity->isModer) ? true : false;
                         }
                     ]
                 ]
