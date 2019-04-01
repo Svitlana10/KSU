@@ -19,7 +19,7 @@ class ArticleSearch extends Article
     {
         return [
             [['id', 'viewed', 'user_id', 'status', 'category_id', 'created_at'], 'integer'],
-            [['title', 'description', 'content', 'image', 'created_at', 'updated_at',], 'safe'],
+            [['title', 'description', 'content', 'image', 'created_at', 'updated_at'    ], 'safe'],
         ];
     }
 
@@ -37,9 +37,10 @@ class ArticleSearch extends Article
      *
      * @param array $params
      *
+     * @param int $pages
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pages = 7)
     {
         $query = Article::find();
 
@@ -47,6 +48,7 @@ class ArticleSearch extends Article
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => $pages]
         ]);
 
         $this->load($params);
@@ -71,7 +73,10 @@ class ArticleSearch extends Article
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'category_id', $this->category_id]);
+
+        $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

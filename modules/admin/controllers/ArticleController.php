@@ -85,7 +85,7 @@ class ArticleController extends Controller
         }
 
         return $this->render('create', [
-            'model' => $model->article,
+            'model' => $model,
         ]);
     }
 

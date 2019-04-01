@@ -14,8 +14,7 @@
                 </aside>
             </div>
             <div class="col-md-6">
-                <div class="about-content">Блог створено для лабораторної роботи. Всі права захищені.
-                </div>
+
                 <div class="address">
                     <h4 class="text-uppercase">Контактна іфнормація</h4>
 

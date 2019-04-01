@@ -6,8 +6,10 @@ use app\models\Article;
 use app\models\Category;
 use app\models\forms\CommentForm;
 use app\models\forms\DogShowForm;
+use app\models\searchs\ArticleSearch;
 use app\models\Show;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
@@ -68,11 +70,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data = Article::getAll(5);
+        $dataProvider = (new ArticleSearch())->search(Yii::$app->request->queryParams, 3);
 
         return $this->render('index',[
-            'articles'=>$data['articles'],
-            'pagination'=>$data['pagination'],
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -92,21 +93,6 @@ class SiteController extends Controller
             'article'=>$article,
             'comments'=>$comments,
             'commentForm'=>$commentForm
-        ]);
-    }
-
-    /**
-     * @param $id
-     * @return string
-     */
-    public function actionCategory($id)
-    {
-
-        $data = Category::getArticlesByCategory($id);
-
-        return $this->render('category',[
-            'articles'=>$data['articles'],
-            'pagination'=>$data['pagination'],
         ]);
     }
 

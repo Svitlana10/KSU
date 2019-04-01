@@ -32,6 +32,7 @@ use yii\web\UploadedFile;
  * @property array $selectedTags
  * @property \yii\db\ActiveQuery $author
  * @property Category $category
+ * @property string $date
  */
 class Article extends \yii\db\ActiveRecord
 {
@@ -161,7 +162,15 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * 
+     * @return string
+     */
+    public function getDate()
+    {
+        return date('Y-m-d', $this->created_at);
+    }
+
+    /**
+     *
      */
     public function clearCurrentTags()
     {

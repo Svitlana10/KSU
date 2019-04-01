@@ -73,6 +73,8 @@ class ArticleForm extends Model
             $this->setAttributes($this->article->getAttributes());
             $this->user = User::findOne($this->article->user_id);
             $this->category = Category::findOne($this->article->category_id);
+        } else {
+            $this->article = new Article();
         }
     }
 

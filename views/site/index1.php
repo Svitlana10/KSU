@@ -17,7 +17,7 @@ use yii\widgets\LinkPager;
                              <h6><a href="<?= Url::toRoute(['site/category','id'=>$article->category->id])?>"> <?= $article->category->title; ?></a></h6>
                              <p class="card-text"><?= $article->description?></p>
                              <a href="<?= Url::toRoute(['site/view', 'id'=>$article->id]);?>" class="btn btn-outline-light btn-sm">Read more</a>
-                             <span class="social-share-title pull-left text-capitalize">By <?= $article->author->name; ?> On <?= $article->getDate();?></span>
+                             <span class="social-share-title pull-left text-capitalize">By <?= $article->author->username; ?> On <?= $article->getDate();?></span>
                              <ul class="text-center pull-right">
                                 <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li><?= (int) $article->viewed?>
                             </ul>
