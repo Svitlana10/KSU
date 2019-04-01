@@ -4,6 +4,7 @@ namespace app\widgets;
 
 use app\models\Article;
 use app\models\Category;
+use yii\base\Widget;
 
 /**
  * Created by PhpStorm.
@@ -12,7 +13,7 @@ use app\models\Category;
  * Time: 9:12
  */
 
-class Sidebar extends \yii\base\Widget
+class Sidebar extends Widget
 {
     public function init()
     {
@@ -20,6 +21,9 @@ class Sidebar extends \yii\base\Widget
         ob_start();
     }
 
+    /**
+     * @return string
+     */
     public function run()
     {
         ob_get_clean();
@@ -27,6 +31,7 @@ class Sidebar extends \yii\base\Widget
         return $this->render('sidebar', [
             'popular'       => Article::getPopular(),
             'recent'        => Article::getRecent(),
-            'categories'    => Category::getAll()]);
+            'categories'    => Category::getAll()
+        ]);
     }
 }

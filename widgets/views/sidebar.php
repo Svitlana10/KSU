@@ -1,14 +1,18 @@
 
 <?php
+
+use app\models\Article;
 use yii\helpers\Url;
 ?>
 
-
+        <aside class="widget">
+            <h2 class="widget-title text-uppercase text-center">Реєстрація на виставку</h2>
+        </aside>
 
         <aside class="widget">
             <h3 class="widget-title text-uppercase text-center">Найпопулярніші пости</h3>
             <?php
-            /** @var \app\models\Article $popular */
+            /** @var Article $popular */
             foreach($popular as $article):?>
                 <div class="popular-post">
                     <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="popular-img"><img src="<?= $article->getImage();?>" alt="">
@@ -25,10 +29,11 @@ use yii\helpers\Url;
             <?php endforeach;?>
 
         </aside>
+
         <aside class="widget pos-padding">
             <h3 class="widget-title text-uppercase text-center">Недавні пости</h3>
             <?php
-            /** @var \app\models\Article $recent */
+            /** @var Article $recent */
             foreach($recent as $article):?>
                 <div class="thumb-latest-posts">
                     <div class="media">
@@ -45,11 +50,12 @@ use yii\helpers\Url;
                 </div>
             <?php endforeach;?>
         </aside>
+
         <aside class="widget border pos-padding">
             <h3 class="widget-title text-uppercase text-center">Категорії</h3>
             <ul>
                 <?php
-                /** @var \app\models\Article $categories */
+                /** @var Article $categories */
                 foreach($categories as $category):?>
                     <li>
                         <a href="<?= Url::toRoute(['site/category','id'=>$category->id]);?>"><?= $category->title?></a>
