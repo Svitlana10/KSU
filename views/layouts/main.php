@@ -24,8 +24,6 @@ PublicAsset::register($this);
 <body id="backgr">
 <?php $this->beginBody() ?>
     <div class="wrap">
-
-
     </div>
 
     <nav class="navbar main-menu navbar-default">
@@ -126,12 +124,23 @@ PublicAsset::register($this);
 
         <!-- /.container-fluid -->
         </div>
+
     </nav>
 
+<div class="row">
 
+</div>
 
-    <?= $content ?>
-<?php $this->endBody() ?>.
+<!--main content start-->
+
+    <div class="container">
+        <div class="row">
+            <img class="center-block" src="/public/images/logo_1.PNG" style="width: 100%" alt="">
+        <?= $content ?>
+        </div>
+    </div>
+
+<?php $this->endBody() ?>
 <?php $this->endPage() ?>
 </body>
 

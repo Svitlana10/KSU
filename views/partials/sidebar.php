@@ -5,7 +5,11 @@ use yii\helpers\Url;
 
 <div class="col-md-4" data-sticky_column>
     <div class="primary-sidebar">
+        <aside class="widget">
+            <h2 class="widget-title text-uppercase text-center">Реєстрація на виставку</h2>
 
+
+        </aside>
         <aside class="widget">
             <h3 class="widget-title text-uppercase text-center">Найпопулярніші пости</h3>
             <?php

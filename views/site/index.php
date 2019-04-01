@@ -2,10 +2,6 @@
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 ?>
-<!--main content start-->
-<div class="main-content">
-    <div class="container">
-        <div class="row">
             <div class="col-md-8">
                 <?php foreach($articles as $article):?>
                     <article class="post" >
@@ -53,8 +49,3 @@ use yii\widgets\LinkPager;
                 'recent'=>$recent,
                 'categories'=>$categories
             ]);?>
-        </div>
-    </div>
-</div>
-<!-- end main content-->
-<!--footer start-->
