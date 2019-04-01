@@ -1,12 +1,15 @@
 <?php
 
-/* @var $this \yii\web\View */
+/* @var $this View */
 /* @var $content string */
 
 use app\assets\PublicAsset;
+use app\widgets\Footer;
+use app\widgets\Sidebar;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\User;
+use yii\web\View;
 
 PublicAsset::register($this);
 ?>
@@ -16,6 +19,8 @@ PublicAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -28,53 +33,42 @@ PublicAsset::register($this);
     </div>
 
     <nav class="navbar main-menu navbar-default">
+
+        <?php // region Sidebar ?>
+
+        <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;
+        </button>
         <div class="container">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-            <div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
-
-            </div>
-
             <div class="w3-teal">
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" id="mySidebar" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="#">Головна</a>
+                    <a href="#">Виставки </a>
+                    <a href="#">Племенні документи</a>
+                    <a href="#">Експерти і інструктори</a>
+                    <a href="#">Чемпіони </a>
+                    <a href="#">Розплідники </a>
+                    <a href="#">Цуценята </a>
+                    <a href="#">Родоводи, чемпіонські сертифікати </a>
+                    <a href="#">Результати виставок </a>
+                </div>
 
-                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="myFunction()">&#9776;
-
-                </button>
-
-            <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a href="#">Головна</a>
-                <a href="#">Виставки </a>
-                <a href="#">Племенні документи</a>
-                <a href="#">Експерти і інструктори</a>
-                <a href="#">Чемпіони </a>
-                <a href="#">Розплідники </a>
-                <a href="#">Цуценята </a>
-                <a href="#">Родоводи, чемпіонські сертифікати </a>
-                <a href="#">Результати виставок </a>
-            </div>
-
-
-            <script>
-                function openNav() {
-                    document.getElementById("mySidenav").style.width = "250px";
-                }
-
-                function closeNav() {
-                    document.getElementById("mySidenav").style.width = "0";
-                }
-
-                function myFunction() {
-                    var x = document.getElementById("mySidenav");
-                    if (document.getElementById("mySidenav").style.width === "250px") {
-                        // x.style.display = "none";
-                        document.getElementById("mySidenav").style.width = "0";
-                    } else {
+                <script>
+                    function openNav() {
                         document.getElementById("mySidenav").style.width = "250px";
-                        // x.style.display = "block";
+                        document.getElementById("mySidebar").style.display = "block";
+                        document.getElementById("openNav").style.display = 'none';
+                        document.getElementById("mySidebar").style.width = "25%";
                     }
-                }
-            </script>
+                    function closeNav() {
+                        document.getElementById("mySidenav").style.width = "0";
+                        document.getElementById("mySidebar").style.display = "none";
+                        document.getElementById("openNav").style.display = "inline-block";
+                    }
+                </script>
+            </div>
+            <?php //endregion   ?>
+
             <div class="menu-content">
 
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -134,12 +128,13 @@ PublicAsset::register($this);
 <div class="main-content">
     <div class="container">
         <div class="row">
+            <img class="center-block" src="/public/images/logo_1.png" style="width: 100%; margin-bottom: 10px;" alt="">
             <div class="col-md-8">
                 <?= $content ?>
             </div>
             <div class="col-md-4" data-sticky_column>
                 <div class="primary-sidebar">
-                    <?= \app\widgets\Sidebar::widget() ?>
+                    <?= Sidebar::widget() ?>
                 </div>
             </div>
         </div>
@@ -149,7 +144,7 @@ PublicAsset::register($this);
 <?php $this->endPage() ?>
 </body>
 
-<?= \app\widgets\Footer::widget() ?>
+<?= Footer::widget() ?>
 
 
 
