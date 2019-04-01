@@ -71,7 +71,7 @@ use yii\web\View;
                         $user_status = Yii::$app->user->identity->status;
                         if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
                             <li>
-                                <a href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a>
+                                <a href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
                             </li>
                         <?php endif;
                     endif;?>
