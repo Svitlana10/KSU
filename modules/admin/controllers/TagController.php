@@ -2,9 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
+use Throwable;
 use Yii;
 use app\models\Tag;
-use app\models\TagSearch;
+use app\models\searchs\TagSearch;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,7 +23,7 @@ class TagController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -48,6 +50,7 @@ class TagController extends Controller
      * Displays a single Tag model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -79,6 +82,7 @@ class TagController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -98,6 +102,9 @@ class TagController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws Throwable
      */
     public function actionDelete($id)
     {

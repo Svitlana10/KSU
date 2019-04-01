@@ -4,7 +4,11 @@ namespace app\models;
 
 use app\models\forms\ShowForm;
 use Yii;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 
 /**
@@ -32,12 +36,12 @@ use yii\web\UploadedFile;
  * @property Dog[] $dogs
  * @property User $user
  */
-class Show extends \yii\db\ActiveRecord
+class Show extends ActiveRecord
 {
 
     const STATUS_REG_COMING_SOON = 'Скоро буде..';
     const STATUS_REG_GOING = 'Йде реєстрація..';
-    const STATUS_REH_END = 'Рєстрація закінчена..';
+    const STATUS_REG_END = 'Рєстрація закінчена..';
 
     /**
      * {@inheritdoc}
@@ -129,7 +133,7 @@ class Show extends \yii\db\ActiveRecord
      */
     public function getStartRegStatus()
     {
-        return ($this->start_reg_date >= time()) ? true : false;
+        return ($this->start_reg_date <= time()) ? true : false;
     }
 
     /**
@@ -145,12 +149,25 @@ class Show extends \yii\db\ActiveRecord
      */
     public function getStatus()
     {
-        return ($this->startRegStatus) ? ($this->finishRegStatus) ? self::STATUS_REH_END : self::STATUS_REG_GOING : self::STATUS_REG_COMING_SOON;
+        return ($this->startRegStatus) ? ($this->finishRegStatus) ? self::STATUS_REG_GOING : self::STATUS_REG_END : self::STATUS_REG_COMING_SOON;
+    }
+
+    /**
+     * @return Show|array|ActiveRecord|null
+     */
+    public static function getOneRegShow()
+    {
+        $result =  static::find()
+            ->where(['<=', 'start_reg_date', time()])
+            ->andWhere(['>=', 'end_reg_date', time()])
+            ->orderBy(['start_reg_date' => SORT_DESC])
+            ->one();
+        return $result;
     }
 
     /**
      * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function getShowDate()
     {
@@ -159,7 +176,7 @@ class Show extends \yii\db\ActiveRecord
 
     /**
      * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function getStartRegDate()
     {
@@ -168,7 +185,7 @@ class Show extends \yii\db\ActiveRecord
 
     /**
      * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function getEndRegDate()
     {
@@ -176,7 +193,7 @@ class Show extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -186,7 +203,7 @@ class Show extends \yii\db\ActiveRecord
     /**
      * @param bool $insert
      * @return bool
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function beforeSave($insert)
     {
@@ -202,7 +219,7 @@ class Show extends \yii\db\ActiveRecord
 
     /**
      * @return bool
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function beforeDelete()
     {
@@ -211,8 +228,8 @@ class Show extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
+     * @return ActiveQuery
+     * @throws InvalidConfigException
      */
     public function getDogs()
     {

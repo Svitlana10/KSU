@@ -7,11 +7,15 @@ use app\models\Article;
 use app\models\forms\ArticleForm;
 use app\models\searchs\ArticleSearch;
 use app\models\Tag;
+use Throwable;
 use Yii;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -66,7 +70,7 @@ class ArticleController extends Controller
      * Creates a new Article model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function actionCreate()
     {
@@ -91,7 +95,7 @@ class ArticleController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function actionUpdate($id)
     {
@@ -117,8 +121,8 @@ class ArticleController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws Throwable
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -145,7 +149,7 @@ class ArticleController extends Controller
 
     /**
      * @param $id
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException
      */
     public function actionSetTags($id)

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Dog;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'months')->textInput(['type' => 'number']) ?>
 
-    <?= $form->field($model, 'type_id')->dropDownList(\app\models\Dog::getAllTypes()) ?>
+    <?= $form->field($model, 'type_id')->dropDownList(Dog::getAllTypes()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

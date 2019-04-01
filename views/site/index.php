@@ -1,9 +1,11 @@
 <?php
+
+use app\models\Article;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 ?>
 <?php
-/** @var \app\models\Article $articles */
+/** @var Article $articles */
 foreach($articles as $article):?>
     <article class="post" >
         <div class="post-thumb">
@@ -16,10 +18,7 @@ foreach($articles as $article):?>
         <div class="post-content">
             <header class="entry-header text-center text-uppercase">
                 <h6><a href="<?= Url::toRoute(['site/category','id'=>$article->category->id])?>"> <?= $article->category->title; ?></a></h6>
-
                 <h1 class="entry-title"><a href="<?= Url::toRoute(['site/view', 'id'=>$article->id]);?>"><?= $article->title?></a></h1>
-
-
             </header>
             <div class="entry-content">
                 <p><?= $article->description?>

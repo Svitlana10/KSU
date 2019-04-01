@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -24,9 +27,10 @@ use yii\helpers\ArrayHelper;
  * @property DogBreeds $breed
  * @property null|string $statusTitle
  * @property string $breedTitle
+ * @property Show $show
  * @property DogTypes $type
  */
-class Dog extends \yii\db\ActiveRecord
+class Dog extends ActiveRecord
 {
 
     const STATUS_NEW        = 1;
@@ -100,7 +104,7 @@ class Dog extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDogShow()
     {
@@ -108,7 +112,17 @@ class Dog extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws InvalidConfigException
+     */
+    public function getShow()
+    {
+        return $this->hasOne(Show::class, ['id' => 'show_id'])
+            ->viaTable('dog_show', ['dog_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getDogShows()
     {
@@ -121,7 +135,7 @@ class Dog extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getBreed()
     {
@@ -129,13 +143,16 @@ class Dog extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getType()
     {
         return $this->hasOne(DogTypes::class, ['id' => 'type_id']);
     }
 
+    /**
+     * @return array
+     */
     public static function getAllTypes()
     {
         return ArrayHelper::map(DogTypes::find()->select(['id', 'title'])->asArray()->all(), 'id', 'title');

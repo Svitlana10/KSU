@@ -4,14 +4,17 @@ namespace app\controllers;
 
 use app\models\Article;
 use app\models\Category;
-use app\models\CommentForm;
+use app\models\forms\CommentForm;
+use app\models\forms\DogShowForm;
+use app\models\Show;
 use Yii;
-use yii\data\Pagination;
+use yii\db\Exception;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class SiteController extends Controller
 {
@@ -49,6 +52,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'layout' => 'nosidebar',
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -65,13 +69,17 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $data = Article::getAll(5);
-        
+
         return $this->render('index',[
             'articles'=>$data['articles'],
             'pagination'=>$data['pagination'],
         ]);
     }
-    
+
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionView($id)
     {
         $article = Article::findOne($id);
@@ -79,29 +87,37 @@ class SiteController extends Controller
         $commentForm = new CommentForm();
 
         $article->viewedCounter();
-        
+
         return $this->render('single',[
             'article'=>$article,
             'comments'=>$comments,
             'commentForm'=>$commentForm
         ]);
     }
-    
+
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionCategory($id)
     {
 
         $data = Category::getArticlesByCategory($id);
-        
+
         return $this->render('category',[
             'articles'=>$data['articles'],
             'pagination'=>$data['pagination'],
         ]);
     }
 
+    /**
+     * @param $id
+     * @return CommentForm|Response
+     */
     public function actionComment($id)
     {
         $model = new CommentForm();
-        
+
         if(Yii::$app->request->isPost)
         {
             $model->load(Yii::$app->request->post());
@@ -113,4 +129,49 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * @param $show
+     * @return string
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     * @throws Exception
+     */
+    public function actionRegisterDog($show)
+    {
+        $model = new DogShowForm(['show' => $this->findShow($show)]);
+        if(Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post());
+            if($model->create()){
+
+                Yii::$app->getSession()->setFlash('comment', 'Перевірте вашу поштову скриньку');
+                return $this->redirect(['/'])->send();
+            }
+        }
+
+        return $this->render('register-dog',[
+            'model'=>$model,
+        ]);
+    }
+
+    /**
+     * @param $show_id
+     * @return Show
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     */
+    protected function findShow($show_id)
+    {
+        /** @var Show $model */
+        if($model = Show::findOne(['id' => $show_id])){
+            if(!$model->startRegStatus){
+                throw new BadRequestHttpException('Реєстрація ще не розпочалась');
+            } elseif (!$model->finishRegStatus) {
+                throw new BadRequestHttpException('Реєстрація вже закінчилась');
+            } else {
+                return $model;
+            }
+        } else {
+            throw  new NotFoundHttpException('Такої виставки не існує');
+        }
+    }
 }

@@ -17,7 +17,7 @@ class DogShowSearch extends DogShow
     public function rules()
     {
         return [
-            [['id', 'dog_id', 'show', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'dog_id', 'show'], 'integer'],
         ];
     }
 
@@ -60,8 +60,6 @@ class DogShowSearch extends DogShow
             'id' => $this->id,
             'dog_id' => $this->dog_id,
             'show_id' => $this->show,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         return $dataProvider;

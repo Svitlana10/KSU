@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use Yii;
-use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -13,13 +13,12 @@ use yii\helpers\ArrayHelper;
  * @property int $dog_id
  * @property int $status
  * @property int $show_id
- * @property int $created_at
- * @property int $updated_at
  *
  * @property Dog $dog
+ * @property null|string $statusTitle
  * @property Show $show
  */
-class DogShow extends \yii\db\ActiveRecord
+class DogShow extends ActiveRecord
 {
     const STATUS_NEW        = 1;
     const STATUS_APPROVED   = 2;
@@ -36,16 +35,6 @@ class DogShow extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%dog_show}}';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
     }
 
     /**
@@ -70,8 +59,6 @@ class DogShow extends \yii\db\ActiveRecord
             'id' => 'ID',
             'dog_id' => 'Dog ID',
             'show_id' => 'Show ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 
@@ -84,7 +71,7 @@ class DogShow extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDog()
     {
@@ -92,7 +79,7 @@ class DogShow extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getShow()
     {
