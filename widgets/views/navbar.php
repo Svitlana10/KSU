@@ -14,8 +14,8 @@ use yii\web\View;
 
     <?php // region left Sidebar ?>
 
-    <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;
-    </button>
+<!--    <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;-->
+<!--    </button>-->
     <div class="container">
         <div class="w3-teal">
             <div id="mySidenav" class="sidenav">
