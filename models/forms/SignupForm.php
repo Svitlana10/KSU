@@ -3,6 +3,7 @@
 namespace app\models\forms;
 
 use app\models\User;
+use yii\base\Exception;
 use yii\base\Model;
 
 /**
@@ -11,8 +12,13 @@ use yii\base\Model;
  */
 class SignupForm extends Model
 {
+    /** @var string $username */
     public $username;
+
+    /** @var string $email */
     public $email;
+
+    /** @var string $password */
     public $password;
 
     /**
@@ -24,29 +30,31 @@ class SignupForm extends Model
             [['username','email','password'], 'required'],
             [['username'], 'string'],
             [['email'], 'email'],
-            [['email'], 'unique', 'targetClass'=>'app\models\User', 'targetAttribute'=>'email']
+            [['username'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
+            [['email'], 'unique', 'targetClass'=> User::class , 'targetAttribute'=>'email']
         ];
     }
 
     /**
      * @return bool
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function signup()
     {
-        if($this->validate())
-        {
-            $user = new User();
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->setPassword($this->password);
-            $user->generateAuthKey();
-
-            if($user->save()){
-                return true;
-            }
-            $this->addErrors($user->getErrors());
+        if($this->validate()) {
+            return false;
         }
+
+        $user = new User();
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
+
+        if($user->save()){
+            return true;
+        }
+        $this->addErrors($user->getErrors());
 
         return false;
     }
