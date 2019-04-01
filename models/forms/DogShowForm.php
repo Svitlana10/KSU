@@ -11,7 +11,10 @@ namespace app\models\forms;
 use app\models\Dog;
 use app\models\DogBreeds;
 use app\models\DogTypes;
+use app\models\Show;
+use Yii;
 use yii\base\Model;
+use yii\db\Exception;
 
 /**
  * Class DogShowForm
@@ -19,9 +22,10 @@ use yii\base\Model;
  */
 class DogShowForm extends Model
 {
+    // region DOG_SHOW_ROWS
+
     /** @var integer $id */
     public $id;
-
     /** @var string $dog_name */
     public $dog_name;
 
@@ -52,6 +56,8 @@ class DogShowForm extends Model
     /** @var integer $updated_at */
     public $updated_at;
 
+    // endregion
+
     /** @var string $email */
     public $email;
 
@@ -63,6 +69,9 @@ class DogShowForm extends Model
 
     /** @var DogTypes $type*/
     public $type;
+
+    /** @var Show $show */
+    public $show;
 
     /**
      * {@inheritdoc}
@@ -83,7 +92,7 @@ class DogShowForm extends Model
     public function rules()
     {
         return[
-            [['email', 'owner', 'pedigree_number'], 'required'],
+            [['email', 'owner', 'pedigree_number', 'dog_name', 'breed_title', 'type_id'], 'required'],
             [['email'], 'email'],
             [['months', 'type_id', 'status'], 'integer'],
             [['dog_name', 'pedigree_number', 'owner', 'breed_title'], 'string', 'max' => 255],
@@ -92,8 +101,26 @@ class DogShowForm extends Model
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id'                => '№',
+            'dog_name'          => 'Кличка',
+            'breed_title'       => 'Порода',
+            'breed_id'          => 'Порода',
+            'pedigree_number'   => '# родословної',
+            'owner'             => 'Хазяїн',
+            'months'            => 'Вік (в місяцях)',
+            'email'             => 'Почтова скринька',
+            'type_id'           => 'Стать',
+        ];
+    }
+
+    /**
      * @return bool
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function create()
     {
@@ -101,15 +128,17 @@ class DogShowForm extends Model
             return false;
         }
 
-        $transaction = \Yii::$app->db->beginTransaction();
+        $transaction = Yii::$app->db->beginTransaction();
 
         $this->dog = new Dog();
         $this->dog->setAttributes($this->getAttributes());
 
         if($this->checkDogBreed() && $this->dog->save()){
 
+            $this->dog->link('show', $this->show);
             $transaction->commit();
-            return $this->sendMail();
+            $this->sendMail();
+            return true;
         }
 
         $transaction->rollBack();
@@ -118,7 +147,7 @@ class DogShowForm extends Model
 
     /**
      * @return bool
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function update()
     {
@@ -126,9 +155,10 @@ class DogShowForm extends Model
             return false;
         }
 
-        $transaction = \Yii::$app->db->beginTransaction();
+        $transaction = Yii::$app->db->beginTransaction();
 
         $this->dog->setAttributes($this->getAttributes());
+        $this->dog->link('show', $this->show);
 
         if($this->dog->save()){
 
@@ -140,6 +170,9 @@ class DogShowForm extends Model
         return false;
     }
 
+    /**
+     * @return bool
+     */
     protected function checkDogBreed()
     {
         $this->breed = DogBreeds::find()->where(['like', 'title', $this->breed_title])->one();
@@ -166,12 +199,12 @@ class DogShowForm extends Model
      */
     protected function sendMail()
     {
-        return \Yii::$app->mailer->compose(
+        return Yii::$app->mailer->compose(
             ['html' => 'approveDog-html', 'text' => 'approveDog-text'],
             ['dog' => $this->dog])
-            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->params['appName']])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->params['appName']])
             ->setTo($this->email)
-            ->setSubject(\Yii::$app->params['appName']. ' - approve dog')
+            ->setSubject(Yii::$app->params['appName']. ' - approve dog')
             ->send();
     }
 }

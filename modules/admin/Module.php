@@ -18,6 +18,7 @@ class Module extends \yii\base\Module
      * @var string
      */
     public $controllerNamespace = 'app\modules\admin\controllers';
+    public $defaultRoute = 'dog';
 
     /**
      * @inheritdoc

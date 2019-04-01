@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "dog_types".
@@ -15,7 +17,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Dog[] $dogs
  */
-class DogTypes extends \yii\db\ActiveRecord
+class DogTypes extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -59,7 +61,7 @@ class DogTypes extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDogs()
     {
