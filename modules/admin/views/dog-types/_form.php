@@ -4,18 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Article */
+/* @var $model app\models\DogTypes */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="article-form">
+<div class="dog-types-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= Html::dropDownList('category', $selectedCategory, $categories, ['class'=>'form-control']) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Додати', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

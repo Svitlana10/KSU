@@ -38,6 +38,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Документи', 'url' => ['/admin/default/index']],
             ['label' => 'Пост', 'url' => ['/admin/article/index']],
+            ['label' => 'Виставка', 'url' => ['/admin/show/index']],
             ['label' => 'Коментарі', 'url' => ['/admin/comment/index']],
             ['label' => 'Категорія', 'url' => ['/admin/category/index']],
             ['label' => 'Теги', 'url' => ['/admin/tag/index']]

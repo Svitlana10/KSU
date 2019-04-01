@@ -1,30 +1,29 @@
 <?php
 
-namespace app\models;
+namespace app\models\searchs;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Category;
+use app\models\Dog;
 
 /**
- * CategorySearch represents the model behind the search form about `app\models\Category`.
+ * DogSearch represents the model behind the search form of `app\models\Dog`.
  */
-class CategorySearch extends Category
+class DogSearch extends Dog
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title'], 'safe'],
+            [['id', 'breed_id', 'months', 'type_id', 'created_at', 'updated_at'], 'integer'],
+            [['dog_name', 'pedigree_number', 'owner'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -41,7 +40,7 @@ class CategorySearch extends Category
      */
     public function search($params)
     {
-        $query = Category::find();
+        $query = Dog::find();
 
         // add conditions that should always apply here
 
@@ -60,9 +59,16 @@ class CategorySearch extends Category
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'breed_id' => $this->breed_id,
+            'months' => $this->months,
+            'type_id' => $this->type_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'dog_name', $this->dog_name])
+            ->andFilterWhere(['like', 'pedigree_number', $this->pedigree_number])
+            ->andFilterWhere(['like', 'owner', $this->owner]);
 
         return $dataProvider;
     }

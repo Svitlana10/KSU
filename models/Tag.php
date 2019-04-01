@@ -3,13 +3,17 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "tag".
+ * This is the model class for table "tags".
  *
  * @property integer $id
  * @property string $title
+ * @property integer $created_at
+ * @property integer $updated_at
  *
+ * @property \yii\db\ActiveQuery $articles
  * @property ArticleTag[] $articleTags
  */
 class Tag extends \yii\db\ActiveRecord
@@ -19,7 +23,17 @@ class Tag extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tag';
+        return '{{%tags}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+        ];
     }
 
     /**
@@ -45,11 +59,11 @@ class Tag extends \yii\db\ActiveRecord
 
     /**
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
-    
     public function getArticles()
     {
-        return $this->hasMany(Article::className(), ['id' => 'article_id'])
+        return $this->hasMany(Article::class, ['id' => 'article_id'])
             ->viaTable('article_tag', ['tag_id' => 'id']);
     }
 }

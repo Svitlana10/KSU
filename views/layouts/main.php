@@ -6,8 +6,7 @@
 use app\assets\PublicAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use \yii\bootstrap\NavBar;
-use \yii\bootstrap\Nav;
+use app\models\User;
 
 PublicAsset::register($this);
 ?>
@@ -24,20 +23,26 @@ PublicAsset::register($this);
 <body id="backgr">
 <?php $this->beginBody() ?>
     <div class="wrap">
+
+
     </div>
 
     <nav class="navbar main-menu navbar-default">
-        <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;
-        </button>
         <div class="container">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+            <div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
+
+            </div>
+
             <div class="w3-teal">
 
+                <button class="w3-button w3-teal w3-xlarge w3-right"  onclick="myFunction()">&#9776;
 
+                </button>
 
             <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" id="mySidebar" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a href="#">Головна</a>
                 <a href="#">Виставки </a>
                 <a href="#">Племенні документи</a>
@@ -53,22 +58,23 @@ PublicAsset::register($this);
             <script>
                 function openNav() {
                     document.getElementById("mySidenav").style.width = "250px";
-                    document.getElementById("mySidebar").style.display = "block";
-                    document.getElementById("openNav").style.display = 'none';
-                    document.getElementById("mySidebar").style.width = "25%";
-
                 }
 
                 function closeNav() {
                     document.getElementById("mySidenav").style.width = "0";
-                    document.getElementById("mySidebar").style.display = "none";
-                    document.getElementById("openNav").style.display = "inline-block";
                 }
 
-
-
+                function myFunction() {
+                    var x = document.getElementById("mySidenav");
+                    if (document.getElementById("mySidenav").style.width === "250px") {
+                        // x.style.display = "none";
+                        document.getElementById("mySidenav").style.width = "0";
+                    } else {
+                        document.getElementById("mySidenav").style.width = "250px";
+                        // x.style.display = "block";
+                    }
+                }
             </script>
-            </div>
             <div class="menu-content">
 
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -86,31 +92,28 @@ PublicAsset::register($this);
                         <span class="icon-bar"></span>
 
                     </button>
-
-
-
-
                 </div>
-
-
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav text-uppercase">
-                        <?php if(!Yii::$app->user->isGuest):?>
-                        <li>
-                         <a   href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a></li>
-
-                            <?php endif;?>
+                        <?php if(!Yii::$app->user->isGuest):
+                            $user_status = Yii::$app->user->identity->status;
+                             if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/admin/default/index'])?>" >Адміністрування</a>
+                                </li>
+                             <?php endif;
+                        endif;?>
                     </ul>
                     <div class="i_con">
-                        <ul class="nav navbar-nav text-uppercase">
+                        <ul class="nav navbar-nav navbar-right text-uppercase">
 
                             <?php if(Yii::$app->user->isGuest):?>
-                                <li><a style=" margin-left:10%" href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
-                                <li><a style=" margin-left:10%" href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
+                                <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
+                                <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
                             <?php else: ?>
                                 <?=  Html::beginForm(['/auth/logout'], 'post')
                                 . Html::submitButton(
-                                    'Вийти (' . Yii::$app->user->identity->name . ')',
+                                    'Вийти (' . Yii::$app->user->identity->username . ')',
                                     ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px; margin-left: 10%; color:#ffffff;"]
                                 )
                                 . Html::endForm() ?>
@@ -121,47 +124,32 @@ PublicAsset::register($this);
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
-
-        <!-- /.container-fluid -->
         </div>
+        <!-- /.container-fluid -->
 
     </nav>
 
-<div class="row">
-
-</div>
 
 <!--main content start-->
-
+<div class="main-content">
     <div class="container">
         <div class="row">
-            <img class="center-block" src="/public/images/logo_1.PNG" style="width: 100%" alt="">
-        <?= $content ?>
+            <div class="col-md-8">
+                <?= $content ?>
+            </div>
+            <div class="col-md-4" data-sticky_column>
+                <div class="primary-sidebar">
+                    <?= \app\widgets\Sidebar::widget() ?>
+                </div>
+            </div>
         </div>
     </div>
-
-<?php $this->endBody() ?>
+</div>
+<?php $this->endBody() ?>.
 <?php $this->endPage() ?>
 </body>
 
-<footer class="footer-widget-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <aside class="footer-widget">
-                </aside>
-            </div>
-            <div class="col-md-6">
-
-                <div class="address">
-                    <h4 class="text-uppercase">Контактна іфнормація</h4>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</footer>
+<?= \app\widgets\Footer::widget() ?>
 
 
 
