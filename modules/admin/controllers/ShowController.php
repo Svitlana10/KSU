@@ -4,9 +4,12 @@ namespace app\modules\admin\controllers;
 
 use app\models\forms\ShowForm;
 use app\models\searchs\DogShowSearch;
+use Throwable;
 use Yii;
 use app\models\Show;
 use app\models\searchs\ShowSearch;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,7 +70,7 @@ class ShowController extends Controller
      * Creates a new Show model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function actionCreate()
     {
@@ -93,7 +96,7 @@ class ShowController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function actionUpdate($id)
     {
@@ -119,8 +122,8 @@ class ShowController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws Throwable
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {

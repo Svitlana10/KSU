@@ -2,9 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
+use Throwable;
 use Yii;
 use app\models\DogShow;
 use app\models\searchs\DogShowSearch;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -101,8 +103,8 @@ class DogShowController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws Throwable
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {
