@@ -34,7 +34,7 @@ PublicAsset::register($this);
 
     <nav class="navbar main-menu navbar-default">
 
-        <?php // region Sidebar ?>
+        <?php // region left Sidebar ?>
 
         <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;
         </button>
