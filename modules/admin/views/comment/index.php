@@ -1,11 +1,12 @@
 <?php
 
+use app\models\Comment;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\CategorySearch */
+/* @var $searchModel app\models\searchs\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Коментарі';
@@ -29,10 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </thead>
 
             <tbody>
-                <?php foreach($comments as $comment):?>
+                <?php
+                /** @var Comment $comment */
+                foreach($comments as $comment):?>
                     <tr>
                         <td><?= $comment->id?></td>
-                        <td><?= $comment->user->name?></td>
+                        <td><?= $comment->user->username?></td>
                         <td><?= $comment->text?></td>
                         <td>
                             <?php if($comment->isAllowed()):?>

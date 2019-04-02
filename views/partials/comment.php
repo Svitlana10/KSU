@@ -1,6 +1,13 @@
-<?php if(!empty($comments)):?>
+<?php use app\models\Article;
+use app\models\Comment;
+use app\models\forms\CommentForm;
+use yii\widgets\ActiveForm;
 
-    <?php foreach($comments as $comment):?>
+if(!empty($comments)):?>
+
+    <?php
+    /** @var Comment $comment */
+    foreach($comments as $comment):?>
         <div class="bottom-comment"><!--bottom comment-->
             <div class="comment-img">
                 <img width="50" class="img-circle" src="<?= $comment->user->image; ?>" alt="">
@@ -8,10 +15,10 @@
 
             <div class="comment-text">
                 <a href="#" class="replay btn pull-right"> Змінити</a>
-                <h5><?= $comment->user->name;?></h5>
+                <h5><?= $comment->user->username;?></h5>
 
                 <p class="comment-date">
-                    <?= $comment->getDate();?>
+                    <?= $comment->date ?>
                 </p>
 
 
@@ -31,7 +38,10 @@
                 <?= Yii::$app->session->getFlash('comment'); ?>
             </div>
         <?php endif;?>
-        <?php $form = \yii\widgets\ActiveForm::begin([
+        <?php
+        /** @var Article $article */
+        /** @var CommentForm $commentForm */
+        $form = ActiveForm::begin([
             'action'=>['site/comment', 'id'=>$article->id],
             'options'=>['class'=>'form-horizontal contact-form', 'role'=>'form']])?>
         <div class="form-group">
@@ -40,6 +50,6 @@
             </div>
         </div>
         <button type="submit" class="btn send-btn">Опублікувати коментарій</button>
-        <?php \yii\widgets\ActiveForm::end();?>
+        <?php ActiveForm::end();?>
     </div><!--end leave comment-->
 <?php endif;?>
