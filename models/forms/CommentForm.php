@@ -31,8 +31,7 @@ class CommentForm extends Model
         $comment->text = $this->comment;
         $comment->user_id = Yii::$app->user->id;
         $comment->article_id = $article_id;
-        $comment->status = 0;
-        $comment->date = date('Y-m-d');
+        $comment->status = Comment::STATUS_DISALLOW;
         return $comment->save();
 
     }
