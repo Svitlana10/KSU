@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+/* @var $model app\models\forms\SignupForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode($this->title) ?></h1>
             <p>Будь ласка заповніть поля для реєстрації:</p>
             <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
+                'id' => 'signup-form',
                 'layout' => 'horizontal',
                 'fieldConfig' => [
                     'template' => "{label}\n<div class=\"text\">{input}</div>\n<div class=\"password\">{error}</div>",

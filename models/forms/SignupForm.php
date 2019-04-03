@@ -27,11 +27,11 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            [['username','email','password'], 'required'],
+            [['username', 'email', 'password'], 'required'],
             [['username'], 'string'],
             [['email'], 'email'],
             [['username'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
-            [['email'], 'unique', 'targetClass'=> User::class , 'targetAttribute'=>'email']
+            [['email'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'email']
         ];
     }
 
@@ -41,7 +41,7 @@ class SignupForm extends Model
      */
     public function signup()
     {
-        if($this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -50,8 +50,9 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+        $user->status = User::USER_STATUS_USER;
 
-        if($user->save()){
+        if ($user->save()) {
             return true;
         }
         $this->addErrors($user->getErrors());
