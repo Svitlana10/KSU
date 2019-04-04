@@ -15,6 +15,7 @@ $show = Show::getOneRegShow();
                 if($show = Show::getOneRegShow()) : ?>
                     <h3>Виставка: <?= $show->showDate ?></h3>
                     <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="btn btn-success" style="width: 90%">Зареєструватись</a>
+                    <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="btn btn-success" style="width: 90%; margin-top: 2px">Переглянути собак</a>
                 <?php else: ?>
                     <h4>Немає найблищих виставок</h4>
                 <?php endif; ?>

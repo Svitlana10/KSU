@@ -3,13 +3,13 @@
 namespace app\controllers;
 
 use app\models\Article;
-use app\models\Category;
 use app\models\forms\CommentForm;
 use app\models\forms\DogShowForm;
 use app\models\searchs\ArticleSearch;
 use app\models\Show;
+use kartik\mpdf\Pdf;
 use Yii;
-use yii\data\ActiveDataProvider;
+use yii\base\InvalidConfigException;
 use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
@@ -137,6 +137,42 @@ class SiteController extends Controller
         return $this->render('register-dog',[
             'model'=>$model,
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws BadRequestHttpException
+     * @throws InvalidConfigException
+     */
+    public function actionViewDog($id)
+    {
+        $model = Show::findOne($id);
+
+        if($model === null){
+            throw new BadRequestHttpException();
+        }
+
+        $this->layout = 'pdf';
+
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'content' => $this->render('viewpdf', ['model'=>$model]),
+            'destination' => Pdf::DEST_BROWSER,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '',
+            'options' => [
+                'title' => $model->title,
+                'subject' => 'PDF'
+            ],
+            'methods' => [
+                'SetHeader' => ['Khmelnytsky vistavka'],
+                'SetFooter' => ['|{PAGENO}|'],
+            ]
+        ]);
+        return $pdf->render();
     }
 
     /**

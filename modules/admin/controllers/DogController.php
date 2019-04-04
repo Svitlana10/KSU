@@ -8,6 +8,7 @@ use app\models\searchs\DogSearch;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\PDF;
 use Throwable;
 use Yii;
 use yii\db\StaleObjectException;
@@ -170,7 +171,6 @@ class DogController extends Controller
     /**
      * @return Response
      * @throws Exception
-     * @throws \yii\base\Exception
      */
     public function actionDocument()
     {
