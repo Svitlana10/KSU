@@ -17,7 +17,7 @@ class DogSearch extends Dog
     public function rules()
     {
         return [
-            [['id', 'breed_id', 'months', 'type_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'breed_id', 'months', 'type_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['dog_name', 'pedigree_number', 'owner'], 'safe'],
         ];
     }
@@ -34,11 +34,10 @@ class DogSearch extends Dog
     /**
      * Creates data provider instance with search query applied
      *
-     * @param array $params
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search()
     {
         $query = Dog::find();
 
@@ -48,27 +47,17 @@ class DogSearch extends Dog
             'query' => $query,
         ]);
 
-        $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'breed_id' => $this->breed_id,
-            'months' => $this->months,
-            'type_id' => $this->type_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ]);
-
-        $query->andFilterWhere(['like', 'dog_name', $this->dog_name])
-            ->andFilterWhere(['like', 'pedigree_number', $this->pedigree_number])
-            ->andFilterWhere(['like', 'owner', $this->owner]);
+        foreach ($this->attributes as $key => $attribute) {
+            if(isset($attribute) && !empty(trim($attribute))) {
+                $query->andFilterWhere(['like', $key, $attribute]);
+            }
+        }
 
         return $dataProvider;
     }

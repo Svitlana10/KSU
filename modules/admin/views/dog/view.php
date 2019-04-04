@@ -39,6 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'type',
                 'value' => $model->type->title,
             ],
+            [
+                 'label' => 'Status',
+                'value' => $model->statusTitle,
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],

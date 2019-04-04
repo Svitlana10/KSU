@@ -26,53 +26,52 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    NavBar::begin([
-        'brandLabel' => 'Головна',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Собаки', 'url' => ['/admin/dog/index']],
-            ['label' => 'Пост', 'url' => ['/admin/article/index']],
-            ['label' => 'Виставка', 'url' => ['/admin/show/index']],
-            ['label' => 'Коментарі', 'url' => ['/admin/comment/index']],
-            ['label' => 'Категорія', 'url' => ['/admin/category/index']],
-            ['label' => 'Теги', 'url' => ['/admin/tag/index']]
-        ],
-    ]);
-    NavBar::end();
+        NavBar::begin([
+            'brandLabel' => 'Головна',
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar-inverse navbar-fixed-top',
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => 'Собаки', 'url' => ['/admin/dog/index']],
+                ['label' => 'Пост', 'url' => ['/admin/article/index']],
+                ['label' => 'Виставка', 'url' => ['/admin/show/index']],
+                ['label' => 'Коментарі', 'url' => ['/admin/comment/index']],
+                ['label' => 'Категорія', 'url' => ['/admin/category/index']],
+                ['label' => 'Теги', 'url' => ['/admin/tag/index']]
+            ],
+        ]);
+        NavBar::end();
     ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+                <div>
+
+                    <?= $content ?>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
+
+<?php $this->endBody() ?>
+</body>
+<?php $this->endPage() ?>
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Головна <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 
-<?php $this->endBody() ?>
-<?php $this->registerJsFile('/ckeditor/ckeditor.js');?>
-<?php $this->registerJsFile('/ckfinder/ckfinder.js');?>
-<script>
-    $(document).ready(function(){
-        var editor = CKEDITOR.replaceAll();
-        CKFinder.setupCKEditor( editor );
-    })
-
-</script>
-</body>
 </html>
-<?php $this->endPage() ?>

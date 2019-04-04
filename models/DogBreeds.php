@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -18,7 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $statusTitle
  * @property Dog[] $dogs
  */
-class DogBreeds extends \yii\db\ActiveRecord
+class DogBreeds extends ActiveRecord
 {
 
     const STATUS_NEW        = 1;
@@ -76,6 +78,19 @@ class DogBreeds extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public static function getBreedsList()
+    {
+        $breeds = self::find()
+            ->select(['id', 'title'])
+            ->distinct(true)
+            ->all();
+
+        return ArrayHelper::map($breeds, 'id', 'title');
+    }
+
+    /**
      * @return string|null
      */
     public function getStatusTitle()
@@ -84,7 +99,7 @@ class DogBreeds extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getDogs()
     {

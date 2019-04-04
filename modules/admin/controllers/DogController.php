@@ -56,7 +56,8 @@ class DogController extends Controller
     public function actionIndex()
     {
         $searchModel = new DogSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel->load(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

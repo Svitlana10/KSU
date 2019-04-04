@@ -1,7 +1,11 @@
 <?php
 
-use yii\helpers\Html;
+use app\models\Dog;
+use app\models\DogBreeds;
+use app\models\DogTypes;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\searchs\DogSearch */
@@ -29,23 +33,35 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'dog_name',
             [
+                'attribute' => 'breed_id',
                 'label' => 'Порода',
-                'value' => function($data){
-                    /** @var \app\models\Dog $data */
+                'value' => function ($data) {
+                    /** @var Dog $data */
                     return $data->breed->title;
-                }
+                },
+                'filter' => DogBreeds::getBreedsList(),
             ],
             'pedigree_number',
             'owner',
             'months',
             [
-                'label' => 'Тип',
-                'value' => function($data){
-                    /** @var \app\models\Dog $data*/
+                'attribute' => 'type_id',
+                'label' => 'Стать',
+                'value' => function ($data) {
+                    /** @var Dog $data */
                     return $data->type->title;
-                }
+                },
+                'filter' => DogTypes::getBreedsList(),
             ],
-            'created_at:datetime',
+            [
+                'attribute' => 'status',
+                'format' => 'text',
+                'content' => function ($data) {
+                    /** @var Dog $data */
+                    return $data->statusTitle;
+                },
+                'filter' => Dog::getStatusList(),
+            ],
             'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],

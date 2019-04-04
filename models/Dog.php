@@ -71,7 +71,9 @@ class Dog extends ActiveRecord
         return [
             [['breed_id', 'months', 'type_id', 'status'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_NEW],
+            ['status', 'in', 'range' => [self::STATUS_NEW, self::STATUS_APPROVED]],
             [['dog_name', 'pedigree_number', 'owner', 'breed_title'], 'string', 'max' => 255],
+            [['pedigree_number'], 'unique'],
             [['breed_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogBreeds::class, 'targetAttribute' => ['breed_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogTypes::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
@@ -101,6 +103,15 @@ class Dog extends ActiveRecord
     public function getStatusTitle()
     {
         return ArrayHelper::map(self::$statuses, 'id', 'title')[$this->status] ?: null;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatusList()
+    {
+        $statuses = self::$statuses;
+        return ArrayHelper::map($statuses, 'id', 'title');
     }
 
     /**
