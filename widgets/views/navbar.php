@@ -4,6 +4,7 @@
 
 /* @var $this View */
 
+use app\models\Show;
 use app\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -50,6 +51,7 @@ use yii\web\View;
         <div class="menu-content">
 
             <!-- Brand and toggle get grouped for better mobile display -->
+
             <div class="navbar-header" style="width:20%">
                 <li class="navbar-brand">
 
@@ -100,3 +102,42 @@ use yii\web\View;
     <!-- /.container-fluid -->
 
 </nav>
+<div class="logo_part">
+    <div class="container">
+        <a class="logo" href="#"><img src="img/logo.png" alt=""></a>
+    </div>
+</div>
+
+<section class="home_banner_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-7">
+                <div class="blog_text_slider owl-carousel">
+                        <div class="blog_text">
+                            <div class="cat">
+                                <aside class="widget">
+                                    <h2 class="text-center" >Реєстрація на виставку</h2>
+                                    <div class="text-center">
+                                        <?php
+                                        /** @var Show $show */
+                                        if($show = Show::getOneRegShow()) : ?>
+                                            <h3>Виставка: <?= $show->showDate ?></h3>
+                                            <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="btn-success" style="width: 50%; margin-left: 15px">Зареєструватись</a>
+                                            <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="btn-success" style="width: 50%; margin-top: 5px">Переглянути собак</a>
+                                        <?php else: ?>
+                                            <h4>Немає найблищих виставок</h4>
+                                        <?php endif; ?>
+
+                                    </div>
+                                </aside>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

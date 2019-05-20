@@ -11,9 +11,9 @@ $this->title = 'Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="login-page">
+<div class="signup-page">
     <div class="form">
-        <div class="login-form">
+        <div class="signup-form">
             <h1><?= Html::encode($this->title) ?></h1>
             <p>Будь ласка заповніть поля для реєстрації:</p>
             <?php $form = ActiveForm::begin([
