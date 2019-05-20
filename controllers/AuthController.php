@@ -7,11 +7,47 @@ use app\models\forms\SignupForm;
 use app\models\User;
 use Yii;
 use yii\base\Exception;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
 
+/**
+ * Class AuthController
+ * @package app\controllers
+ */
 class AuthController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['login', 'signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Login action
      *
@@ -70,19 +106,5 @@ class AuthController extends Controller
         }
 
         return $this->render('signup', ['model'=>$model]);
-    }
-
-    /**
-     * @param $user_id
-     * @param $first_name
-     * @param $photo
-     * @return Response
-     */
-    public function actionLoginVk($user_id, $first_name, $photo)
-    {
-        if((new User())->saveFromVk($user_id, $first_name, $photo))
-        {
-            return $this->redirect(['site/index']);
-        }
     }
 }
