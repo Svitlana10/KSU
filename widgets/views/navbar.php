@@ -67,34 +67,30 @@ use yii\web\View;
 
                 </button>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav text-uppercase">
-                    <?php if(!Yii::$app->user->isGuest):
-                        $user_status = Yii::$app->user->identity->status;
-                        if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
-                            <li>
-                                <a href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
-                            </li>
-                        <?php endif;
-                    endif;?>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right text-uppercase">
+
+                    <?php if(Yii::$app->user->isGuest):?>
+                        <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
+                        <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
+                    <?php else: ?>
+                        <?php if(!Yii::$app->user->isGuest):
+                            $user_status = Yii::$app->user->identity->status;
+                            if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
+                                </li>
+                            <?php endif;
+                        endif;?>
+                        <?=  Html::beginForm(['/auth/logout'], 'post')
+                        . Html::submitButton(
+                            'Вийти (' . Yii::$app->user->identity->username . ')',
+                            ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px; margin-left: 10%; color:#ffffff;"]
+                        )
+                        . Html::endForm() ?>
+
+                    <?php endif;?>
                 </ul>
-                <div class="i_con">
-                    <ul class="nav navbar-nav navbar-right text-uppercase">
-
-                        <?php if(Yii::$app->user->isGuest):?>
-                            <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
-                            <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
-                        <?php else: ?>
-                            <?=  Html::beginForm(['/auth/logout'], 'post')
-                            . Html::submitButton(
-                                'Вийти (' . Yii::$app->user->identity->username . ')',
-                                ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px; margin-left: 10%; color:#ffffff;"]
-                            )
-                            . Html::endForm() ?>
-
-                        <?php endif;?>
-                    </ul>
-                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -104,7 +100,7 @@ use yii\web\View;
 </nav>
 <div class="logo_part">
     <div class="container">
-        <a class="logo" href="#"><img src="img/logo.png" alt=""></a>
+        <a class="logo" href="#"><img src="/public/images/logo.png" alt=""></a>
     </div>
 </div>
 
@@ -114,28 +110,24 @@ use yii\web\View;
             <div class="col-lg-5"></div>
             <div class="col-lg-7">
                 <div class="blog_text_slider owl-carousel">
-                        <div class="blog_text">
-                            <div class="cat">
-                                <aside class="widget">
-                                    <h2 class="text-center" >Реєстрація на виставку</h2>
-                                    <div class="text-center">
-                                        <?php
-                                        /** @var Show $show */
-                                        if($show = Show::getOneRegShow()) : ?>
-                                            <h3>Виставка: <?= $show->showDate ?></h3>
-                                            <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="btn-success" style="width: 50%; margin-left: 15px">Зареєструватись</a>
-                                            <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="btn-success" style="width: 50%; margin-top: 5px">Переглянути собак</a>
-                                        <?php else: ?>
-                                            <h4>Немає найблищих виставок</h4>
-                                        <?php endif; ?>
-
-                                    </div>
-                                </aside>
-                            </div>
-
+                    <div class="blog_text">
+                        <div class="cat">
+                            <aside class="widget">
+                                <h2 class="text-center" >Реєстрація на виставку</h2>
+                                <div class="text-center">
+                                    <?php
+                                    /** @var Show $show */
+                                    if($show = Show::getOneRegShow()) : ?>
+                                        <h3>Виставка: <?= $show->showDate ?></h3>
+                                        <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="btn-success" style="width: 50%; margin-left: 15px">Зареєструватись</a>
+                                        <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="btn-success" style="width: 50%; margin-top: 5px">Переглянути собак</a>
+                                    <?php else: ?>
+                                        <h4>Немає найблищих виставок</h4>
+                                    <?php endif; ?>
+                                </div>
+                            </aside>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
