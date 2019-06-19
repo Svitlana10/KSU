@@ -41,6 +41,7 @@
                             ['label' => 'Типи', 'icon' => 'file-code-o', 'url' => ['/admin/dog-types']],
                         ],
                     ],
+                    ['label' => 'Усі шоу', 'icon' => 'file-code-o', 'url' => ['/admin/show']],
                     ['label' => 'Доки', 'icon' => 'file-code-o', 'url' => ['/admin/default']],
                     ['label' => 'Теги', 'icon' => 'file-code-o', 'url' => ['/admin/tag']],
                 ],

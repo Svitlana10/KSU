@@ -1,16 +1,19 @@
 <?php
 
+use app\models\Dog;
+use app\widgets\MapView;
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Show */
-/* @var $dogs \app\models\Dog[] */
+/* @var $dogs Dog[] */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Shows', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="show-view">
 
@@ -46,6 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at:datetime',
         ],
     ]) ?>
+
+    <?= MapView::widget(['model' => $model]) ?>
 
 
     <?php if($dogs) echo "<h1>Собаки:</h1>" ;{ foreach ($dogs as $dog) : ?>

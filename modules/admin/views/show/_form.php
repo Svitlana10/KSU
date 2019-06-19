@@ -1,5 +1,6 @@
 <?php
 
+use kalyabin\maplocation\SelectMapLocationWidget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\datetime\DateTimePicker;
@@ -17,10 +18,16 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'address')->widget(SelectMapLocationWidget::class, [
+        'attributeLatitude' => 'latitude',
+        'attributeLongitude' => 'longitude',
+        'googleMapApiKey' => env('GOOGLE_MAP_API_KEY', '').'&language=ru',
+        'draggable' => true,
+    ])
+ ?>
 
     <?= $form->field($model, 'showDate')->widget(DateTimePicker::class, [
-            'options' => ['placeholder' => 'Введіть дату/час проведення виставки', 'readonly' => true],
+            'options' => ['placeholder' => 'Введіть дату/час проведення виставки', 'readonly' => !$model->show->isNewRecord],
             'removeButton' => false,
             'pluginOptions' => [
                 'autoClose' => true,
@@ -46,7 +53,7 @@ use kartik\datetime\DateTimePicker;
         <div class="panel-body">
             <div class="col-mod-6">
                 <?= $form->field($model, 'startRegDate')->widget(DateTimePicker::class, [
-                    'options' => ['placeholder' => 'Введіть дату/час початку реєстрації', 'readonly' => true],
+                    'options' => ['placeholder' => 'Введіть дату/час початку реєстрації', 'readonly' => !$model->show->isNewRecord],
                     'removeButton' => false,
                     'pluginOptions' => [
                         'autoClose' => true,
@@ -56,7 +63,7 @@ use kartik\datetime\DateTimePicker;
             </div>
             <div class="col-mod-6">
                 <?= $form->field($model, 'endRegDate')->widget(DateTimePicker::class, [
-                    'options' => ['placeholder' => 'Введіть дату/час закінчення рєстрації', 'readonly' => true],
+                    'options' => ['placeholder' => 'Введіть дату/час закінчення рєстрації', 'readonly' => !$model->show->isNewRecord],
                     'removeButton' => false,
                     'pluginOptions' => [
                         'autoClose' => true,

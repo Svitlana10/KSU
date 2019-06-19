@@ -9,10 +9,12 @@
 namespace app\models\forms;
 
 
-use app\models\Show;
 use app\models\ImageUpload;
+use app\models\Show;
 use app\models\User;
+use Yii;
 use yii\base\Model;
+use yii\db\Exception;
 
 /**
  * Class ShowForm
@@ -22,44 +24,85 @@ use yii\base\Model;
  */
 class ShowForm extends Model
 {
-    /** @var integer $id */
+    /**
+     * @var integer $id
+     */
     public $id;
 
-    /** @var string $title */
+    /**
+     * @var string $title
+     */
     public $title;
 
-    /** @var string $description */
+    /**
+     * @var string $description
+     */
     public $description;
 
-    /** @var string $address */
+    /**
+     * @var string $address
+     */
     public $address;
 
-    /** @var string $showDate */
+    /**
+     * @var string $showDate
+     */
     public $showDate;
 
+    /**
+     * @var string $img
+     */
     public $img;
 
-    /** @var string $start_reg_date */
+    /**
+     * @var string $start_reg_date
+     */
     public $startRegDate;
 
-    /** @var string $end_reg_date */
+    /**
+     * @var string $end_reg_date
+     */
     public $endRegDate;
 
-    /** @var User $user */
+    /**
+     * @var User $user
+     */
     public $user;
-    /** @var integer $user_id */
+
+    /**
+     * @var integer $user_id
+     */
     public $user_id;
 
-    /** @var Show $show */
+    /**
+     * @var Show $show
+     */
     public $show;
 
-    /** @var integer $created_at */
+    /**
+     * @var integer $created_at
+     */
     public $created_at;
-    /** @var integer $updated_at */
+
+    /**
+     * @var integer $updated_at
+     */
     public $updated_at;
 
-    /** @var ImageUpload $imageUpload */
+    /**
+     * @var ImageUpload $imageUpload
+     */
     public $imageUpload;
+
+    /**
+     * @var float $latitude
+     */
+    public $latitude;
+
+    /**
+     * @var float $longitude
+     */
+    public $longitude;
 
     /**
      * {@inheritdoc}
@@ -68,11 +111,16 @@ class ShowForm extends Model
     {
         $this->show = new Show();
 
-        if($this->show){
+        if ($this->show && !$this->show->isNewRecord) {
             $this->setAttributes($this->show->getAttributes());
-            $this->showDate     = $this->show->showDate;
+            $this->showDate = $this->show->showDate;
             $this->startRegDate = $this->show->startRegDate;
-            $this->endRegDate   = $this->show->endRegDate;
+            $this->endRegDate = $this->show->endRegDate;
+            if($this->show->google_location) {
+                $cords = $this->show->location;
+                $this->latitude     = $cords['latitude'];
+                $this->longitude    = $cords['longitude'];
+            }
             $this->user = User::findOne($this->show->user_id);
         }
     }
@@ -92,7 +140,8 @@ class ShowForm extends Model
                 'user_id', 'created_at', 'updated_at'
             ], 'integer'],
             [[
-                'showDate', 'startRegDate', 'endRegDate'
+                'showDate', 'startRegDate', 'endRegDate',
+                'longitude', 'latitude',
             ], 'safe'],
             [['title', 'address'], 'string', 'max' => 255],
             ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
@@ -102,20 +151,26 @@ class ShowForm extends Model
 
     /**
      * @return bool
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function create()
     {
-        if(!$this->validate()){
+        if (!$this->validate()) {
             return false;
         }
 
-        $transaction = \Yii::$app->db->beginTransaction();
+        $transaction = Yii::$app->db->beginTransaction();
 
         $this->show->setAttributes($this->getAttributes());
-        $this->show->user_id = \Yii::$app->user->id;
+        $this->show->user_id = Yii::$app->user->id;
 
-        if($this->show->save()){
+        if(!$this->setLocation()) {
+
+            $transaction->rollBack();
+            return false;
+        }
+
+        if ($this->show->save()) {
 
             $transaction->commit();
             return true;
@@ -127,20 +182,26 @@ class ShowForm extends Model
 
     /**
      * @return bool
-     * @throws \yii\db\Exception
+     * @throws Exception
      */
     public function update()
     {
-        if(!$this->validate()){
+        if (!$this->validate()) {
             return false;
         }
 
-        $transaction = \Yii::$app->db->beginTransaction();
+        $transaction = Yii::$app->db->beginTransaction();
 
         $this->show->setAttributes($this->getAttributes());
-        $this->show->user_id = \Yii::$app->user->id;
+        $this->show->user_id = Yii::$app->user->id;
 
-        if($this->show->save()){
+        if(!$this->setLocation()) {
+
+            $transaction->rollBack();
+            return false;
+        }
+
+        if ($this->show->save()) {
 
             $transaction->commit();
             return true;
@@ -150,6 +211,30 @@ class ShowForm extends Model
         return false;
     }
 
+    /**
+     * @return bool
+     */
+    public function setLocation()
+    {
+        if($this->latitude && $this->longitude) {
+            $this->show->setGoogleLocation($this->latitude, $this->longitude);
+        }
+
+        $location = explode(', ', $this->address);
+        $count = count($location);
+
+        if($count < 3) {
+
+            $this->addError('shop_address', 'Выберете, как минимум, город, а лучше еще и адресс указать');
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return string
+     */
     public function getImage()
     {
         return $this->show->getImage();

@@ -3,12 +3,14 @@
 namespace app\models;
 
 use app\models\forms\ShowForm;
+use app\validators\JsonValidator;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 use yii\web\UploadedFile;
 
 /**
@@ -23,16 +25,18 @@ use yii\web\UploadedFile;
  * @property int $start_reg_date
  * @property int $end_reg_date
  * @property int $user_id
+ * @property Json $google_location
  * @property int $created_at
  * @property int $updated_at
  *
  * @property bool $finishRegStatus
- * @property string $image
  * @property bool $startRegStatus
+ * @property string $image
  * @property string $status
  * @property string $showDate
  * @property string $endRegDate
  * @property string $startRegDate
+ * @property array $location
  * @property Dog[] $dogs
  * @property User $user
  */
@@ -71,6 +75,7 @@ class Show extends ActiveRecord
             [['description'], 'string'],
             [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
             [['title', 'address'], 'string', 'max' => 255],
+            ['google_location', JsonValidator::class],
             ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -91,6 +96,7 @@ class Show extends ActiveRecord
             'start_reg_date' => 'Початок реєстрації',
             'end_reg_date' => 'Кінець реєстрації',
             'user_id' => 'Користувач',
+            'google_location' => 'Локація',
             'created_at' => 'Дата створення',
             'updated_at' => 'Дата оновлення',
         ];
@@ -166,6 +172,14 @@ class Show extends ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function getLocation()
+    {
+        return Json::decode($this->google_location);
+    }
+
+    /**
      * @return string
      * @throws InvalidConfigException
      */
@@ -201,6 +215,16 @@ class Show extends ActiveRecord
     }
 
     /**
+     * @return ActiveQuery
+     * @throws InvalidConfigException
+     */
+    public function getDogs()
+    {
+        return $this->hasMany(Dog::class, ['id' => 'dog_id'])
+            ->viaTable('dog_show', ['show_id' => 'id']);
+    }
+
+    /**
      * @param bool $insert
      * @return bool
      * @throws Exception
@@ -228,12 +252,15 @@ class Show extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
-     * @throws InvalidConfigException
+     * @param $lat
+     * @param $long
      */
-    public function getDogs()
+    public function setGoogleLocation($lat, $long)
     {
-        return $this->hasMany(Dog::class, ['id' => 'dog_id'])
-            ->viaTable('dog_show', ['show_id' => 'id']);
+        $array = [
+            'latitude'  => $lat,
+            'longitude' => $long
+        ];
+        $this->google_location = Json::encode($array);
     }
 }
