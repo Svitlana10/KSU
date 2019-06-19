@@ -3,27 +3,20 @@
     <section class="sidebar">
 
         <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-            </div>
-            <div class="pull-left info">
-                <p>Alexander Pierce</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>
+<!--        <div class="user-panel">-->
+<!--            <div class="pull-left image">-->
+<!--                <img src="--><?//= $directoryAsset ?><!--/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>-->
+<!--            </div>-->
+<!--            <div class="pull-left info">-->
+<!--                <p>Alexander Pierce</p>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
+<!--        <form action="#" method="get" class="sidebar-form">-->
+<!--            <div class="input-group">-->
+<!--            </div>-->
+<!--        </form>-->
         <!-- /.search form -->
 
         <?= dmstr\widgets\Menu::widget(
@@ -34,22 +27,22 @@
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Новини', 'icon' => 'file-code-o', 'url' => ['/article']],
-                    ['label' => 'Категорії', 'icon' => 'file-code-o', 'url' => ['/category']],
-                    ['label' => 'Коментарі', 'icon' => 'file-code-o', 'url' => ['/comment']],
+                    ['label' => 'Новини', 'icon' => 'file-code-o', 'url' => ['/admin/article']],
+                    ['label' => 'Категорії', 'icon' => 'file-code-o', 'url' => ['/admin/category']],
+                    ['label' => 'Коментарі', 'icon' => 'file-code-o', 'url' => ['/admin/comment']],
                     [
                         'label' => 'Собаки',
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Усі собаки', 'icon' => 'file-code-o', 'url' => ['/dog']],
-                            ['label' => 'Породи', 'icon' => 'file-code-o', 'url' => ['/dog-breeds']],
-                            ['label' => 'Усі шоу', 'icon' => 'file-code-o', 'url' => ['/dog-show']],
-                            ['label' => 'Типи', 'icon' => 'file-code-o', 'url' => ['/dog-types']],
+                            ['label' => 'Усі собаки', 'icon' => 'file-code-o', 'url' => ['/admin/dog']],
+                            ['label' => 'Породи', 'icon' => 'file-code-o', 'url' => ['/admin/dog-breeds']],
+                            ['label' => 'Усі шоу', 'icon' => 'file-code-o', 'url' => ['/admin/dog-show']],
+                            ['label' => 'Типи', 'icon' => 'file-code-o', 'url' => ['/admin/dog-types']],
                         ],
                     ],
-                    ['label' => 'Доки', 'icon' => 'file-code-o', 'url' => ['/default']],
-                    ['label' => 'Теги', 'icon' => 'file-code-o', 'url' => ['/tag']],
+                    ['label' => 'Доки', 'icon' => 'file-code-o', 'url' => ['/admin/default']],
+                    ['label' => 'Теги', 'icon' => 'file-code-o', 'url' => ['/admin/tag']],
                 ],
             ]
         ) ?>

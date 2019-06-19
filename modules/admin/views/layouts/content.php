@@ -1,6 +1,8 @@
 <?php
 
 use dmstr\widgets\Alert;
+use yii\helpers\Html;
+use yii\helpers\Inflector;
 use yii\widgets\Breadcrumbs;
 
 ?>
@@ -12,10 +14,10 @@ use yii\widgets\Breadcrumbs;
             <h1>
                 <?php
                 if ($this->title !== null) {
-                    echo \yii\helpers\Html::encode($this->title);
+                    echo Html::encode($this->title);
                 } else {
-                    echo \yii\helpers\Inflector::camel2words(
-                        \yii\helpers\Inflector::id2camel($this->context->module->id)
+                    echo Inflector::camel2words(
+                        Inflector::id2camel($this->context->module->id)
                     );
                     echo ($this->context->module->id !== \Yii::$app->id) ? '<small>Module</small>' : '';
                 } ?>
@@ -80,7 +82,7 @@ use yii\widgets\Breadcrumbs;
                     </a>
                 </li>
                 <li>
-                    <a href='javascript::;'>
+                    <a href="javascript::">
                         <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
 
                         <div class="menu-info">
@@ -91,7 +93,7 @@ use yii\widgets\Breadcrumbs;
                     </a>
                 </li>
                 <li>
-                    <a href='javascript::;'>
+                    <a href="javascript::">
                         <i class="menu-icon fa fa-file-code-o bg-green"></i>
 
                         <div class="menu-info">
