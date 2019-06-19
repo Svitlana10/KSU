@@ -15,8 +15,8 @@ use yii\web\View;
 
     <?php // region left Sidebar ?>
 
-<!--    <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;-->
-<!--    </button>-->
+    <button id="openNav" class="w3-button w3-teal w3-xlarge w3-left" onclick="openNav()">&#9776;
+    </button>
     <div class="container">
         <div class="w3-teal">
             <div id="mySidenav" class="sidenav">
@@ -67,30 +67,32 @@ use yii\web\View;
 
                 </button>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right text-uppercase">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="i_con">
+                    <ul class="nav navbar-nav navbar-right text-uppercase">
 
-                    <?php if(Yii::$app->user->isGuest):?>
-                        <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
-                        <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
-                    <?php else: ?>
-                        <?php if(!Yii::$app->user->isGuest):
-                            $user_status = Yii::$app->user->identity->status;
-                            if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
-                                <li>
-                                    <a href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
-                                </li>
-                            <?php endif;
-                        endif;?>
-                        <?=  Html::beginForm(['/auth/logout'], 'post')
-                        . Html::submitButton(
-                            'Вийти (' . Yii::$app->user->identity->username . ')',
-                            ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px; margin-left: 10%; color:#ffffff;"]
-                        )
-                        . Html::endForm() ?>
+                        <?php if(Yii::$app->user->isGuest):?>
+                            <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
+                            <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
+                        <?php else: ?>
+                            <?php if(!Yii::$app->user->isGuest):
+                                $user_status = Yii::$app->user->identity->status;
+                                if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
+                                    <li>
+                                        <a href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
+                                    </li>
+                                <?php endif;
+                            endif;?>
+                            <?=  Html::beginForm(['/auth/logout'], 'post')
+                            . Html::submitButton(
+                                'Вийти (' . Yii::$app->user->identity->username . ')',
+                                ['class' => 'btn btn-link logout', 'style'=>" margin-left: 10%; color:#ffffff;"]
+                            )
+                            . Html::endForm() ?>
 
-                    <?php endif;?>
-                </ul>
+                        <?php endif;?>
+                    </ul>
+                </div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
