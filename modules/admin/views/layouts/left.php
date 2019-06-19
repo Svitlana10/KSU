@@ -34,32 +34,22 @@
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Новини', 'icon' => 'file-code-o', 'url' => ['/article']],
+                    ['label' => 'Категорії', 'icon' => 'file-code-o', 'url' => ['/category']],
+                    ['label' => 'Коментарі', 'icon' => 'file-code-o', 'url' => ['/comment']],
                     [
-                        'label' => 'Some tools',
+                        'label' => 'Собаки',
                         'icon' => 'share',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
+                            ['label' => 'Усі собаки', 'icon' => 'file-code-o', 'url' => ['/dog']],
+                            ['label' => 'Породи', 'icon' => 'file-code-o', 'url' => ['/dog-breeds']],
+                            ['label' => 'Усі шоу', 'icon' => 'file-code-o', 'url' => ['/dog-show']],
+                            ['label' => 'Типи', 'icon' => 'file-code-o', 'url' => ['/dog-types']],
                         ],
                     ],
+                    ['label' => 'Доки', 'icon' => 'file-code-o', 'url' => ['/default']],
+                    ['label' => 'Теги', 'icon' => 'file-code-o', 'url' => ['/tag']],
                 ],
             ]
         ) ?>
