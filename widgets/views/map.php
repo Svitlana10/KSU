@@ -9,11 +9,11 @@ use dosamigos\google\maps\overlays\Marker;
 use dosamigos\google\maps\overlays\PolylineOptions;
 use dosamigos\google\maps\services\DirectionsRenderer;
 
+
+/** @var $model Show */
 $coords = $model->location;
 $latitude = $coords && array_key_exists('latitude', $coords) ? $coords['latitude'] : 39.720089311812094;
 $longitude = $coords && array_key_exists('longitude', $coords) ? $coords['longitude'] : 2.91165944519042;
-
-/** @var $model Show */
 ?>
 <?php $cord = new LatLng(['lat' => $latitude, 'lng' => $longitude]);
 
@@ -37,13 +37,13 @@ $directionsRenderer = new DirectionsRenderer([
 // Lets add a marker now
 $marker = new Marker([
     'position' => $cord,
-    'title' => $model->shop_name,
+    'title' => $model->title,
 ]);
 
 // Provide a shared InfoWindow to the marker
 $marker->attachInfoWindow(
     new InfoWindow([
-        'content' => "<p>$model->shop_address</p>"
+        'content' => "<p>$model->address</p>"
     ])
 );
 

@@ -225,7 +225,7 @@ class ShowForm extends Model
 
         if($count < 3) {
 
-            $this->addError('shop_address', 'Выберете, как минимум, город, а лучше еще и адресс указать');
+            $this->addError('address', 'Выберете, как минимум, город, а лучше еще и адресс указать');
             return false;
         }
 
