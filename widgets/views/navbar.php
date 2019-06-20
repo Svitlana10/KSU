@@ -100,11 +100,11 @@ use yii\web\View;
     <!-- /.container-fluid -->
 
 </nav>
-<div class="logo_part">
-    <div class="container">
-        <a class="logo" href="#"><img src="/public/images/logo.png" alt=""></a>
-    </div>
-</div>
+<!--<div class="logo_part">-->
+<!--    <div class="container">-->
+<!--        <a class="logo" href="#"><img src="/public/images/logo.png" alt=""></a>-->
+<!--    </div>-->
+<!--</div>-->
 
 <section class="home_banner_area">
     <div class="container">

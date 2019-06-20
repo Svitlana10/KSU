@@ -1,7 +1,8 @@
 <?php
 
+use app\models\searchs\ArticleSearch;
 use yii\widgets\ListView;
-/** @var $dataProvider \app\models\searchs\ArticleSearch */
+/** @var $dataProvider ArticleSearch */
 ?>
 <?= ListView::widget([
     'dataProvider' => $dataProvider,
