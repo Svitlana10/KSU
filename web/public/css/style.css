@@ -115,6 +115,9 @@ address {
     font-style: normal;
     line-height: inherit
 }
+.comment-date{
+
+}
 
 dl,
 ol,
@@ -20276,8 +20279,24 @@ p.change_link{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.button_1 {
+    background-color: #009789; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    width: 40%;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
 
-
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+.comment-date{
+    font-size: 10px;
+}
 
 
 
