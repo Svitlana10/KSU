@@ -36,7 +36,6 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#program-selection-step-1" data-toggle="tab"><span></span><i>I шаг</i></a></li>
                 <li><a href="#program-selection-step-2" data-toggle="tab"><span class="step-passed">2</span> <i>II шаг</i></a></li>
-                <li><a href="#program-selection-step-3" data-toggle="tab"><span>3</span> <i>III шаг</i></a></li>
             </ul>
 
             <div class="tab-content">
@@ -53,13 +52,28 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
                     <input value="Далее" class="btn btn-default program-selection__button" type="button" data-href="#program-selection-step-2">
                 </div><!-- tab-pane -->
                 <div class="tab-pane fade in" id="program-selection-step-2">
-                    2
+                    <?php
+
+                    $client_login = "Иванов Иван";
+                    $orderid = "9933413";
+                    $order_sum = "1530";
+                    $optional_phone = "9183331122";
+
+                    $payment_parameters = http_build_query(array("clientid" => $client_login,
+                        "orderid" => $orderid,
+                        "sum" => $order_sum,
+                        "phone" => $optional_phone));
+                    $options = array("http" => array(
+                        "method" => "POST",
+                        "header" =>
+                            "Content-type: application/x-www-form-urlencoded",
+                        "content" => $payment_parameters
+                    ));
+                    $context = stream_context_create($options);
+
+                    echo file_get_contents("http://demo.paykeeper.ru/order/inline/", FALSE, $context);
+                    ?>
                     <input value="Назад" class="btn btn-default program-selection__button" type="button" data-href="#program-selection-step-1">
-                    <input value="Далее" class="btn btn-default program-selection__button" type="submit" data-href="#program-selection-step-3">
-                </div><!-- tab-pane -->
-                <div class="tab-pane fade in" id="program-selection-step-3">
-                    3
-                    <input value="Назад" class="btn btn-default program-selection__button" type="button" data-href="#program-selection-step-2">
                 </div><!-- tab-pane -->
             </div><!-- tab-content -->
 
