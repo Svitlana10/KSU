@@ -14,18 +14,21 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $layout = '/admin';
+    public $layout = '..\layouts\main';
 
     /**
-     * @var string
+     * @var string $controllerNamespace
      */
     public $controllerNamespace = 'app\modules\admin\controllers';
+
+    /**
+     * @var string $defaultRoute
+     */
     public $defaultRoute = 'dog';
 
     /**
      * @inheritdoc
      */
-
     public function behaviors()
     {
         return [
