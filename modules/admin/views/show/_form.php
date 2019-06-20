@@ -27,7 +27,7 @@ use kartik\datetime\DateTimePicker;
  ?>
 
     <?= $form->field($model, 'showDate')->widget(DateTimePicker::class, [
-            'options' => ['placeholder' => 'Введіть дату/час проведення виставки', 'readonly' => !$model->show->isNewRecord],
+            'options' => ['placeholder' => 'Введіть дату/час проведення виставки'],
             'removeButton' => false,
             'pluginOptions' => [
                 'autoClose' => true,
@@ -53,7 +53,7 @@ use kartik\datetime\DateTimePicker;
         <div class="panel-body">
             <div class="col-mod-6">
                 <?= $form->field($model, 'startRegDate')->widget(DateTimePicker::class, [
-                    'options' => ['placeholder' => 'Введіть дату/час початку реєстрації', 'readonly' => !$model->show->isNewRecord],
+                    'options' => ['placeholder' => 'Введіть дату/час початку реєстрації'],
                     'removeButton' => false,
                     'pluginOptions' => [
                         'autoClose' => true,
@@ -63,7 +63,7 @@ use kartik\datetime\DateTimePicker;
             </div>
             <div class="col-mod-6">
                 <?= $form->field($model, 'endRegDate')->widget(DateTimePicker::class, [
-                    'options' => ['placeholder' => 'Введіть дату/час закінчення рєстрації', 'readonly' => !$model->show->isNewRecord],
+                    'options' => ['placeholder' => 'Введіть дату/час закінчення рєстрації'],
                     'removeButton' => false,
                     'pluginOptions' => [
                         'autoClose' => true,
