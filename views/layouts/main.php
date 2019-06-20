@@ -3,7 +3,7 @@
 /* @var $this View */
 /* @var $content string */
 
-use app\assets\PublicAsset;
+use app\assets\AppAsset;
 use app\models\Show;
 use app\widgets\Footer;
 use app\widgets\Navbar;
@@ -14,7 +14,7 @@ use yii\helpers\Url;
 
 $show = Show::getOneRegShow();
 
-PublicAsset::register($this);
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

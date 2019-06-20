@@ -16317,6 +16317,38 @@ button:focus {
     color: #fff;
 }
 
+form div.step {
+    display:none;
+}
+
+form div.step p.step{
+  text-align:center;
+  font-size:28px;
+}
+form div.step p{
+}
+
+form div.step p input{
+  float:right;
+}
+
+a.back {
+  display:none;
+}
+
+form input[type=submit] {
+  display:none;
+}
+
+a {
+  color:#006600;
+  text-decoration:none;
+}
+
+form p.talign{
+  text-align:center;
+}
+
 .comment-form {
     background: #fff;
     text-align: left;

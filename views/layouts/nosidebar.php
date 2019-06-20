@@ -3,14 +3,14 @@
 /* @var $this View */
 /* @var $content string */
 
-use app\assets\PublicAsset;
+use app\assets\AppAsset;
 use app\widgets\Footer;
 use app\widgets\Navbar;
 use yii\helpers\Html;
 use yii\web\View;
 
 
-PublicAsset::register($this);
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
