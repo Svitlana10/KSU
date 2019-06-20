@@ -24,7 +24,7 @@ use yii\web\View;
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav">
-                        <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="/">Домашня</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Category</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Archive</a></li>
                         <li class="nav-item submenu dropdown">
