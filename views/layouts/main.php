@@ -4,11 +4,15 @@
 /* @var $content string */
 
 use app\assets\PublicAsset;
+use app\models\Show;
 use app\widgets\Footer;
 use app\widgets\Navbar;
 use app\widgets\Sidebar;
 use yii\helpers\Html;
 use yii\web\View;
+use yii\helpers\Url;
+
+$show = Show::getOneRegShow();
 
 PublicAsset::register($this);
 ?>
@@ -19,7 +23,6 @@ PublicAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -33,7 +36,7 @@ PublicAsset::register($this);
 
 <?= Navbar::widget() ?>
 
-<section class="home_banner_area">ner
+<section class="home_banner_area">
     <div class="container">
         <div class="row">
             <div class="col-lg-5"></div>
@@ -41,40 +44,22 @@ PublicAsset::register($this);
                 <div class="blog_text_slider owl-carousel">
                     <div class="item">
                         <div class="blog_text">
-                            <div class="cat">
-                                <a class="cat_btn" href="#">Gadgets</a>
-                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> March 14, 2018</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 05</a>
-                            </div>
-                            <a href="#"><h4>Nest Protect: 2nd Gen Smoke + CO Alarm</h4></a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <a class="blog_btn" href="#">Read More</a>
-                        </div>
+                            <aside class="widget">
+                                <h2 class="widget-title text-uppercase text-center">Реєстрація на виставку</h2>
+                                <div class="text-center">
+                                    <?php
+                                    if($show = Show::getOneRegShow()) : ?>
+                                        <h3>Виставка: <?= $show->showDate ?></h3>
+                                        <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="button" style="width: 90%">Зареєструватись</a>
+                                        <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="button" style="width: 90%; margin-top: 2px">Переглянути зареєстрованих собак</a>
+                                    <?php else: ?>
+                                        <h4>Немає найблищих виставок</h4>
+                                    <?php endif; ?>
+
+                                </div>
+                            </aside>
                     </div>
-                    <div class="item">
-                        <div class="blog_text">
-                            <div class="cat">
-                                <a class="cat_btn" href="#">Gadgets</a>
-                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> March 14, 2018</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 05</a>
-                            </div>
-                            <a href="#"><h4>Nest Protect: 2nd Gen Smoke + CO Alarm</h4></a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <a class="blog_btn" href="#">Read More</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="blog_text">
-                            <div class="cat">
-                                <a class="cat_btn" href="#">Gadgets</a>
-                                <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> March 14, 2018</a>
-                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 05</a>
-                            </div>
-                            <a href="#"><h4>Nest Protect: 2nd Gen Smoke + CO Alarm</h4></a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                            <a class="blog_btn" href="#">Read More</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

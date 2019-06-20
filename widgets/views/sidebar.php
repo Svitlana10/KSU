@@ -7,21 +7,7 @@ use yii\helpers\Url;
 $show = Show::getOneRegShow();
 ?>
 
-        <aside class="widget">
-            <h2 class="widget-title text-uppercase text-center">Реєстрація на виставку</h2>
-            <div class="text-center">
-                <?php
-                /** @var Show $show */
-                if($show = Show::getOneRegShow()) : ?>
-                    <h3>Виставка: <?= $show->showDate ?></h3>
-                    <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="btn btn-success" style="width: 90%">Зареєструватись</a>
-                    <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="btn btn-success" style="width: 90%; margin-top: 2px">Переглянути собак</a>
-                <?php else: ?>
-                    <h4>Немає найблищих виставок</h4>
-                <?php endif; ?>
 
-            </div>
-        </aside>
 
         <aside class="widget">
             <h3 class="widget-title text-uppercase text-center">Найпопулярніші пости</h3>
