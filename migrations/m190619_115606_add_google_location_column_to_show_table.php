@@ -18,7 +18,7 @@ class m190619_115606_add_google_location_column_to_show_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn($this->table, 'google_location', $this->json()->after('user_id'));
+        $this->addColumn($this->table, 'google_location', $this->text()->after('user_id'));
     }
 
     /**
