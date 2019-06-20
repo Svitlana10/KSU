@@ -5,6 +5,7 @@ namespace app\models\forms;
 
 
 use app\models\Show;
+use app\services\PayKeeperApi;
 use yii\base\Model;
 use yii\db\Exception;
 
@@ -47,8 +48,8 @@ class RegisterForm extends Model
     public function rules()
     {
         return [
-            [['show', 'optional_phone'], 'required'],
-            [['show', 'optional_phone'], 'string'],
+            [['clientid', 'optional_phone'], 'required'],
+            [['clientid', 'optional_phone'], 'string'],
         ];
     }
 
@@ -71,10 +72,13 @@ class RegisterForm extends Model
 
         if(!$this->dog->create()) {
 
+            $this->addErrors($this->dog->errors);
             return false;
         }
 
+        $pay = new PayKeeperApi();
 
+        $pay->getCreate($this->clientid, 123.00);
 
         return true;
     }

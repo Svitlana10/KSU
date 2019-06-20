@@ -136,6 +136,26 @@ class PayKeeperApi
     }
 
     /**
+     * @param string $client_id
+     * @param float $order_sum
+     * @return array
+     */
+    public function getCreate(string $client_id, float $order_sum) {
+
+        $response = $this->client->post(Yii::$app->params['paykeeper']['domain'].'/create', [
+            'headers' => [
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => [
+                'sum' => $order_sum,
+                'clientid' => $client_id,
+            ]
+        ]);
+
+        echo $response->getBody()->getContents();
+    }
+
+    /**
      * @param int $invoice_id
      * @return array
      */

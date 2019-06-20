@@ -129,9 +129,11 @@ class SiteController extends Controller
      */
     public function actionRegisterDog($show)
     {
+        $this->layout = 'nosidebar';
         $model = new RegisterForm(['show' => $this->findShow($show)]);
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());
+            $model->dog->load(Yii::$app->request->post());
             if($model->create()){
 
                 Yii::$app->getSession()->setFlash('comment', 'Перевірте вашу поштову скриньку');
