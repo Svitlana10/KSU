@@ -9,6 +9,7 @@
 namespace app\models\forms;
 
 
+use app\assets\PublicAsset;
 use app\models\ImageUpload;
 use app\models\Show;
 use app\models\User;
@@ -109,8 +110,6 @@ class ShowForm extends Model
      */
     public function init()
     {
-        $this->show = new Show();
-
         if ($this->show && !$this->show->isNewRecord) {
             $this->setAttributes($this->show->getAttributes());
             $this->showDate = $this->show->showDate;
@@ -122,6 +121,8 @@ class ShowForm extends Model
                 $this->longitude    = $cords['longitude'];
             }
             $this->user = User::findOne($this->show->user_id);
+        } else {
+            $this->show = new Show();
         }
     }
 

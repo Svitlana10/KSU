@@ -40,6 +40,32 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
                 <?= Html::submitButton('Зареєструватися', ['class' => 'btn btn-primary', 'name' => 'register-dog--button']) ?>
             <?php ActiveForm::end(); ?>
 
+        <div class="program-selection">
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#program-selection-step-1" data-toggle="tab"><span>1</span> <i>общая информация</i></a></li>
+                <li><a href="#program-selection-step-2" data-toggle="tab"><span class="step-passed">2</span> <i>подбор программы</i></a></li>
+                <li><a href="#program-selection-step-3" data-toggle="tab"><span>3</span> <i>рекомендуемые программы</i></a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="program-selection-step-1">
+                    1
+                    <input value="Далее" class="btn btn-default program-selection__button" type="button" data-href="#program-selection-step-2">
+                </div><!-- tab-pane -->
+                <div class="tab-pane fade in" id="program-selection-step-2">
+                    2
+                    <input value="Назад" class="btn btn-default program-selection__button" type="button" data-href="#program-selection-step-1">
+                    <input value="Далее" class="btn btn-default program-selection__button" type="submit" data-href="#program-selection-step-3">
+                </div><!-- tab-pane -->
+                <div class="tab-pane fade in" id="program-selection-step-3">
+                    3
+                    <input value="Назад" class="btn btn-default program-selection__button" type="button" data-href="#program-selection-step-2">
+                </div><!-- tab-pane -->
+            </div><!-- tab-content -->
+
+        </div><!-- program-selection -->
+
 
     </div>
 </div>
