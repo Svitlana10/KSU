@@ -32,22 +32,22 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
                 ],
         ]); ?>
             <div class="step">
-                <?= $form->field($model, 'dog_name')->textInput(['autofocus' => true]) ?>
-                <?= $form->field($model, 'pedigree_number')->textInput() ?>
-                <?= $form->field($model, 'owner')->textInput() ?>
-                <?= $form->field($model, 'months')->textInput(["type" => 'number']) ?>
-                <?= $form->field($model, 'breed_title')->textInput() ?>
-                <?= $form->field($model, 'type_id')->dropDownList(Dog::getAllTypes()) ?>
-                <?= $form->field($model, 'email')->textInput() ?>
+                <?= $form->field($model->dog, 'dog_name')->textInput(['autofocus' => true])->label('Кличка') ?>
+                <?= $form->field($model->dog, 'pedigree_number')->textInput()->label('# родословної') ?>
+                <?= $form->field($model->dog, 'owner')->textInput()->label('Хазяїн') ?>
+                <?= $form->field($model->dog, 'months')->textInput(["type" => 'number'])->label('Вік (в місяцях)') ?>
+                <?= $form->field($model->dog, 'breed_title')->textInput()->label('Порода') ?>
+                <?= $form->field($model->dog, 'type_id')->dropDownList(Dog::getAllTypes())->label('Стать') ?>
+                <?= $form->field($model->dog, 'email')->textInput()->label('Почтова скринька') ?>
             </div>
             <div class="step">
-                <?= $form->field($model, 'clientid')->textInput() ?>
-                <?= $form->field($model, 'optional_phone')->textInput() ?>
+                <?= $form->field($model, 'clientid')->textInput()->label('ІФП') ?>
+                <?= $form->field($model, 'optional_phone')->textInput()->label('Номер телефону') ?>
             </div>
             <p class="talign">
                 <a href="#" class="back">Назад</a>
                 <a href="#" class="next">Следующий шаг</a>
-                <?= Html::submitButton('Зареєструватися', ['class' => 'btn btn-primary', 'name' => 'register-dog--button']) ?>
+                <?= Html::submitInput('Зареєструватися', ['class' => 'btn btn-primary', 'name' => 'register-dog--button']) ?>
             </p>
 
         <?php ActiveForm::end(); ?>
@@ -55,36 +55,5 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
 </div>
 
 <script>
-    $(document).ready(function() { // Ждём загрузки страницы
-
-        var steps = $("form").children(".step"); // находим все шаги формы
-        $(steps[0]).show(); // показываем первый шаг
-        var current_step = 0; // задаем текущий шаг
-
-        $("a.next").click(function(){    // Событие клика на ссылку "Следующий шаг"
-            if (current_step === steps.length-2) { // проверяем, будет ли следующий шаг последним
-                $(this).hide(); // скрываем ссылку "Следующий шаг"
-                $("form input[type=submit]").show(); // показываем кнопку "Регистрация"
-            }
-            $("a.back").show(); // показываем ссылку "Назад"
-            current_step++; // увеличиваем счетчик текущего слайда
-            changeStep(current_step); // меняем шаг
-        });
-
-        $("a.back").click(function(){    // Событие клика на маленькое изображение
-            if (current_step === 1) { // проверяем, будет ли предыдущий шаг первым
-                $(this).hide(); // скрываем ссылку "Назад"
-            }
-            $("form input[type=submit]").hide(); // скрываем кнопку "Регистрация"
-            $("a.next").show(); // показываем ссылку "Следующий шаг"
-            current_step--; // уменьшаем счетчик текущего слайда
-            changeStep(current_step);// меняем шаг
-        });
-
-        function changeStep(i) { // функция смены шага
-            $(steps).hide(); // скрываем все шаги
-            $(steps[i]).show(); // показываем текущий
-        }
-    });
 </script>
 

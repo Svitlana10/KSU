@@ -16321,6 +16321,10 @@ form div.step {
     display:none;
 }
 
+form label {
+    color: #000;
+}
+
 form div.step p.step{
   text-align:center;
   font-size:28px;

@@ -6,6 +6,7 @@ namespace app\models\forms;
 
 use app\models\Show;
 use yii\base\Model;
+use yii\db\Exception;
 
 class RegisterForm extends Model
 {
@@ -40,9 +41,42 @@ class RegisterForm extends Model
         $this->dog = new DogShowForm(['show' => $this->show]);
     }
 
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            [['show', 'optional_phone'], 'required'],
+            [['show', 'optional_phone'], 'string'],
+        ];
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
     public function create()
     {
+        if(!$this->dog->validate()) {
 
+            $this->addErrors($this->dog->errors);
+            return false;
+        }
+
+        if(!$this->validate()) {
+
+            return false;
+        }
+
+        if(!$this->dog->create()) {
+
+            return false;
+        }
+
+
+
+        return true;
     }
 
 }
