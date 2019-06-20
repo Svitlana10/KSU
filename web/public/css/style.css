@@ -15083,7 +15083,7 @@ button:focus {
 .main_menu .navbar .nav .nav-item .nav-link {
     font: 400 13px/44px "Inconsolata", monospace;
     text-transform: uppercase;
-    color: #000;
+    color: #009789;
     padding: 0px 20px;
     display: inline-block;
 }
@@ -15884,8 +15884,8 @@ button:focus {
 }
 
 .blog_right_sidebar .post_category_widget .cat-list li a {
-    font-size: 100%;
-    line-height: 100%;
+    font-size: 20px;
+    line-height: 20px;
     color: #009789;
 }
 

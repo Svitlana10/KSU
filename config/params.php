@@ -3,5 +3,5 @@
 return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'admin@example.com',
-    'appName' => 'sabaki'
+    'appName' => 'Собаки'
 ];
