@@ -95,10 +95,10 @@ class AuthController extends Controller
     {
         $this->layout = 'nosidebar';
         $model = new SignupForm();
-        $model->load(Yii::$app->request->post(), '');
 
         if(Yii::$app->request->isPost)
         {
+            $model->load(Yii::$app->request->post());
             if($model->signup())
             {
                 return $this->redirect(['auth/login']);

@@ -3,13 +3,14 @@
 /* @var $this View */
 /* @var $content string */
 
-use app\assets\AppAsset;
+use app\assets\PublicAsset;
 use app\widgets\Footer;
 use app\widgets\Navbar;
 use yii\helpers\Html;
 use yii\web\View;
 
-AppAsset::register($this);
+
+PublicAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -22,7 +23,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body id="backgr">
 <?php $this->beginBody() ?>
 <div class="wrap">
 

@@ -11,29 +11,56 @@ $this->title = 'Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="signup-page">
-    <div class="form">
-        <div class="signup-form">
-            <h1><?= Html::encode($this->title) ?></h1>
-            <p>Будь ласка заповніть поля для реєстрації:</p>
-            <?php $form = ActiveForm::begin([
-                'id' => 'signup-form',
-                'layout' => 'horizontal',
-                'fieldConfig' => [
-                    'template' => "{label}\n<div class=\"text\">{input}</div>\n<div class=\"password\">{error}</div>",
-                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
-                ],
-            ]); ?>
+<div class="container">
+    <section>
+        <div id="container_demo" >
+            <a class="hiddenanchor" id="toregister"></a>
+            <a class="hiddenanchor" id="tologin"></a>
+            <div id="wrapper">
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-            <?= $form->field($model, 'email')->textInput() ?>
-            <?= $form->field($model, 'password')->passwordInput() ?>
-            <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary']) ?>
+
+                    <form  action="mysuperscript.php" autocomplete="on">
+                        <h1> Реєстрація </h1>
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'signup-form',
+                            'layout' => 'horizontal',
+                            'fieldConfig' => [
+                                'template' => "{label}\n<div class=\"text\">{input}</div>\n<div class=\"password\">{error}</div>",
+                                'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                            ],
+                        ]); ?>
+                        <p>
+                            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+
+                        </p>
+                        <p>
+                            <?= $form->field($model, 'email')->textInput() ?>
+
+                        </p>
+                        <p>
+                            <?= $form->field($model, 'password')->passwordInput() ?>
+
+                        </p>
+                        <p>
+                            <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Подтвердите ваш пароль </label>
+                            <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="123456"/>
+                        </p> <p>
+                        <div class="form-group">
+                            <?= Html::submitButton('Зареєструватись', ['class' => 'button']) ?>
+                        </div>
+                        </p>
+
+                        <?php ActiveForm::end(); ?>
+                    </form>
+                </div>
             </div>
-            <?php ActiveForm::end(); ?>
         </div>
-    </div>
-</div>
+
+
+
+
+
+
+
 
 

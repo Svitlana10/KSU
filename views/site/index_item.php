@@ -8,32 +8,34 @@
 /** @var $model \app\models\Article */
 use yii\helpers\Url;
 ?>
-<article class="post" >
-    <div class="post-thumb">
-        <a href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>"><img src="<?= $model->getImage();?>" alt=""></a>
 
-        <a href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>" class="post-thumb-overlay text-center">
-            <div class="text-uppercase text-center">View Post</div>
-        </a>
-    </div>
-    <div class="post-content">
-        <header class="entry-header text-center text-uppercase">
-            <h6><a href="<?= Url::toRoute(['site/category','id'=>$model->category->id])?>"> <?= $model->category->title; ?></a></h6>
-            <h1 class="entry-title"><a href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>"><?= $model->title?></a></h1>
-        </header>
-        <div class="entry-content">
-            <p><?= $model->description?>
-            </p>
+<section class="blog_area p_120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog_left_sidebar">
+                    <article class="blog_style1">
+                        <div class="blog_img">
 
-            <div class="btn-continue-reading text-center text-uppercase">
-                <a href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>" class="more-link">Continue Reading</a>
+                            <img class="img-fluid" href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>" src="<?= $model->getImage();?>" alt="">
+                        </div>
+                        <div class="blog_text"<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>>
+                            <div class="blog_text_inner">
+                                <div class="cat">
+                                    <a class="cat_btn" href="<?= Url::toRoute(['site/category','id'=>$model->category->id])?>"> <?= $model->category->title; ?></a>
+                                    <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> <?= $model->author->username; ?> On <?= $model->date ?></a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= (int) $model->viewed?></a>
+                                </div>
+                                <a href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>"><h4><?= $model->title?></h4></a>
+                                <p><?= $model->description?></p>
+                                <a class="blog_btn" href="<?= Url::toRoute(['site/view', 'id'=>$model->id]);?>" >Переглянути</a>
+                            </div>
+                        </div>
+                    </article>
+
             </div>
         </div>
-        <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <?= $model->author->username; ?> On <?= $model->date ?></span>
-            <ul class="text-center pull-right">
-                <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li><?= (int) $model->viewed?>
-            </ul>
-        </div>
     </div>
-</article>
+    </div>
+</section>
+

@@ -6,65 +6,71 @@ use app\models\Show;
 use yii\helpers\Url;
 $show = Show::getOneRegShow();
 ?>
+<body>
+<section class="blog_area p_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                 <div class="blog_right_sidebar">
+                     <aside class="single_sidebar_widget search_widget">
+                         <div class="input-group">
 
+            </div><!-- /input-group -->
 
-
-        <aside class="widget">
-            <h3 class="widget-title text-uppercase text-center">Найпопулярніші пости</h3>
+        </aside>
+        <div class="single_sidebar_widget author_widget">
+            <h3 class="widget_title">Увага</h3>
+            З 01.01.2016 РОКУ В СИСТЕМІ КСУ
+            ЗАБОРОНЕНО купировка вух і хвоста!
+            НАКАЗ №2 від 17.02.2016г.
+           <div class="br"></div>
+        </aside>
+        <aside class="single_sidebar_widget popular_post_widget">
+            <h3 class="widget_title">Популярні пости</h3>
             <?php
             /** @var Article $popular */
             /** @var Article $article */
             foreach($popular as $article):?>
-                <div class="popular-post">
-                    <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="popular-img"><img src="<?= $article->getImage();?>" alt="">
+            <div class="media post_item">
 
-                        <div class="p-overlay"></div>
-                    </a>
-
-                    <div class="p-content">
-                        <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="text-uppercase"><?= $article->title?></a>
-                        <span class="p-date"><?= date("Y-m-d H:i:s", $article->created_at)?></span>
-
-                    </div>
+                <img class="img_" src="<?= $article->getImage()?> " href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" alt="post">
+                <div class="media-body">
+                    <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>"> <?= $article->title?> </a>
+                    <p><?= date("Y-m-d H:i:s", $article->created_at)?></p>
+                </div>
+            </img>
                 </div>
             <?php endforeach;?>
-
+            <div class="br"></div>
         </aside>
+        <aside class="single_sidebar_widget post_category_widget">
 
-        <aside class="widget pos-padding">
-            <h3 class="widget-title text-uppercase text-center">Недавні пости</h3>
+            <h4 class="widget_title">Категорії</h4>
             <?php
-            /** @var Article[] $recent */
-            /** @var Article $article */
-            foreach($recent as $article):?>
-                <div class="thumb-latest-posts">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="popular-img"><img src="<?= $article->getImage();?>" alt="">
-                                <div class="p-overlay"></div>
-                            </a>
-                        </div>
-                        <div class="p-content">
-                            <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="text-uppercase"><?= $article->title?></a>
-                            <span class="p-date"><?= date("Y-m-d H:i:s", $article->created_at)?></span>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach;?>
-        </aside>
+            /** @var \app\models\Category $category */
+            foreach($categories as $category):?>
+            <ul class="list cat-list">
 
-        <aside class="widget border pos-padding">
-            <h3 class="widget-title text-uppercase text-center">Категорії</h3>
-            <ul>
-                <?php
-                /** @var \app\models\Category[] $categories */
-                /** @var \app\models\Category $category */
-                foreach($categories as $category):?>
-                    <li>
-                        <a href="<?= Url::toRoute(['site/index','category_id'=>$category->id]);?>"><?= $category->title?></a>
-                        <span class="post-count pull-right"> (<?= $category->getArticlesCount();?>)</span>
-                    </li>
-                <?php endforeach;?>
+                <li>
 
+                    <a href=" <?= Url::toRoute(['site/index','category_id'=>$category->id]);?>"><?= $category->title?>
+                        <?= $category->articlesCount?>
+                            <?php endforeach;?>
+
+                    </a>
+                </li>
             </ul>
         </aside>
+    </div>
+</div>
+</div>
+</div>
+</section>
+</body>
+
+
+
+
+
+
+
