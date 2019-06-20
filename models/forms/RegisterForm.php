@@ -28,11 +28,6 @@ class RegisterForm extends Model
     public $show;
 
     /**
-     * @var string $optional_phone
-     */
-    public $optional_phone;
-
-    /**
      * RegisterForm constructor.
      * @param array $config
      */
@@ -48,8 +43,8 @@ class RegisterForm extends Model
     public function rules()
     {
         return [
-            [['clientid', 'optional_phone'], 'required'],
-            [['clientid', 'optional_phone'], 'string'],
+            [['clientid'], 'required'],
+            [['clientid'], 'string'],
         ];
     }
 
@@ -78,7 +73,7 @@ class RegisterForm extends Model
 
         $pay = new PayKeeperApi();
 
-        $pay->getCreate($this->clientid, 123.00);
+        $pay->getCreate($this->clientid, $this->show->price);
 
         return true;
     }

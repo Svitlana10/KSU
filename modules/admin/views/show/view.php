@@ -35,6 +35,7 @@ YiiAsset::register($this);
         'attributes' => [
             'id',
             'title',
+            'price',
             'description:ntext',
             'address',
             'show_date:datetime',

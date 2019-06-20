@@ -32,6 +32,7 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
                 ],
         ]); ?>
             <div class="step">
+                <h3> Реєстрація собаки </h3>
                 <?= $form->field($model->dog, 'dog_name')->textInput(['autofocus' => true])->label('Кличка') ?>
                 <?= $form->field($model->dog, 'pedigree_number')->textInput()->label('# родословної') ?>
                 <?= $form->field($model->dog, 'owner')->textInput()->label('Хазяїн') ?>
@@ -41,8 +42,8 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
                 <?= $form->field($model->dog, 'email')->textInput()->label('Почтова скринька') ?>
             </div>
             <div class="step">
+                <h3> Оплата </h3>
                 <?= $form->field($model, 'clientid')->textInput()->label('ІФП') ?>
-                <?= $form->field($model, 'optional_phone')->textInput()->label('Номер телефону') ?>
             </div>
             <p class="talign">
                 <a href="#" class="back">Назад</a>
