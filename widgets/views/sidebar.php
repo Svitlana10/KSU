@@ -51,14 +51,12 @@ $show = Show::getOneRegShow();
             foreach($categories as $category):?>
             <ul class="list cat-list">
 
-                <li>
-
                     <a href=" <?= Url::toRoute(['site/index','category_id'=>$category->id]);?>"><?= $category->title?>
                         <?= $category->articlesCount?>
                             <?php endforeach;?>
 
                     </a>
-                </li>
+
             </ul>
         </aside>
     </div>

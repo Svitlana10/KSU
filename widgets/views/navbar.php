@@ -24,38 +24,39 @@ use yii\web\View;
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav">
-                        <li class="nav-item active"><a class="nav-link" href="/">Домашня</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Category</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Archive</a></li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href=" ">Sinlge Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href=" ">Elements</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">
-                                <?php if(!Yii::$app->user->isGuest):
-                                $user_status = Yii::$app->user->identity->status;
-                                if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
-                        <li>
-                            <a href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
-                        </li>
-                        <?php endif;
-                        endif;?></a></li>
+                        <li class="nav-item active"><a class="nav-link" href="/">Головна</a></li>
+<!--                        <li class="nav-item"><a class="nav-link" href="">Category</a></li>-->
+<!--                        <li class="nav-item"><a class="nav-link" href="">Archive</a></li>-->
+<!--                        <li class="nav-item submenu dropdown">-->
+<!--                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>-->
+<!--                            <ul class="dropdown-menu">-->
+<!--                                <li class="nav-item"><a class="nav-link" href=" ">Sinlge Blog</a></li>-->
+<!--                                <li class="nav-item"><a class="nav-link" href=" ">Elements</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+                        <?php if(!Yii::$app->user->isGuest):
+                            $user_status = Yii::$app->user->identity->status;
+                            if($user_status == User::USER_STATUS_ADMIN || $user_status == User::USER_STATUS_MODERATOR) :?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
+                            </li>
+                            <?php endif; ?>
+                        <?php endif;?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right header_social ml-auto">
                         <?php if(Yii::$app->user->isGuest):?>
-                            <li><a href="<?= Url::toRoute(['auth/login'])?>">Авторизуватися</a></li>
-                            <li><a href="<?= Url::toRoute(['auth/signup'])?>">Зареєструватися</a></li>
+                            <li><a href="<?= Url::toRoute(['/auth/login'])?>">Авторизуватися</a></li>
+                            <li><a href="<?= Url::toRoute(['/auth/signup'])?>">Зареєструватися</a></li>
                         <?php else: ?>
-                            <?=  Html::beginForm(['/auth/logout'], 'post')
-                            . Html::submitButton(
-                                'Вийти (' . Yii::$app->user->identity->username . ')',
-                                ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px; margin-left: 10%; color:#ffffff;"]
-                            )
-                            . Html::endForm() ?>
+                            <li>
+                                <?=  Html::beginForm(['/auth/logout'], 'post')
+                                . Html::submitButton(
+                                    'Вийти',
+                                    ['class' => 'btn btn-link logout', 'style' => 'color: #009789']
+                                )
+                                . Html::endForm() ?>
 
+                            </li>
                         <?php endif;?>
                     </ul>
                 </div>

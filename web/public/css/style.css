@@ -15884,9 +15884,9 @@ button:focus {
 }
 
 .blog_right_sidebar .post_category_widget .cat-list li a {
-    font-size: 20px;
-    line-height: 20px;
-    color: #777;
+    font-size: 100%;
+    line-height: 100%;
+    color: #009789;
 }
 
 .blog_right_sidebar .post_category_widget .cat-list li a p {
