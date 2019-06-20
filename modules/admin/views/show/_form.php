@@ -18,6 +18,8 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'price')->textInput(['type' => 'number'])?>
+
     <?= $form->field($model, 'address')->widget(SelectMapLocationWidget::class, [
         'attributeLatitude' => 'latitude',
         'attributeLongitude' => 'longitude',
@@ -44,7 +46,7 @@ use kartik\datetime\DateTimePicker;
             <?= ($model->img)? '<img src="'.$model->image.'" class="img-thumbnail">' : "no image uploaded" ?>
         </div>
         <div class="panel-footer">
-            <?= $form->field($model, 'img')->fileInput()->label(false) ?>
+            <?= $form->field($model, 'img')->fileInput(['value' => $model->img])->label(false) ?>
         </div>
     </div>
 

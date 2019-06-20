@@ -8,8 +8,6 @@
 
 namespace app\models\forms;
 
-
-use app\assets\PublicAsset;
 use app\models\ImageUpload;
 use app\models\Show;
 use app\models\User;
@@ -81,6 +79,11 @@ class ShowForm extends Model
     public $show;
 
     /**
+     * @var float $price
+     */
+    public $price;
+
+    /**
      * @var integer $created_at
      */
     public $created_at;
@@ -133,7 +136,7 @@ class ShowForm extends Model
     {
         return [
             [[
-                'title', 'address',
+                'title', 'address', 'price',
                 'showDate', 'startRegDate', 'endRegDate'
             ], 'required'],
             [['description'], 'string'],
@@ -142,8 +145,9 @@ class ShowForm extends Model
             ], 'integer'],
             [[
                 'showDate', 'startRegDate', 'endRegDate',
-                'longitude', 'latitude',
+                'longitude', 'latitude'
             ], 'safe'],
+            [['price'], 'string'],
             [['title', 'address'], 'string', 'max' => 255],
             ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -193,6 +197,7 @@ class ShowForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
 
+        $this->img = $this->show->img;
         $this->show->setAttributes($this->getAttributes());
         $this->show->user_id = Yii::$app->user->id;
 

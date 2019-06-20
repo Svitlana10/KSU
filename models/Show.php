@@ -233,8 +233,8 @@ class Show extends ActiveRecord
     {
         $photo = new ImageUpload();
         $form = new ShowForm();
-
-        if($file = UploadedFile::getInstance($form, 'img') ?: UploadedFile::getInstanceByName('img')){
+        $file = UploadedFile::getInstance($form, 'img') ?: UploadedFile::getInstanceByName('img');
+        if($file){
             $this->img = $photo->uploadFile($file, $this->img);
         }
 
