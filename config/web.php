@@ -1,6 +1,8 @@
 <?php
 
+use app\models\User;
 use app\modules\admin\Module as AdminModule;
+use vision\messages\components\MyMessages;
 
 $params = require(__DIR__ . '/params.php');
 
@@ -36,7 +38,25 @@ $config = [
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
-
+        'mymessages' => [
+            //Обязательно
+            'class'    => MyMessages::class,
+            'nameController' => 'site',
+            'admins' => [1],
+            'getEmail' => function(User $user_model) {
+                return $user_model->email;
+            },
+            'getLogo' => function($user_id) {
+                return '\img\ghgsd.jpg';
+            },
+            'enableEmail' => false,
+//            'templateEmail' => [
+//                'html' => 'private-message-text',
+//                'text' => 'private-message-html'
+//            ],
+            //тема письма
+            'subject' => 'Private message'
+        ],
     ],
     'modules' => [
         'admin' => [
@@ -48,15 +68,15 @@ $config = [
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-    ];
-
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-    ];
+//    $config['bootstrap'][] = 'debug';
+//    $config['modules']['debug'] = [
+//        'class' => 'yii\debug\Module',
+//    ];
+//
+//    $config['bootstrap'][] = 'gii';
+//    $config['modules']['gii'] = [
+//        'class' => 'yii\gii\Module',
+//    ];
 }
 
 return $config;
