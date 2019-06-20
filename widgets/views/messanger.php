@@ -7,6 +7,7 @@ Modal::begin([
         'label' => '+',
         'id' => 'fixedbutton',
         'class' => 'btn btn-success btn-lg btn-custom-lg'],
+    'footer' => 'asd',
 ]);
 echo CloadMessage::widget();
 ?>
