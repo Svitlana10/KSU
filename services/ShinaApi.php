@@ -8,6 +8,23 @@ use yii\helpers\Json;
 /**
  * Class ShinaApi
  * @package app\services
+ *
+ * @property bool|mixed partnerInfo
+ * @property bool|mixed categories
+ * @property bool|mixed regions
+ * @property bool|mixed billList
+ * @property bool|mixed billInfo
+ * @property bool|mixed billFields
+ * @property bool|mixed billValidate
+ * @property bool|mixed cartCreate
+ * @property bool|mixed cartInfo
+ * @property bool|mixed cartSetUser
+ * @property bool|mixed cartAdd
+ * @property bool|mixed cartPay
+ * @property bool|mixed cartCancel
+ * @property bool|mixed cartVerificationPay
+ * @property bool|mixed cartOperations
+ * @property bool|mixed sig
  */
 class ShinaApi
 {
@@ -35,7 +52,12 @@ class ShinaApi
     /**
      * @var array $request
      */
-    private $request = [];
+    public $request = [];
+
+    /**
+     * @var string $time
+     */
+    public $time;
 
     /**
      * @var bool $enable_caching
@@ -74,83 +96,71 @@ class ShinaApi
     {
         $this->app_id  = env('PAY_APP_ID', 'localhost');
         $this->app_key = env('PAY_APP_KEY', 'localhost');
+        $this->item = date('Y:m:d H:i:s');
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getPartnerInfo($request = [])
+    public function getPartnerInfo()
     {
-
         $this->uri = $this->domain . '/connect';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getCategories( $request = [] )
+    public function getCategories()
     {
-
         $this->uri = $this->domain . '/category/list';
-        $this->request= $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getRegions( $request = [] )
+    public function getRegions()
     {
-
         $this->uri = $this->domain . '/region/list';
-        $this->request= $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getBillList( $request = [] )
+    public function getBillList()
     {
-        $hash = md5( Json::encode( array_merge( [ 'name' => 'ShinaApi_getBillList' ], $request ) ) );
+        $hash = md5( Json::encode( array_merge( [ 'name' => 'ShinaApi_getBillList' ], $this->request ) ) );
         
-        $respons = false;
+        $response = false;
         
         if( empty($respons) ){
         
             $this->uri = $this->domain . '/bill/list';
-            $this->request= $request;
 
-            $respons = $this->sendRequest();
+            $response = $this->sendRequest();
         }
         
         return $respons;
     }
 
-    /**
-     * @param array $request
+    /**\
      * @return bool|mixed
      */
-    public function getBillInfo( $request = [] )
+    public function getBillInfo()
     {
 
-        $hash = md5( Json::encode( array_merge( [ 'name' => 'ShinaApi_getBillInfo' ], $request ) ) );
+        $hash = md5( Json::encode( array_merge( [ 'name' => 'ShinaApi_getBillInfo' ], $this->request ) ) );
         
         $response =  false;
         
         if( empty($response) ){
         
             $this->uri = $this->domain . '/bill/info';
-            $this->request= $request;
 
             $response = $this->sendRequest();
         }
@@ -159,130 +169,101 @@ class ShinaApi
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getBillFields( $request = [] )
+    public function getBillFields()
     {
-
         $this->uri = $this->domain . '/bill/fields';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getBillValidate( $request = [] )
+    public function getBillValidate()
     {
-
         $this->uri = $this->domain . '/bill/validate';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function createCart( $request = [] )
+    public function getCartCreate()
     {
-
         $this->uri = $this->domain . '/cart/create';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getCartInfo($request = [])
+    public function getCartInfo()
     {
-
         $this->uri = $this->domain . '/cart/info';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function setCartUser($request = [])
+    public function getCartSetUser()
     {
-
         $this->uri = $this->domain . '/cart/user';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function addCart( $request = [] )
+    public function getCartAdd()
     {
-
         $this->uri = $this->domain . '/cart/add';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function payCart( $request = [] )
+    public function getCartPay()
     {
-
         $this->uri = $this->domain . '/cart/pay';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function cancelCart( $request = [] )
+    public function getCartCancel()
     {
-
         $this->uri = $this->domain . '/cart/cancel';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function verificationPayCart( $request = [] )
+    public function getCartVerificationPay()
     {
-
         $this->uri = $this->domain . '/cart/pay/verification';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
 
     /**
-     * @param array $request
      * @return bool|mixed
      */
-    public function getCartOperations( $request = [] )
+    public function getCartOperations()
     {
         $this->uri = $this->domain . '/cart/operations';
-        $this->request = $request;
 
         return $this->sendRequest();
     }
@@ -290,16 +271,14 @@ class ShinaApi
     /**
      * @return bool|mixed
      */
-    public function sendRequest()
+    private function sendRequest()
     {
-        $time = date('Y:m:d H:i:s');
-
         $this->validateBeforeSend();
 
         $auth_params = [
             'app_id' => $this->app_id,
-            'sig' => $this->getSig($time),
-            'time' => $time,
+            'sig' => $this->sig,
+            'time' => $this->time,
         ];
 
         $params = $auth_params + $this->request;
@@ -322,13 +301,12 @@ class ShinaApi
     }
 
     /**
-     * @param string $time
      * @return string
      * вычисляет подпись
      */
-    public function getSig( $time = '' )
+    public function getSig()
     {
-        return md5( $this->app_id . $this->app_key . $time );
+        return md5( $this->app_id . $this->app_key . $this->time );
     }
 
     /**
@@ -346,5 +324,4 @@ class ShinaApi
             die('Empty uri');
         }
     }
-
 }
