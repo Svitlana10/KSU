@@ -25,6 +25,7 @@ use yii\web\UploadedFile;
  * @property int $start_reg_date
  * @property int $end_reg_date
  * @property int $user_id
+ * @property float $price
  * @property Json $google_location
  * @property int $created_at
  * @property int $updated_at
@@ -71,10 +72,11 @@ class Show extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'address', 'showDate', 'startRegDate', 'endRegDate'], 'required'],
+            [['title', 'description', 'address', 'showDate', 'startRegDate', 'endRegDate', 'price'], 'required'],
             [['description'], 'string'],
             [['show_date', 'start_reg_date', 'end_reg_date', 'user_id', 'created_at', 'updated_at'], 'integer'],
             [['title', 'address'], 'string', 'max' => 255],
+            [['price'], 'double'],
             ['google_location', JsonValidator::class],
             ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -96,6 +98,7 @@ class Show extends ActiveRecord
             'start_reg_date' => 'Початок реєстрації',
             'end_reg_date' => 'Кінець реєстрації',
             'user_id' => 'Користувач',
+            'price' => 'Ціна',
             'google_location' => 'Локація',
             'created_at' => 'Дата створення',
             'updated_at' => 'Дата оновлення',
@@ -233,8 +236,8 @@ class Show extends ActiveRecord
     {
         $photo = new ImageUpload();
         $form = new ShowForm();
-
-        if($file = UploadedFile::getInstance($form, 'img') ?: UploadedFile::getInstanceByName('img')){
+        $file = UploadedFile::getInstance($form, 'img') ?: UploadedFile::getInstanceByName('img');
+        if($file){
             $this->img = $photo->uploadFile($file, $this->img);
         }
 

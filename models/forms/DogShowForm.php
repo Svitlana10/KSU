@@ -24,36 +24,59 @@ class DogShowForm extends Model
 {
     // region DOG_SHOW_ROWS
 
-    /** @var integer $id */
+    /**
+     * @var integer $id
+     */
     public $id;
-    /** @var string $dog_name */
+
+    /**
+     * @var string $dog_name
+     */
     public $dog_name;
 
-    /** @var integer $breed_id*/
+    /**
+     * @var integer $breed_id
+     */
     public $breed_id;
 
-    /** @var string $breed_title */
+    /**
+     * @var string $breed_title
+     */
     public $breed_title;
 
-    /** @var integer $pedigree_number*/
+    /**
+     * @var integer $pedigree_number
+     */
     public $pedigree_number;
 
-    /** @var string $owner*/
+    /**
+     * @var string $owner
+     */
     public $owner;
 
-    /** @var integer $status */
+    /**
+     * @var integer $status
+     */
     public $status;
 
-    /** @var integer $months */
+    /**
+     * @var integer $months
+     */
     public $months;
 
-    /** @var integer $category_id */
+    /**
+     * @var integer $category_id
+     */
     public $type_id;
 
-    /** @var integer $created_at */
+    /**
+     * @var integer $created_at
+     */
     public $created_at;
 
-    /** @var integer $updated_at */
+    /**
+     * @var integer $updated_at
+     */
     public $updated_at;
 
     // endregion
@@ -61,16 +84,24 @@ class DogShowForm extends Model
     /** @var string $email */
     public $email;
 
-    /** @var Dog $dog */
+    /**
+     * @var Dog $dog
+     */
     public $dog;
 
-    /** @var DogBreeds $breed*/
+    /**
+     * @var DogBreeds $breed
+     */
     public $breed;
 
-    /** @var DogTypes $type*/
+    /**
+     * @var DogTypes $type
+     */
     public $type;
 
-    /** @var Show $show */
+    /**
+     * @var Show $show
+     */
     public $show;
 
     /**

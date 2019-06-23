@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Article;
 use app\models\forms\CommentForm;
 use app\models\forms\DogShowForm;
+use app\models\forms\RegisterForm;
 use app\models\searchs\ArticleSearch;
 use app\models\Show;
 use kartik\mpdf\Pdf;
@@ -128,9 +129,11 @@ class SiteController extends Controller
      */
     public function actionRegisterDog($show)
     {
-        $model = new DogShowForm(['show' => $this->findShow($show)]);
+        $this->layout = 'nosidebar';
+        $model = new RegisterForm(['show' => $this->findShow($show)]);
         if(Yii::$app->request->isPost){
             $model->load(Yii::$app->request->post());
+            $model->dog->load(Yii::$app->request->post());
             if($model->create()){
 
                 Yii::$app->getSession()->setFlash('comment', 'Перевірте вашу поштову скриньку');
