@@ -2,10 +2,15 @@
 
 namespace app\models;
 
+use vision\messages\models\Messages;
 use Yii;
+use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
@@ -24,26 +29,49 @@ use yii\web\IdentityInterface;
  *
  * @property bool $isAdmin
  * @property bool $isModer
+ * @property bool|string $userLogo
  * @property null $userStatus
  * @property mixed $password
+ * @property mixed $allUsers
+ * @property array $adminIds
  * @property string $image
  * @property string $authKey
+ * @property User[] $admins
  * @property Comment[] $comments
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    /**
+     * @const USER_STATUS_NOT_ACTIVE
+     */
     const USER_STATUS_NOT_ACTIVE = 0;
-    const USER_STATUS_BANNED     = 1;
-    const USER_STATUS_USER       = 2;
-    const USER_STATUS_MODERATOR  = 3;
-    const USER_STATUS_ADMIN      = 4;
+    /**
+     * @const USER_STATUS_BANNED
+     */
+    const USER_STATUS_BANNED = 1;
+    /**
+     * @const USER_STATUS_USER
+     */
+    const USER_STATUS_USER = 2;
+    /**
+     * @const USER_STATUS_MODERATOR
+     */
+    const USER_STATUS_MODERATOR = 3;
 
+    /**
+     * @const USER_STATUS_ADMIN
+     */
+    const USER_STATUS_ADMIN = 4;
+
+    /**
+     * @var array $statuses
+     */
     public static $statuses = [
-        ['id' => self::USER_STATUS_NOT_ACTIVE,  'title' => 'Not active'],
-        ['id' => self::USER_STATUS_BANNED,      'title' => 'Banned'],
-        ['id' => self::USER_STATUS_USER,        'title' => 'User'],
-        ['id' => self::USER_STATUS_MODERATOR,   'title' => 'Moder'],
-        ['id' => self::USER_STATUS_ADMIN,       'title' => 'Admin'],
+        ['id' => self::USER_STATUS_NOT_ACTIVE, 'title' => 'Not active'],
+        ['id' => self::USER_STATUS_BANNED, 'title' => 'Banned'],
+        ['id' => self::USER_STATUS_USER, 'title' => 'User'],
+        ['id' => self::USER_STATUS_MODERATOR, 'title' => 'Moder'],
+        ['id' => self::USER_STATUS_ADMIN, 'title' => 'Admin'],
     ];
 
     /**
@@ -83,15 +111,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id'            => '№',
-            'username'      => "Ім'я",
-            'auth_key'      => "Ключ",
+            'id' => '№',
+            'username' => "Ім'я",
+            'auth_key' => "Ключ",
             'password_hash' => 'Пароль',
-            'email'         => 'Email, Логін',
-            'status'        => 'Статус',
-            'avatar'        => 'Аватар',
-            'created_at'    => 'Створено',
-            'updated_at'    => 'Оновлено',
+            'email' => 'Email, Логін',
+            'status' => 'Статус',
+            'avatar' => 'Аватар',
+            'created_at' => 'Створено',
+            'updated_at' => 'Оновлено',
         ];
     }
 
@@ -122,7 +150,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getComments()
     {
@@ -145,7 +173,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->id;
     }
-
 
     /**
      * @return string
@@ -195,7 +222,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @param $password
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function setPassword($password)
     {
@@ -203,7 +230,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function generateAuthKey()
     {
@@ -219,16 +246,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function saveFromVk($user_id, $name, $photo)
     {
         $user = User::findOne($user_id);
-        if($user)
-        {
+        if ($user) {
             return Yii::$app->user->login($user);
         }
-        
+
         $this->id = $user_id;
         $this->username = $name;
         $this->avatar = $photo;
         $this->save();
-        
+
         return Yii::$app->user->login($this);
     }
 
@@ -241,7 +267,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     *
+     * @throws Exception
      */
     public function deleteAvatar()
     {
@@ -250,6 +276,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function beforeDelete()
     {
@@ -263,16 +290,75 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function sendActivationEmail($user_id)
     {
-        if($user = User::findOne($user_id)){
+        if ($user = User::findOne($user_id)) {
             return Yii::$app->mailer->compose(
                 ['html' => '', 'text' => ''],
                 ['user' => $user]
             )
-                ->setFrom([env('supportEmail', 'nomail@test.test') => env('appName', 'Yii-test-project'). ' robot'])
+                ->setFrom([env('supportEmail', 'nomail@test.test') => env('appName', 'Yii-test-project') . ' robot'])
                 ->setTo($user->email)
                 ->setSubject('Activate account on' . env('appName', 'Yii-test-project'))
                 ->send();
         }
         return false;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getAdmins()
+    {
+        return self::findAll(['status' => self::USER_STATUS_ADMIN]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdminIds()
+    {
+        return self::find()->where(['status' => self::USER_STATUS_ADMIN])->select(['id'])->column();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllUsers()
+    {
+        $table_name = Messages::tableName();
+
+        $subQuery = (new Query())
+            ->select([
+                'from_id',
+                'cnt' => new Expression('count(id)')
+            ])
+            ->from($table_name)
+            ->where([
+                'status' => 1,
+                'whom_id' => $this->id
+            ])
+            ->groupBy([
+                'from_id'
+            ]);
+
+        $query = (new Query())
+            ->select([
+                'usr.id',
+                'username' => 'usr.' . 'username',
+                'cnt_mess' => 'msg.cnt'
+            ])
+            ->from(['usr' => 'users'])
+            ->leftJoin(['msg' => $subQuery], 'usr.id = msg.from_id')
+            ->where([
+                '!=', 'usr.id', $this->id
+            ])
+            ->andWhere([
+                'in','usr.status', [self::USER_STATUS_ADMIN, self::USER_STATUS_MODERATOR],
+            ])
+            ->orderBy([
+                'msg.cnt' => SORT_DESC,
+                'usr.' . 'username' => SORT_DESC
+            ]);
+
+        return $query->all();
     }
 }

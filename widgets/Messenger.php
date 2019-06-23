@@ -38,7 +38,7 @@ class Messenger extends PrivateMessageWidget
 
     protected function getListUsers()
     {
-        $users = Yii::$app->mymessages->allUsers;
+        $users = Yii::$app->user->identity->allUsers;
         $html = '<div class="col-md-2">';
         $html .= '<div class="list_users message-user-list friends-message-layout">';
         $html .= '<div id="scrollbar3">
@@ -54,7 +54,7 @@ class Messenger extends PrivateMessageWidget
                                 <div class="overview" style="top 10px;">';
 
         foreach ($users as $usr) {
-            $username = trim($usr[Yii::$app->mymessages->attributeNameUser]);
+            $username = trim($usr['username']);
             $names = explode(' ', $username);
             $html .= '<div class="contact friends" data-name="' . $username . '" data-user="' . $usr['id'] . '">';
 
