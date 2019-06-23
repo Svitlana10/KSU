@@ -167,7 +167,7 @@
 
 #scrollbar3 .viewport
 {
-    height:300px;
+    height:100%;
     overflow:hidden;
     position:relative;
 }
@@ -242,7 +242,7 @@
 
 #scrollbar4 .viewport
 {
-    height:200px;
+    height:100%;
     overflow:hidden;
     position:relative;
 }
@@ -541,13 +541,13 @@
 }
 .my-message .massage-cell{
     text-align: right;
-    background: #c3edf8;
+    background: #009789;
 }
 .message-wrapper{
     background: #fff;
     clear: both;
     padding: 32px 16px;
-    width: 540px;
+    width: 100%;
     float: left;
     padding-bottom: 25px;
 }
@@ -566,7 +566,7 @@
     margin-top: 55px;
 }
 .create-message .textarea-layout{
-    border: 1px solid #55b2cc;
+    border: 1px solid #009789;
     background: #faf9fa;
     font-size: 11px;
     line-height: 18px;
@@ -587,7 +587,7 @@
     background: none;
     box-shadow: none;
     border: none;
-    color: #55b2cc;
+    color: #009789;
     font-size: 18px;
     line-height: 18px;
     font-family: NeuronLight;
@@ -611,9 +611,8 @@
     right: -17px;
 }
 .friends-message-layout{
-    float: right;
-    width: 140px;
-    background-color: #50a3bb;
+    width: 100%;
+    background-color: #009789bf;
     min-height: 540px;
 }
 .friends{
@@ -623,7 +622,7 @@
     cursor: pointer;
 }
 .friends.active{
-    background-color: #80c5d9
+    background-color: #00978978
 }
 .friends.active .friends-block{
     border: 2px solid #fff;
@@ -715,8 +714,8 @@
     background: none;
 }
 .friends-message-layout #scrollbar3{
-    height: 537px;
-    width: 140px;
+    height: 100%;
+    width: 20%;
 }
 .friends-message-layout #scrollbar3 .thumb{
     background: transparent url(img/scroll-2.png) no-repeat 50% 100%;
@@ -724,7 +723,7 @@
     background-repeat-y: repeat;
 }
 .friends-message-layout .viewport{
-    height: 537px;
+    height: 100%;
     width: 132px;
 }
 .friends-message-layout .overview{
@@ -762,15 +761,15 @@
     clear: both;
 }
 div.main-message-container {
-    width: 750px;
-    border: 2px solid #7ECBD4;
+    width: 100%;
+    border: 2px solid #009789;
 }
 div.message-north .right-layout{
-    background: #65b8d0;
+    background: #009789;
     /*padding-bottom: 50px;*/
 }
 div.main-message-container .layout-background {
-    background: #63b2c9;
+    background: #009789;
 }
 .search input {
     color: white;

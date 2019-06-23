@@ -1,5 +1,5 @@
 div.message-container  {
-    width: 250px;
+    /*width: 250px;*/
     height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
