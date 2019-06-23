@@ -53,6 +53,10 @@ class Messenger extends PrivateMessageWidget
                             <div class="viewport">
                                 <div class="overview" style="top 10px;">';
 
+        if(!$users) {
+            $html .= '<h3>Адмінів не знайдено</h3>';
+        }
+
         foreach ($users as $usr) {
             $username = trim($usr['username']);
             $names = explode(' ', $username);
