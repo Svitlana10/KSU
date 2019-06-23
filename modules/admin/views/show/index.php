@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\searchs\ShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Shows';
+$this->title = 'Виставка';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="show-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Show', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Додати нову виставку', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

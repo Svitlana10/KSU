@@ -14,7 +14,7 @@ if(!empty($comments)):?>
             </div>
 
             <div class="comment-text">
-                <a href="#" class="replay btn pull-right"> Змінити</a>
+                <a href="#" class="replay btn pull-right"> </a>
                 <h5><?= $comment->user->username;?></h5>
 
                 <p class="comment-date">
@@ -32,7 +32,7 @@ if(!empty($comments)):?>
 
 <?php if(!Yii::$app->user->isGuest):?>
     <div class="leave-comment"><!--leave comment-->
-        <h4>Leave a reply</h4>
+
         <?php if(Yii::$app->session->getFlash('comment')):?>
             <div class="alert alert-success" role="alert">
                 <?= Yii::$app->session->getFlash('comment'); ?>
@@ -49,7 +49,7 @@ if(!empty($comments)):?>
                 <?= $form->field($commentForm, 'comment')->textarea(['class'=>'form-control','placeholder'=>'Write Message'])->label(false)?>
             </div>
         </div>
-        <button type="submit" class="btn send-btn">Опублікувати коментарій</button>
+        <button type="submit" class="button_1">Опублікувати </button>
         <?php ActiveForm::end();?>
     </div><!--end leave comment-->
 <?php endif;?>

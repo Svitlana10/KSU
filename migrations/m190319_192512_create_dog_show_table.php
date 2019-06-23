@@ -38,7 +38,7 @@ class m190319_192512_create_dog_show_table extends Migration
             'fk-dog-show-dog_id',
             'dog_show',
             'dog_id',
-            'dogs',
+            'Собаки',
             'id',
             'CASCADE','RESTRICT'
         );

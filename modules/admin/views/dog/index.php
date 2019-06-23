@@ -11,7 +11,7 @@ use yii\helpers\Html;
 /* @var $searchModel app\models\searchs\DogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Dogs';
+$this->title = 'Собаки';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dog-index">
@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Dog', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Create document', ['document'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Додати собаку', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Створити документ', ['document'], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= GridView::widget([
