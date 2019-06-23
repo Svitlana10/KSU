@@ -40,6 +40,9 @@ use yii\web\View;
                                 <a class="nav-link" href="<?= Url::toRoute(['/admin'])?>" >Адміністрування</a>
                             </li>
                             <?php endif; ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= Url::toRoute(['/site/messenger'])?>" >Мессенджер</a>
+                            </li>
                         <?php endif;?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right header_social ml-auto">

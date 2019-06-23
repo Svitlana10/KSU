@@ -34,10 +34,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'comment'],
+                'only' => ['logout', 'comment', 'messenger'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'comment'],
+                        'actions' => ['logout', 'comment', 'messenger'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -148,6 +148,15 @@ class SiteController extends Controller
         return $this->render('register-dog',[
             'model'=>$model,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionMessenger()
+    {
+        $this->layout = 'nosidebar';
+        return $this->render('messenger');
     }
 
     /**

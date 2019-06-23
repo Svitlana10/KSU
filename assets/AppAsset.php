@@ -16,21 +16,22 @@ use yii\web\AssetBundle;
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '@web/public';
+    public $sourcePath = '@web/public';
     public $css = [
-        "public/css/animate.min.css",
-        "public/css/owl.carousel.css",
-        "public/css/owl.theme.css",
-        "public/css/owl.transitions.css",
-        "public/css/style.css",
-        "public/css/responsive.css",
-        "public/css/backgr.css",
+        "css/animate.min.css",
+        "css/owl.carousel.css",
+        "css/owl.theme.css",
+        "css/owl.transitions.css",
+        "css/style.css",
+        "css/responsive.css",
+        "css/backgr.css",
     ];
     public $js = [
-        "public/js/owl.carousel.min.js",
-        "public/js/jquery.stickit.min.js",
-        "public/js/menu.js",
-        "public/js/scripts.js",
+        "js/owl.carousel.min.js",
+        "js/jquery.stickit.min.js",
+        "js/menu.js",
+        "js/scripts.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',

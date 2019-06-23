@@ -6,11 +6,8 @@
 use app\assets\AppAsset;
 use app\models\Show;
 use app\widgets\Footer;
-use app\widgets\Messanger;
 use app\widgets\Navbar;
 use app\widgets\Sidebar;
-use vision\messages\widgets\CloadMessage;
-use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\helpers\Url;
@@ -78,7 +75,6 @@ AppAsset::register($this);
         </div>
     </div>
 </div>
-<?= Messanger::widget() ?>
 
 <?php $this->endBody() ?>
 <?php $this->endPage() ?>
