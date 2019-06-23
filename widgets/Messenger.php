@@ -4,7 +4,7 @@
 namespace app\widgets;
 
 
-use vision\messages\assets\CloadAsset;
+use app\assets\MessageAsset;
 use vision\messages\widgets\PrivateMessageWidget;
 
 /**
@@ -111,7 +111,7 @@ class Messenger extends PrivateMessageWidget {
 
 
     protected function assetJS() {
-        CloadAsset::register($this->view);
+        MessageAsset::register($this->view);
         $this->addJs();
     }
 }
