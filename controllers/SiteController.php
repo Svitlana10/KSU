@@ -151,6 +151,15 @@ class SiteController extends Controller
     }
 
     /**
+     * @return string
+     */
+    public function actionMessenger()
+    {
+        $this->layout = 'nosidebar';
+        return $this->render('messenger');
+    }
+
+    /**
      * @param $id
      * @return mixed
      * @throws BadRequestHttpException

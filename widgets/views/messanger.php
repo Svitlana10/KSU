@@ -1,16 +1,7 @@
 <?php
 use vision\messages\widgets\CloadMessage;
-use yii\bootstrap\Modal;
 
-Modal::begin([
-    'size' => 'modal-lg',
-    'toggleButton' => [
-        'label' => '+',
-        'id' => 'fixedbutton',
-        'tag' => 'button',
-        'class' => 'btn btn-success btn-lg btn-custom-lg'],
-    'footer' => 'asd',
-]);
+
 echo CloadMessage::widget();
 ?>
     <script>
@@ -20,6 +11,3 @@ echo CloadMessage::widget();
         });
         listener.start();
     </script>
-<?php
-Modal::end();
-?>
