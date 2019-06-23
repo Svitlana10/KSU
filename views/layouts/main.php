@@ -6,8 +6,11 @@
 use app\assets\AppAsset;
 use app\models\Show;
 use app\widgets\Footer;
+use app\widgets\Messanger;
 use app\widgets\Navbar;
 use app\widgets\Sidebar;
+use vision\messages\widgets\CloadMessage;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\helpers\Url;
@@ -38,23 +41,22 @@ AppAsset::register($this);
 
 <section class="home_banner_area">
     <div class="container">
-            <div class="col-lg-5"></div>
-            <div class="col-lg-7">
-                <div class="blog_text_slider owl-carousel">
-                    <div class="blog_text">
-                            <h2 class="widget-title text-uppercase text-center">Реєстрація на виставку</h2>
-                            <div class="text-center">
-                                <?php
-                                if($show = Show::getOneRegShow()) : ?>
-                                    <h3>Виставка: <?= $show->showDate ?></h3>
-                                    <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="button" style="width: 90%">Зареєструватись</a>
-                                    <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="button" style="width: 90%; margin-top: 2px">Переглянути зареєстрованих собак</a>
-                                <?php else: ?>
-                                    <h4>Немає найблищих виставок</h4>
-                                <?php endif; ?>
+        <div class="col-lg-5"></div>
+        <div class="col-lg-7">
+            <div class="blog_text_slider owl-carousel">
+                <div class="blog_text">
+                        <h2 class="widget-title text-uppercase text-center">Реєстрація на виставку</h2>
+                        <div class="text-center">
+                            <?php
+                            if($show = Show::getOneRegShow()) : ?>
+                                <h3>Виставка: <?= $show->showDate ?></h3>
+                                <a href="<?= Url::toRoute(['site/register-dog', 'show' => $show->id]) ?>" class="button" style="width: 90%">Зареєструватись</a>
+                                <a href="<?= Url::toRoute(['site/view-dog', 'id' => $show->id]) ?>" class="button" style="width: 90%; margin-top: 2px">Переглянути зареєстрованих собак</a>
+                            <?php else: ?>
+                                <h4>Немає найблищих виставок</h4>
+                            <?php endif; ?>
 
-                            </div>
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -76,12 +78,11 @@ AppAsset::register($this);
         </div>
     </div>
 </div>
-<?php $this->endBody() ?>.
+<?= Messanger::widget() ?>
+
+<?php $this->endBody() ?>
 <?php $this->endPage() ?>
 </body>
 
 <?= Footer::widget() ?>
-
-
-
 </html>

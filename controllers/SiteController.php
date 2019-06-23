@@ -9,6 +9,7 @@ use app\models\forms\RegisterForm;
 use app\models\searchs\ArticleSearch;
 use app\models\Show;
 use kartik\mpdf\Pdf;
+use vision\messages\actions\MessageApiAction;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\Exception;
@@ -65,6 +66,9 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'private-messages' => [
+                'class' => MessageApiAction::class
+            ]
         ];
     }
 

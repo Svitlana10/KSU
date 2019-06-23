@@ -20316,6 +20316,22 @@ p.change_link{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+#fixedbutton {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+}
+
+.btn.btn-custom-lg,
+.btn.btn-custom-sm,
+.btn.btn-custom-xs {
+    border-radius: 25px;
+}
+/*Global*/
+
+.btn.btn-square {
+    border-radius: 25px;
+}
 .button_1 {
     background-color: #009789; /* Green */
     border: none;
@@ -20334,9 +20350,3 @@ p.change_link{
 .comment-date{
     font-size: 10px;
 }
-
-
-
-
-
-
