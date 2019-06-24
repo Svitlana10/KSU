@@ -359,6 +359,15 @@ class User extends ActiveRecord implements IdentityInterface
                 'usr.' . 'username' => SORT_DESC
             ]);
 
+        if(in_array($this->status, [self::USER_STATUS_ADMIN, self::USER_STATUS_MODERATOR])) {
+            $whom = Messages::find()->select(['from_id'])->where(['whom_id' => $this->id])->groupBy(['from_id'])->column();
+            $query->orWhere([
+               'and',
+                [ 'usr.status' => self::USER_STATUS_USER],
+                [ 'in', 'usr.id', $whom]
+            ]);
+        }
+
         return $query->all();
     }
 }
