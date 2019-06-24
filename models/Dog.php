@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use DateTime;
+use Exception;
 use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -22,24 +24,38 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property int $born_at
+ * @property void $current_months
+ * @property null|string $statusTitle
+ * @property string $breedTitle
+ * @property string $born_month
  * @property DogShow $dogShow
  * @property DogShow[] $dogShows
  * @property DogBreeds $breed
- * @property null|string $statusTitle
- * @property string $breedTitle
- * @property Show $show
  * @property DogTypes $type
+ * @property Show $show
  */
 class Dog extends ActiveRecord
 {
 
+    /**
+     * @const STATUS_NEW
+     */
     const STATUS_NEW        = 1;
+
+    /**
+     * @const STATUS_APPROVED
+     */
     const STATUS_APPROVED   = 2;
 
-    /** @var string $breed */
+    /**
+     * @var string $breed
+     */
     public $breed_title;
 
-    /**@var array $statuses*/
+    /**
+     * @var array $statuses
+     */
     public static $statuses = [
         ['id' => self::STATUS_NEW, 'title' => 'NEW'],
         ['id' => self::STATUS_APPROVED, 'title' => 'APPROVED'],
@@ -162,10 +178,39 @@ class Dog extends ActiveRecord
     }
 
     /**
+     * @return int
+     */
+    public function getBorn_at()
+    {
+        $months = $this->months * 60 * 60 * 24 * 7 * 4;
+        return $this->created_at - $months;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBorn_month()
+    {
+        return date('m', $this->born_at);
+    }
+
+    /**
+     * @return int
+     * @throws Exception
+     */
+    public function getCurrent_months()
+    {
+        $data_time1 = new DateTime(date('Y-m-d', $this->born_at));
+        $data_time2 = new DateTime(date('Y-m-d', time()));
+        return date_diff($data_time1, $data_time2)->days;
+    }
+
+    /**
      * @return array
      */
     public static function getAllTypes()
     {
         return ArrayHelper::map(DogTypes::find()->select(['id', 'title'])->asArray()->all(), 'id', 'title');
     }
+
 }

@@ -8,13 +8,11 @@ use app\models\searchs\DogSearch;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Writer\PDF;
 use Throwable;
 use Yii;
 use yii\db\StaleObjectException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -38,11 +36,11 @@ class DogController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index', 'create', 'update', 'view', 'delete', 'document'],
+                'only' => ['index', 'create', 'update', 'view', 'delete', 'document', 'create-document-pedigree'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'document'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'document', 'create-document-pedigree'],
                         'roles' => ['@'],
                     ],
                 ]
@@ -179,13 +177,37 @@ class DogController extends Controller
         $section = $phpWord->addSection();
         /** @var Dog $dog */
         foreach ($dogs as $dog) {
-            $section->addText('Name: ' . $dog->dog_name . '; owner: ' . $dog->owner . '; breed: ' . $dog->breed->title,
+            $section->addText("Ім'я: $dog->dog_name; власник: $dog->owner; порода: ".$dog->breed->title,
                 ['name' => 'Times New Roman', 'size' => 14]);
         }
         $objWriter = IOFactory::createWriter($phpWord);
         $objWriter->save( 'document.docx');
-        return $this->goBack('/admin');
 
+        return $this->goBack('/admin');
+    }
+
+    /**
+     * @return Response
+     * @throws Exception
+     */
+    public function actionCreateDocumentPedigree()
+    {
+        $phpWord = new PhpWord();
+        $dogs = Dog::find()->all();
+        $section = $phpWord->addSection();
+        $section->addText('В цьому місцяці народились', ['name' => 'Times New Roman', 'size' => 14, 'bold' => true]);
+        /** @var Dog $dog */
+        foreach ($dogs as $dog) {
+            if($dog->born_month === date('m', time())) {
+                $section->addText("Ім'я: $dog->dog_name; власник: $dog->owner; дата народження: ".date('Y-m-d', $dog->born_at),
+                    ['name' => 'Times New Roman', 'size' => 14]);
+            }
+        }
+        $section->addText('Голова осередку Віктор Болячко', ['name' => 'Times New Roman', 'size' => 14, 'bold' => true]);
+        $objWriter = IOFactory::createWriter($phpWord);
+        $objWriter->save( 'document_pedigree.docx');
+
+        return $this->goBack('/admin');
     }
 
     /**
