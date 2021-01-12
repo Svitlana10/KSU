@@ -70,6 +70,11 @@ class DogShowForm extends Model
     public $type_id;
 
     /**
+     * @var string $payImage
+     */
+    public $payImage;
+
+    /**
      * @var integer $created_at
      */
     public $created_at;
@@ -123,10 +128,11 @@ class DogShowForm extends Model
     public function rules()
     {
         return[
-            [['email', 'owner', 'pedigree_number', 'dog_name', 'breed_title', 'type_id'], 'required'],
+            [['email', 'owner', 'pedigree_number', 'dog_name', 'breed_title', 'type_id', 'pay_image'], 'required'],
             [['email'], 'email'],
             [['months', 'type_id', 'status'], 'integer'],
             [['dog_name', 'pedigree_number', 'owner', 'breed_title'], 'string', 'max' => 255],
+            ['payImage', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogTypes::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
     }
@@ -146,6 +152,7 @@ class DogShowForm extends Model
             'months'            => 'Вік (в місяцях)',
             'email'             => 'Почтова скринька',
             'type_id'           => 'Стать',
+            'payImage'         => 'Скрін Чеку'
         ];
     }
 

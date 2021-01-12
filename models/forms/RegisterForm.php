@@ -1,14 +1,17 @@
 <?php
-
+declare(strict_types=1);
 
 namespace app\models\forms;
-
 
 use app\models\Show;
 use app\services\PayKeeperApi;
 use yii\base\Model;
 use yii\db\Exception;
 
+/**
+ * Class RegisterForm
+ * @package app\models\forms
+ */
 class RegisterForm extends Model
 {
 
@@ -31,7 +34,9 @@ class RegisterForm extends Model
      * RegisterForm constructor.
      * @param array $config
      */
-    public function __construct($config = [])
+    public function __construct(
+        $config = []
+    )
     {
         parent::__construct($config);
         $this->dog = new DogShowForm(['show' => $this->show]);
@@ -54,18 +59,18 @@ class RegisterForm extends Model
      */
     public function create()
     {
-        if(!$this->dog->validate()) {
+        if (!$this->dog->validate()) {
 
             $this->addErrors($this->dog->errors);
             return false;
         }
 
-        if(!$this->validate()) {
+        if (!$this->validate()) {
 
             return false;
         }
 
-        if(!$this->dog->create()) {
+        if (!$this->dog->create()) {
 
             $this->addErrors($this->dog->errors);
             return false;

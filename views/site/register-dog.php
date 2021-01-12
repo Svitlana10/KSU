@@ -44,6 +44,8 @@ box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);">
             <div class="step">
                 <h3> Оплата </h3>
                 <?= $form->field($model, 'clientid')->textInput()->label('ІФП') ?>
+
+                <?= $form->field($model->dog, 'payImage')->fileInput()->label('Скрін платіжки') ?>
             </div>
             <p class="talign">
                 <a href="#" class="back">Назад</a>

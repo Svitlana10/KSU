@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: comrade
- * Date: 18.03.19
- * Time: 1:48
- */
+declare(strict_types=1);
 
 namespace app\models\forms;
 
@@ -118,10 +113,10 @@ class ShowForm extends Model
             $this->showDate = $this->show->showDate;
             $this->startRegDate = $this->show->startRegDate;
             $this->endRegDate = $this->show->endRegDate;
-            if($this->show->google_location) {
+            if ($this->show->google_location) {
                 $cords = $this->show->location;
-                $this->latitude     = $cords['latitude'];
-                $this->longitude    = $cords['longitude'];
+                $this->latitude = $cords['latitude'];
+                $this->longitude = $cords['longitude'];
             }
             $this->user = User::findOne($this->show->user_id);
         } else {
@@ -169,7 +164,7 @@ class ShowForm extends Model
         $this->show->setAttributes($this->getAttributes());
         $this->show->user_id = Yii::$app->user->id;
 
-        if(!$this->setLocation()) {
+        if (!$this->setLocation()) {
 
             $transaction->rollBack();
             return false;
@@ -201,7 +196,7 @@ class ShowForm extends Model
         $this->show->setAttributes($this->getAttributes());
         $this->show->user_id = Yii::$app->user->id;
 
-        if(!$this->setLocation()) {
+        if (!$this->setLocation()) {
 
             $transaction->rollBack();
             return false;
@@ -222,14 +217,14 @@ class ShowForm extends Model
      */
     public function setLocation()
     {
-        if($this->latitude && $this->longitude) {
+        if ($this->latitude && $this->longitude) {
             $this->show->setGoogleLocation($this->latitude, $this->longitude);
         }
 
         $location = explode(', ', $this->address);
         $count = count($location);
 
-        if($count < 3) {
+        if ($count < 3) {
 
             $this->addError('address', 'Выберете, как минимум, город, а лучше еще и адресс указать');
             return false;
