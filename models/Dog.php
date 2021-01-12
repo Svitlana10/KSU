@@ -91,6 +91,7 @@ class Dog extends ActiveRecord
             ['status', 'in', 'range' => [self::STATUS_NEW, self::STATUS_APPROVED]],
             [['dog_name', 'pedigree_number', 'owner', 'breed_title'], 'string', 'max' => 255],
             [['pedigree_number'], 'unique'],
+            ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
             [['breed_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogBreeds::class, 'targetAttribute' => ['breed_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => DogTypes::class, 'targetAttribute' => ['type_id' => 'id']],
         ];

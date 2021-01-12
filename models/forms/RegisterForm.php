@@ -77,9 +77,9 @@ class RegisterForm extends Model
             return false;
         }
 
-        $pay = new PayKeeperApi();
-
-        $pay->getCreate($this->clientid, $this->show->price);
+//        $pay = new PayKeeperApi();
+//
+//        $pay->getCreate($this->clientid, $this->show->price);
 
         return true;
     }
