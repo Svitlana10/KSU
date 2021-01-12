@@ -10,7 +10,7 @@ use yii\web\View;
 <header class="main-header">
     <?= Html::a(
             '<span class="logo-mini">S</span><span class="logo-lg">' .
-            Yii::$app->params['appName'] .
+            Yii::$app->params['adminTitle'] .
             '</span>', Yii::$app->homeUrl, ['class' => 'logo'])
     ?>
     <nav class="navbar navbar-static-top" role="navigation">
