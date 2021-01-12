@@ -54,32 +54,40 @@ YiiAsset::register($this);
     <?= MapView::widget(['model' => $model]) ?>
 
 
-    <?php if($dogs) echo "<h1>Собаки:</h1>" ;{ foreach ($dogs as $dog) : ?>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <label> <?= $dog->dog_name ?> </label> <?= Html::a('Переглянути', ['/admin/dog/view', 'id' => $dog->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Видалити з шоу', ['/admin/dog-show/delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-                <?= Html::a('Видалити собаку', ['/admin/dog/delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </div>
-            <div class="panel-body">
-                <label>Власник:</label><?= $dog->owner ?><hr>
-                <label>№ Родословної:</label><?= $dog->pedigree_number ?><hr>
-                <label>Місяців:</label><?= $dog->months ?><hr>
-                <label>Пол:</label><?= $dog->type->title ?>
-            </div>
+    <?php if($dogs) : ?>
+        <?= "<h1>Собаки:</h1>" ?>
+        <div class="row">
+            <?php foreach ($dogs as $dog) : ?>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                    <div class="panel <?= ($dog->status == Dog::STATUS_APPROVED) ? 'panel-success':'panel-default' ?>" >
+                        <div class="panel-heading">
+                            <label> <?= $dog->dog_name ?> </label> <?= Html::a('Переглянути', ['/admin/dog/view', 'id' => $dog->id], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('Видалити з шоу', ['/admin/dog-show/delete', 'id' => $model->id], [
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete this item?',
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+                            <?= Html::a('Видалити собаку', ['/admin/dog/delete', 'id' => $model->id], [
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete this item?',
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+                        </div>
+                        <div class="panel-body">
+                            <label>Власник:</label><?= $dog->owner ?><hr>
+                            <label>№ Родословної:</label><?= $dog->pedigree_number ?><hr>
+                            <label>Місяців:</label><?= $dog->months ?><hr>
+                            <label>Пол:</label><?= $dog->type->title ?><hr>
+                            <label>Статус:</label><?= $dog->getStatusTitle() ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    <?php endforeach; } ?>
+    <?php endif; ?>
 
 </div>

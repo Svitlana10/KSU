@@ -130,22 +130,20 @@ class ShowForm extends Model
     public function rules()
     {
         return [
-            [[
-                'title', 'address', 'price',
-                'showDate', 'startRegDate', 'endRegDate'
-            ], 'required'],
+            [['title', 'address', 'price', 'showDate', 'startRegDate', 'endRegDate'], 'required'],
             [['description'], 'string'],
-            [[
-                'user_id', 'created_at', 'updated_at'
-            ], 'integer'],
-            [[
-                'showDate', 'startRegDate', 'endRegDate',
-                'longitude', 'latitude'
-            ], 'safe'],
+            [['user_id', 'created_at', 'updated_at'], 'integer'],
+            [['showDate', 'startRegDate', 'endRegDate', 'longitude', 'latitude'], 'safe'],
             [['price'], 'string'],
             [['title', 'address'], 'string', 'max' => 255],
-            ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'], 'checkExtensionByMimeType' => true, 'maxSize' => 15 * 1024 * 1024],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            ['img', 'file', 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                'checkExtensionByMimeType' => true,
+                'maxSize' => 15 * 1024 * 1024
+            ],
+            [['user_id'], 'exist', 'skipOnError' => true,
+                'targetClass' => User::class,
+                'targetAttribute' => ['user_id' => 'id']
+            ],
         ];
     }
 

@@ -42,22 +42,22 @@ class Dog extends ActiveRecord
     /**
      * @const STATUS_NEW
      */
-    const STATUS_NEW        = 1;
+    const STATUS_NEW = 1;
 
     /**
      * @const STATUS_APPROVED
      */
-    const STATUS_APPROVED   = 2;
+    const STATUS_APPROVED = 2;
 
     /**
-     * @var string $breed
+     * @var string $breed_title
      */
     public $breed_title;
 
     /**
      * @var array $statuses
      */
-    public static $statuses = [
+    private static array $statuses = [
         ['id' => self::STATUS_NEW, 'title' => 'NEW'],
         ['id' => self::STATUS_APPROVED, 'title' => 'APPROVED'],
     ];

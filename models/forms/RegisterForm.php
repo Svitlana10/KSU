@@ -67,6 +67,7 @@ class RegisterForm extends Model
 
         if (!$this->validate()) {
 
+            $this->addErrors($this->errors);
             return false;
         }
 

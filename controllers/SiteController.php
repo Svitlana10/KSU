@@ -23,6 +23,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 /**
  * Class SiteController
@@ -149,6 +150,7 @@ class SiteController extends Controller
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $model->dog->load(Yii::$app->request->post());
+            $model->dog->payImage = UploadedFile::getInstance($model, 'img') ?: UploadedFile::getInstanceByName('img');
             if ($model->create()) {
                 Yii::$app->getSession()->setFlash('comment', 'Перевірте вашу поштову скриньку');
                 return $this->redirect(['/'])->send();

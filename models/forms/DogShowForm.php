@@ -152,7 +152,7 @@ class DogShowForm extends Model
             'months'            => 'Вік (в місяцях)',
             'email'             => 'Почтова скринька',
             'type_id'           => 'Стать',
-            'payImage'         => 'Скрін Чеку'
+            'payImage'          => 'Скрін Чеку'
         ];
     }
 

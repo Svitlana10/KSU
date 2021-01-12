@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type_id')->dropDownList(Dog::getAllTypes()) ?>
 
-    <?= $form->field($model, 'status')->dropDownList(\yii\helpers\ArrayHelper::map(Dog::$statuses, 'id', 'title')) ?>
+    <?= $form->field($model, 'status')->dropDownList(Dog::getStatusList()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
