@@ -1,11 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
 use app\models\forms\ArticleForm;
-use Yii;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
 use yii\data\Pagination;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -27,14 +31,14 @@ use yii\web\UploadedFile;
  *
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
- * @property \yii\db\ActiveQuery $tags
- * @property array|\yii\db\ActiveRecord[] $articleComments
+ * @property ActiveQuery $tags
+ * @property array|ActiveRecord[] $articleComments
  * @property array $selectedTags
- * @property \yii\db\ActiveQuery $author
+ * @property ActiveQuery $author
  * @property Category $category
  * @property string $date
  */
-class Article extends \yii\db\ActiveRecord
+class Article extends ActiveRecord
 {
 
     const STATUS_PUBLISH = '10';
@@ -73,7 +77,7 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['title','description','content'], 'string'],
+            [['title', 'description', 'content'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['category_id', 'status'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_UNPUBLISH],
@@ -87,17 +91,17 @@ class Article extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'            => '№',
-            'title'         => 'Назва',
-            'description'   => 'Опис',
-            'content'       => 'Вміст',
-            'image'         => 'Фото',
-            'viewed'        => 'Переглянуто',
-            'user_id'       => '№ користувача',
-            'status'        => 'Статус',
-            'category_id'   => '№ категорії',
-            'created_at'    => 'Дата створення',
-            'updated_at'    => 'Дата оновлення',
+            'id' => '№',
+            'title' => 'Назва',
+            'description' => 'Опис',
+            'content' => 'Вміст',
+            'image' => 'Фото',
+            'viewed' => 'Переглянуто',
+            'user_id' => '№ користувача',
+            'status' => 'Статус',
+            'category_id' => '№ категорії',
+            'created_at' => 'Дата створення',
+            'updated_at' => 'Дата оновлення',
         ];
     }
 
@@ -118,7 +122,7 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCategory()
     {
@@ -126,8 +130,8 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
+     * @return ActiveQuery
+     * @throws InvalidConfigException
      */
     public function getTags()
     {
@@ -137,7 +141,7 @@ class Article extends \yii\db\ActiveRecord
 
     /**
      * @return array
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function getSelectedTags()
     {
@@ -149,12 +153,10 @@ class Article extends \yii\db\ActiveRecord
      */
     public function saveTags($tags)
     {
-        if (is_array($tags))
-        {
+        if (is_array($tags)) {
             $this->clearCurrentTags();
 
-            foreach($tags as $tag_id)
-            {
+            foreach ($tags as $tag_id) {
                 $tag = Tag::findOne($tag_id);
                 $this->link('tags', $tag);
             }
@@ -174,7 +176,7 @@ class Article extends \yii\db\ActiveRecord
      */
     public function clearCurrentTags()
     {
-        ArticleTag::deleteAll(['article_id'=>$this->id]);
+        ArticleTag::deleteAll(['article_id' => $this->id]);
     }
 
     /**
@@ -190,22 +192,22 @@ class Article extends \yii\db\ActiveRecord
         $count = $query->count();
 
         // create a pagination object with the total count
-        $pagination = new Pagination(['totalCount' => $count, 'pageSize'=>$pageSize]);
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
 
         // limit the query using the pagination and retrieve the articles
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->orderBy(['created_at' => SORT_DESC])
             ->all();
-        
+
         $data['articles'] = $articles;
         $data['pagination'] = $pagination;
-        
+
         return $data;
     }
 
     /**
-     * @return array|\yii\db\ActiveRecord[]
+     * @return array|ActiveRecord[]
      */
     public static function getPopular()
     {
@@ -213,7 +215,7 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return array|\yii\db\ActiveRecord[]
+     * @return array|ActiveRecord[]
      */
     public static function getRecent()
     {
@@ -221,27 +223,27 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getComments()
     {
-        return $this->hasMany(Comment::class, ['article_id'=>'id']);
+        return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
     /**
-     * @return array|\yii\db\ActiveRecord[]
+     * @return array|ActiveRecord[]
      */
     public function getArticleComments()
     {
-        return $this->getComments()->where(['status'=>Comment::STATUS_ALLOW])->all();
+        return $this->getComments()->where(['status' => Comment::STATUS_ALLOW])->all();
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAuthor()
     {
-        return $this->hasOne(User::class, ['id'=>'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -256,14 +258,14 @@ class Article extends \yii\db\ActiveRecord
     /**
      * @param bool $insert
      * @return bool
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function beforeSave($insert)
     {
         $photo = new ImageUpload();
         $form = new ArticleForm();
 
-        if($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')){
+        if ($file = UploadedFile::getInstance($form, 'image') ?: UploadedFile::getInstanceByName('image')) {
             $this->image = $photo->uploadFile($file, $this->image);
         }
 
@@ -272,7 +274,7 @@ class Article extends \yii\db\ActiveRecord
 
     /**
      * @return bool
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function beforeDelete()
     {

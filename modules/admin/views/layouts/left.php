@@ -2,23 +2,6 @@
 
     <section class="sidebar">
 
-        <!-- Sidebar user panel -->
-<!--        <div class="user-panel">-->
-<!--            <div class="pull-left image">-->
-<!--                <img src="--><?//= $directoryAsset ?><!--/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>-->
-<!--            </div>-->
-<!--            <div class="pull-left info">-->
-<!--                <p>Alexander Pierce</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-        <!-- search form -->
-<!--        <form action="#" method="get" class="sidebar-form">-->
-<!--            <div class="input-group">-->
-<!--            </div>-->
-<!--        </form>-->
-        <!-- /.search form -->
-
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
@@ -37,11 +20,11 @@
                         'items' => [
                             ['label' => 'Усі собаки', 'icon' => 'file-code-o', 'url' => ['/admin/dog']],
                             ['label' => 'Породи', 'icon' => 'file-code-o', 'url' => ['/admin/dog-breeds']],
-                            ['label' => 'Усі шоу', 'icon' => 'file-code-o', 'url' => ['/admin/dog-show']],
+                            ['label' => 'Собаки на виставках', 'icon' => 'file-code-o', 'url' => ['/admin/dog-show']],
                             ['label' => 'Типи', 'icon' => 'file-code-o', 'url' => ['/admin/dog-types']],
                         ],
                     ],
-                    ['label' => 'Усі шоу', 'icon' => 'file-code-o', 'url' => ['/admin/show']],
+                    ['label' => 'Виставки', 'icon' => 'file-code-o', 'url' => ['/admin/show']],
 //                    ['label' => 'Доки', 'icon' => 'file-code-o', 'url' => ['/admin/default']],
                     ['label' => 'Теги', 'icon' => 'file-code-o', 'url' => ['/admin/tag']],
                 ],

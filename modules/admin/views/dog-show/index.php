@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\searchs\DogShowSearch*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Dog Shows';
+$this->title = 'Собаки на шоу';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dog-show-index">
@@ -26,8 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'dog_id',
-            'show_id',
+            [
+                'attribute' => 'dog_id',
+                'label' => 'Dog Name',
+                'value' => function ($data) {
+                    return $data->dog->dog_name;
+                },
+                'filter' => \app\models\Dog::getAllDogsNames()
+            ],
+            [
+                'attribute' => 'show_id',
+                'label' => 'Show Name',
+                'value' => function ($data) {
+                    return $data->show->title;
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article_tag".
@@ -17,7 +19,7 @@ use yii\behaviors\TimestampBehavior;
  * @property Tag $tag
  * @property Article $article
  */
-class ArticleTag extends \yii\db\ActiveRecord
+class ArticleTag extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -62,7 +64,7 @@ class ArticleTag extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTag()
     {
@@ -70,7 +72,7 @@ class ArticleTag extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getArticle()
     {

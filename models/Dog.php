@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -156,6 +157,9 @@ class Dog extends ActiveRecord
         return $this->hasMany(DogShow::class, ['dog_id' => 'id']);
     }
 
+    /**
+     * @return string
+     */
     public function getBreedTitle()
     {
         return ($breed = $this->breed) ? $breed->title : '';
@@ -208,9 +212,26 @@ class Dog extends ActiveRecord
     /**
      * @return array
      */
-    public static function getAllTypes()
+    public static function getAllDogsNames()
     {
-        return ArrayHelper::map(DogTypes::find()->select(['id', 'title'])->asArray()->all(), 'id', 'title');
+        $names = self::find()
+            ->select(['id', 'dog_name'])
+            ->all();
+
+        return ArrayHelper::map($names, 'id', 'dog_name');
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllTypes()
+    {
+        return ArrayHelper::map(DogTypes::find()
+            ->select(['id', 'title'])
+            ->asArray()
+            ->all(),
+            'id',
+            'title'
+        );
+    }
 }

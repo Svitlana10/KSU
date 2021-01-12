@@ -54,7 +54,7 @@ use yii\web\View;
                                 <?=  Html::beginForm(['/auth/logout'], 'post')
                                 . Html::submitButton(
                                     'Вийти',
-                                    ['class' => 'btn btn-link logout', 'style' => 'color: #009789']
+                                    ['class' => 'btn btn-link logout nav-link', 'style' => 'color: #009789']
                                 )
                                 . Html::endForm() ?>
 
