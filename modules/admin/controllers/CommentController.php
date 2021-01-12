@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
@@ -9,6 +10,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
+/**
+ * Class CommentController
+ * @package app\modules\admin\controllers
+ */
 class CommentController extends Controller
 {
     /**
@@ -17,8 +22,8 @@ class CommentController extends Controller
     public function actionIndex()
     {
         $comments = Comment::find()->orderBy('id desc')->all();
-        
-        return $this->render('index',['comments'=>$comments]);
+
+        return $this->render('index', ['comments' => $comments]);
     }
 
     /**
@@ -30,8 +35,7 @@ class CommentController extends Controller
     public function actionDelete($id)
     {
         $comment = Comment::findOne($id);
-        if($comment && $comment->delete())
-        {
+        if ($comment && $comment->delete()) {
             return $this->redirect(['comment/index']);
         }
         throw new NotFoundHttpException('The requested page does not exist.');
@@ -45,8 +49,7 @@ class CommentController extends Controller
     public function actionAllow($id)
     {
         $comment = Comment::findOne($id);
-        if($comment && $comment->allow())
-        {
+        if ($comment && $comment->allow()) {
             return $this->redirect(['index']);
         }
 
@@ -61,8 +64,7 @@ class CommentController extends Controller
     public function actionDisallow($id)
     {
         $comment = Comment::findOne($id);
-        if($comment && $comment->disallow())
-        {
+        if ($comment && $comment->disallow()) {
             return $this->redirect(['index']);
         }
         throw new NotFoundHttpException('The requested page does not exist.');

@@ -1,9 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
-use Yii;
+use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "tags".
@@ -13,10 +16,10 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property \yii\db\ActiveQuery $articles
+ * @property ActiveQuery $articles
  * @property ArticleTag[] $articleTags
  */
-class Tag extends \yii\db\ActiveRecord
+class Tag extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -58,8 +61,8 @@ class Tag extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
+     * @return ActiveQuery
+     * @throws InvalidConfigException
      */
     public function getArticles()
     {

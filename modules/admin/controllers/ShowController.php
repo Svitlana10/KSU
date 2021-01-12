@@ -1,18 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
 use app\models\forms\ShowForm;
-use app\models\searchs\DogShowSearch;
+use app\models\searchs\ShowSearch;
+use app\models\Show;
 use Throwable;
 use Yii;
-use app\models\Show;
-use app\models\searchs\ShowSearch;
 use yii\db\Exception;
 use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -76,7 +76,7 @@ class ShowController extends Controller
     {
         $model = new ShowForm();
 
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $model->img = UploadedFile::getInstance($model, 'img') ?: UploadedFile::getInstanceByName('img');
             if ($model->create()) {
@@ -102,7 +102,7 @@ class ShowController extends Controller
     {
         $model = new ShowForm(['show' => $this->findModel($id)]);
 
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $model->img = UploadedFile::getInstance($model, 'img') ?: UploadedFile::getInstanceByName('img');
             if ($model->update()) {

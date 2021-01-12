@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
@@ -36,26 +38,25 @@ class ImageUpload extends Model
      * @param UploadedFile $file
      * @param string $currentImage
      * @return string
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function uploadFile(UploadedFile $file, $currentImage = '')
     {
         $this->image = $file;
 
-       if($this->validate())
-       {
-           if(trim($currentImage) != '' && $currentImage != null) {
-               $this->deleteCurrentImage($currentImage);
-           }
-           return $this->saveImage();
-       }
+        if ($this->validate()) {
+            if (trim($currentImage) != '' && $currentImage != null) {
+                $this->deleteCurrentImage($currentImage);
+            }
+            return $this->saveImage();
+        }
 
-       return false;
+        return false;
     }
 
     /**
      * @return string
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     private function getFolder()
     {
@@ -66,11 +67,11 @@ class ImageUpload extends Model
 
     /**
      * @param $filepath
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     private static function checkFolder($filepath)
     {
-        if(!file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             FileHelper::createDirectory($filepath, 0777, true);
         }
     }
@@ -85,14 +86,13 @@ class ImageUpload extends Model
 
     /**
      * @param $currentImage
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function deleteCurrentImage($currentImage)
     {
         $fullFilePath = $this->getFolder() . $currentImage;
 
-        if($this->fileExists($fullFilePath) && !empty($currentImage))
-        {
+        if ($this->fileExists($fullFilePath) && !empty($currentImage)) {
             unlink($fullFilePath);
         }
     }
@@ -103,8 +103,7 @@ class ImageUpload extends Model
      */
     public function fileExists($fullFilePath)
     {
-        if(!empty($fullFilePath) && $fullFilePath != null)
-        {
+        if (!empty($fullFilePath) && $fullFilePath != null) {
             return file_exists($fullFilePath);
         }
 
@@ -113,7 +112,7 @@ class ImageUpload extends Model
 
     /**
      * @return string
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function saveImage()
     {

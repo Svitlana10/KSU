@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -166,7 +167,7 @@ class Show extends ActiveRecord
      */
     public static function getOneRegShow()
     {
-        $result =  static::find()
+        $result = static::find()
             ->where(['<=', 'start_reg_date', time()])
             ->andWhere(['>=', 'end_reg_date', time()])
             ->orderBy(['start_reg_date' => SORT_DESC])
@@ -237,7 +238,7 @@ class Show extends ActiveRecord
         $photo = new ImageUpload();
         $form = new ShowForm();
         $file = UploadedFile::getInstance($form, 'img') ?: UploadedFile::getInstanceByName('img');
-        if($file){
+        if ($file) {
             $this->img = $photo->uploadFile($file, $this->img);
         }
 
@@ -261,7 +262,7 @@ class Show extends ActiveRecord
     public function setGoogleLocation($lat, $long)
     {
         $array = [
-            'latitude'  => $lat,
+            'latitude' => $lat,
             'longitude' => $long
         ];
         $this->google_location = Json::encode($array);

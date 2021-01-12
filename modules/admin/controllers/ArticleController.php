@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
-
 
 use app\models\Article;
 use app\models\forms\ArticleForm;
@@ -76,7 +76,7 @@ class ArticleController extends Controller
     {
         $model = new ArticleForm();
 
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             if ($model->create()) {
 
@@ -101,7 +101,7 @@ class ArticleController extends Controller
     {
         $model = new ArticleForm(['article' => $this->findModel($id)]);
 
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $model->image = UploadedFile::getInstance($model, 'image') ?: UploadedFile::getInstanceByName('image');
             if ($model->update()) {
@@ -157,17 +157,16 @@ class ArticleController extends Controller
         $article = $this->findModel($id);
         $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
 
-        if(Yii::$app->request->isPost)
-        {
+        if (Yii::$app->request->isPost) {
             $tags = Yii::$app->request->post('tags');
             $article->saveTags($tags);
 
-            return $this->redirect(['view', 'id'=>$article->id]);
+            return $this->redirect(['view', 'id' => $article->id]);
         }
-        
+
         return $this->render('tags', [
-            'tags'          =>$tags,
-            'selectedTags'  => $article->selectedTags
+            'tags' => $tags,
+            'selectedTags' => $article->selectedTags
         ]);
     }
 }

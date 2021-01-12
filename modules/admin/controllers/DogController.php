@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
@@ -177,11 +178,11 @@ class DogController extends Controller
         $section = $phpWord->addSection();
         /** @var Dog $dog */
         foreach ($dogs as $dog) {
-            $section->addText("Ім'я: $dog->dog_name; власник: $dog->owner; порода: ".$dog->breed->title,
+            $section->addText("Ім'я: $dog->dog_name; власник: $dog->owner; порода: " . $dog->breed->title,
                 ['name' => 'Times New Roman', 'size' => 14]);
         }
         $objWriter = IOFactory::createWriter($phpWord);
-        $objWriter->save( 'document.docx');
+        $objWriter->save('document.docx');
 
         return $this->goBack('/admin');
     }
@@ -198,14 +199,14 @@ class DogController extends Controller
         $section->addText('В цьому місцяці народились', ['name' => 'Times New Roman', 'size' => 14, 'bold' => true]);
         /** @var Dog $dog */
         foreach ($dogs as $dog) {
-            if($dog->born_month === date('m', time())) {
-                $section->addText("Ім'я: $dog->dog_name; власник: $dog->owner; дата народження: ".date('Y-m-d', $dog->born_at),
+            if ($dog->born_month === date('m', time())) {
+                $section->addText("Ім'я: $dog->dog_name; власник: $dog->owner; дата народження: " . date('Y-m-d', $dog->born_at),
                     ['name' => 'Times New Roman', 'size' => 14]);
             }
         }
         $section->addText('Голова осередку Віктор Болячко', ['name' => 'Times New Roman', 'size' => 14, 'bold' => true]);
         $objWriter = IOFactory::createWriter($phpWord);
-        $objWriter->save( 'document_pedigree.docx');
+        $objWriter->save('document_pedigree.docx');
 
         return $this->goBack('/admin');
     }

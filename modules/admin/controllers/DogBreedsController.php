@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
-use Throwable;
-use Yii;
 use app\models\DogBreeds;
 use app\models\searchs\DogBreedsSearch;
+use Throwable;
+use Yii;
 use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * DogBreedsController implements the CRUD actions for DogBreeds model.

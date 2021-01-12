@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
-use Throwable;
-use Yii;
 use app\models\Category;
 use app\models\searchs\CategorySearch;
+use Throwable;
+use Yii;
 use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -68,7 +69,7 @@ class CategoryController extends Controller
     {
         $model = new Category();
 
-        if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 
             $model->load(Yii::$app->request->post());
 
@@ -93,7 +94,7 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
 
             $model->load(Yii::$app->request->post());
 

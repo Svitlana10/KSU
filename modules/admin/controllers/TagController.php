@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
+use app\models\searchs\TagSearch;
+use app\models\Tag;
 use Throwable;
 use Yii;
-use app\models\Tag;
-use app\models\searchs\TagSearch;
 use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TagController implements the CRUD actions for Tag model.

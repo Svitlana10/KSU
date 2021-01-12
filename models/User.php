@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -352,19 +353,19 @@ class User extends ActiveRecord implements IdentityInterface
                 '!=', 'usr.id', $this->id
             ])
             ->andWhere([
-                'in','usr.status', [self::USER_STATUS_ADMIN, self::USER_STATUS_MODERATOR],
+                'in', 'usr.status', [self::USER_STATUS_ADMIN, self::USER_STATUS_MODERATOR],
             ])
             ->orderBy([
                 'msg.cnt' => SORT_DESC,
                 'usr.' . 'username' => SORT_DESC
             ]);
 
-        if(in_array($this->status, [self::USER_STATUS_ADMIN, self::USER_STATUS_MODERATOR])) {
+        if (in_array($this->status, [self::USER_STATUS_ADMIN, self::USER_STATUS_MODERATOR])) {
             $whom = Messages::find()->select(['from_id'])->where(['whom_id' => $this->id])->groupBy(['from_id'])->column();
             $query->orWhere([
-               'and',
-                [ 'usr.status' => self::USER_STATUS_USER],
-                [ 'in', 'usr.id', $whom]
+                'and',
+                ['usr.status' => self::USER_STATUS_USER],
+                ['in', 'usr.id', $whom]
             ]);
         }
 

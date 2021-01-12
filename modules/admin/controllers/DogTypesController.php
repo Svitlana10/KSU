@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
-use Throwable;
-use Yii;
 use app\models\DogTypes;
 use app\models\searchs\DogTypesSearch;
+use Throwable;
+use Yii;
 use yii\db\StaleObjectException;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * DogTypesController implements the CRUD actions for DogTypes model.

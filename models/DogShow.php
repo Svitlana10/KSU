@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -20,10 +21,10 @@ use yii\helpers\ArrayHelper;
  */
 class DogShow extends ActiveRecord
 {
-    const STATUS_NEW        = 1;
-    const STATUS_APPROVED   = 2;
+    const STATUS_NEW = 1;
+    const STATUS_APPROVED = 2;
 
-    /**@var array $statuses*/
+    /**@var array $statuses */
     public static $statuses = [
         ['id' => self::STATUS_NEW, 'title' => 'NEW'],
         ['id' => self::STATUS_APPROVED, 'title' => 'APPROVED'],
