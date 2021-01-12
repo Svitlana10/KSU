@@ -91,7 +91,7 @@ class ImageUpload extends Model
     {
         $fullFilePath = $this->getFolder() . $currentImage;
 
-        if($this->fileExists($fullFilePath))
+        if($this->fileExists($fullFilePath) && !empty($currentImage))
         {
             unlink($fullFilePath);
         }
