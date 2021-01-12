@@ -10,9 +10,6 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-
-
 <div class="container">
       <section>
         <div id="container_demo" >

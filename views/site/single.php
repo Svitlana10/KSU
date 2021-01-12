@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 /** @var \app\models\Article $article */
+$this->title = $article->title;
 ?>
 <section class="blog_area p_120 single-post-area">
     <div class="container">

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\forms;
 
@@ -16,7 +17,10 @@ class CommentForm extends Model
      * @var Comment $comment
      */
     public $comment;
-    
+
+    /**
+     * @return array|array[]
+     */
     public function rules()
     {
         return [
@@ -25,6 +29,10 @@ class CommentForm extends Model
         ];
     }
 
+    /**
+     * @param $article_id
+     * @return bool
+     */
     public function saveComment($article_id)
     {
         $comment = new Comment;
@@ -32,7 +40,7 @@ class CommentForm extends Model
         $comment->user_id = Yii::$app->user->id;
         $comment->article_id = $article_id;
         $comment->status = Comment::STATUS_DISALLOW;
-        return $comment->save();
 
+        return $comment->save();
     }
 }

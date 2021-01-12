@@ -47,8 +47,8 @@ use yii\web\View;
                     </ul>
                     <ul class="nav navbar-nav navbar-right header_social ml-auto">
                         <?php if(Yii::$app->user->isGuest):?>
-                            <li><a href="<?= Url::toRoute(['/auth/login'])?>">Авторизуватися</a></li>
-                            <li><a href="<?= Url::toRoute(['/auth/signup'])?>">Зареєструватися</a></li>
+<!--                            <li><a href="--><?//= Url::toRoute(['/auth/login'])?><!--">Авторизуватися</a></li>-->
+<!--                            <li><a href="--><?//= Url::toRoute(['/auth/signup'])?><!--">Зареєструватися</a></li>-->
                         <?php else: ?>
                             <li>
                                 <?=  Html::beginForm(['/auth/logout'], 'post')

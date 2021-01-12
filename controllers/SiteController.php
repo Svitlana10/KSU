@@ -1,22 +1,26 @@
 <?php
+declare(strict_types=1);
 
 namespace app\controllers;
 
 use app\models\Article;
 use app\models\forms\CommentForm;
-use app\models\forms\DogShowForm;
 use app\models\forms\RegisterForm;
 use app\models\searchs\ArticleSearch;
 use app\models\Show;
 use kartik\mpdf\Pdf;
+use Mpdf\MpdfException;
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
+use setasign\Fpdi\PdfParser\PdfParserException;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 use vision\messages\actions\MessageApiAction;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\Exception;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -81,7 +85,7 @@ class SiteController extends Controller
     {
         $dataProvider = (new ArticleSearch())->search(Yii::$app->request->queryParams, 3);
 
-        return $this->render('index',[
+        return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -89,19 +93,25 @@ class SiteController extends Controller
     /**
      * @param $id
      * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
         $article = Article::findOne($id);
+
+        if ($article == null) {
+            throw new NotFoundHttpException('Подія не знайдена');
+        }
+
         $comments = $article->getArticleComments();
         $commentForm = new CommentForm();
 
         $article->viewedCounter();
 
-        return $this->render('single',[
-            'article'=>$article,
-            'comments'=>$comments,
-            'commentForm'=>$commentForm
+        return $this->render('single', [
+            'article' => $article,
+            'comments' => $comments,
+            'commentForm' => $commentForm
         ]);
     }
 
@@ -113,15 +123,16 @@ class SiteController extends Controller
     {
         $model = new CommentForm();
 
-        if(Yii::$app->request->isPost)
-        {
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
-            if($model->saveComment($id))
-            {
+            if ($model->saveComment($id)) {
                 Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
-                return $this->redirect(['site/view','id'=>$id]);
+            } else {
+                Yii::$app->getSession()->setFlash('comment', 'Щось пішло не так, спробуйте пізніше');
             }
         }
+
+        return $this->redirect(['site/view', 'id' => $id]);
     }
 
     /**
@@ -135,18 +146,19 @@ class SiteController extends Controller
     {
         $this->layout = 'nosidebar';
         $model = new RegisterForm(['show' => $this->findShow($show)]);
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $model->dog->load(Yii::$app->request->post());
-            if($model->create()){
-
+            if ($model->create()) {
                 Yii::$app->getSession()->setFlash('comment', 'Перевірте вашу поштову скриньку');
                 return $this->redirect(['/'])->send();
+            } else {
+                Yii::$app->getSession()->setFlash('comment', 'Щось пішло не так, спробуйте пізніше');
             }
         }
 
-        return $this->render('register-dog',[
-            'model'=>$model,
+        return $this->render('register-dog', [
+            'model' => $model,
         ]);
     }
 
@@ -164,12 +176,16 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      * @throws InvalidConfigException
+     * @throws MpdfException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
+     * @throws PdfTypeException
      */
     public function actionViewDog($id)
     {
         $model = Show::findOne($id);
 
-        if($model === null){
+        if ($model === null) {
             throw new BadRequestHttpException();
         }
 
@@ -179,7 +195,7 @@ class SiteController extends Controller
             'mode' => Pdf::MODE_UTF8,
             'format' => Pdf::FORMAT_A4,
             'orientation' => Pdf::ORIENT_PORTRAIT,
-            'content' => $this->render('viewpdf', ['model'=>$model]),
+            'content' => $this->render('viewpdf', ['model' => $model]),
             'destination' => Pdf::DEST_BROWSER,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '',
@@ -204,8 +220,8 @@ class SiteController extends Controller
     protected function findShow($show_id)
     {
         /** @var Show $model */
-        if($model = Show::findOne(['id' => $show_id])){
-            if(!$model->startRegStatus){
+        if ($model = Show::findOne(['id' => $show_id])) {
+            if (!$model->startRegStatus) {
                 throw new BadRequestHttpException('Реєстрація ще не розпочалась');
             } elseif (!$model->finishRegStatus) {
                 throw new BadRequestHttpException('Реєстрація вже закінчилась');
@@ -213,7 +229,7 @@ class SiteController extends Controller
                 return $model;
             }
         } else {
-            throw  new NotFoundHttpException('Такої виставки не існує');
+            throw new NotFoundHttpException('Такої виставки не існує');
         }
     }
 }
